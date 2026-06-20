@@ -1,4 +1,5 @@
 import { FormEvent, FormEventHandler, JSX, useState } from "react"
+import { NavigateFunction, useNavigate } from "react-router"
 import { t } from "@/i18n"
 import { MAX_PLAYERS, MIN_PLAYERS, ENABLE_TEAMS } from "@/constants"
 import { Toggle } from "@/Component"
@@ -16,6 +17,7 @@ export default function NewLegacyView(): JSX.Element {
     Player.create("red"),
   ])
   const [errors, setErrors] = useState<string[]>([])
+  const navigate: NavigateFunction = useNavigate()
 
   const handleAddPlayer: VoidFunction = (): void => {
     if (players.length === MAX_PLAYERS) {
@@ -60,9 +62,14 @@ export default function NewLegacyView(): JSX.Element {
       .flat()
 
     setErrors(errs)
-    if (errs.length === 0) {
-      legacyRepository.save(Legacy.create(players).advance())
+    if (errs.length > 0) {
+      return
     }
+
+    const legacy: Legacy = Legacy.create(players).advance()
+    legacyRepository.save(legacy)
+
+    navigate(`/legacy/${legacy.id}`)
   }
 
   return (

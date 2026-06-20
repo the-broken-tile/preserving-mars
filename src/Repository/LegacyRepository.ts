@@ -51,4 +51,18 @@ export default class LegacyRepository {
 
     return l
   }
+
+  public delete(legacy: Legacy): void {
+    const all: Legacy[] = this.findAll().filter(
+      (l: Legacy): boolean => l.id !== legacy.id,
+    )
+
+    this.store.set<SerializedLegacy[]>(
+      KEY,
+      all.map(
+        (l: Legacy): SerializedLegacy => this.serializer.serialize(l),
+        this,
+      ),
+    )
+  }
 }

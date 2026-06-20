@@ -9,6 +9,10 @@ body {
   color: white;
 }
 
+a {
+  color: inherit;
+}
+
 input {
   background: transparent;
   color: inherit

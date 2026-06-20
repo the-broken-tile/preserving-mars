@@ -9,8 +9,8 @@ export default function App(): JSX.Element {
     <StrictMode>
       <HashRouter>
         <Routes>
-          <Route path="/" Component={NewLegacyView} />
-          <Route path="/legacies" Component={ListLegacyView} />
+          <Route path="/" Component={ListLegacyView} />
+          <Route path="/new" Component={NewLegacyView} />
           <Route path="/legacy/:id" Component={LegacyView} />
         </Routes>
       </HashRouter>
