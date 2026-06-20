@@ -15,7 +15,7 @@
     transform-origin: center;
     transform-style: preserve-3d;
     transform: rotateX(75deg) rotateZ(210deg);
-    translate: 50% calc(-25% + var(--z));
+    translate: 0 calc(-25% + var(--z));
 
     width: var(--x);
     height: var(--y);

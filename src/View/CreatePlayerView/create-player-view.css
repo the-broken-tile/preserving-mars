@@ -1,3 +1,20 @@
 .color-label {
   display: none;
 }
+.create-player {
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.create-player > li {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.create-player input {
+    display: block;
+}

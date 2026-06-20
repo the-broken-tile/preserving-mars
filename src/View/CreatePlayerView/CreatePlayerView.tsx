@@ -37,40 +37,46 @@ export default function CreatePlayerView({
   }
 
   return (
-    <>
-      <label htmlFor={`name-${player.id}`}>{t("Name")}: </label>
-      <input
-        onInput={handleNameChange}
-        value={player.name}
-        id={`name-${player.id}`}
-      />
-      <label htmlFor={`corporation-${player.id}`}>{t("Corporation")}:</label>
-      <input
-        onInput={handleCorporationChange}
-        value={player.corporation?.name ?? ""}
-        id={`corporation-${player.id}`}
-      />
-      <label htmlFor={`color-${player.id}`} className="color-label">
-        {t("Color")}
-      </label>
-      <select
-        onInput={handleColorChange}
-        id={`color-${player.id}`}
-        value={player.color ?? undefined}
-      >
-        {COLORS.map(
-          (color: Color, i: number): JSX.Element => (
-            <option
-              value={color}
-              disabled={disabledColors.includes(color)}
-              key={i}
-            >
-              {t(color)}
-            </option>
-          ),
-        )}
-      </select>
-      {player.color && <Cube color={player.color} />}
-    </>
+    <ul className="create-player">
+      <li>
+        <label htmlFor={`name-${player.id}`}>{t("Name")}: </label>
+        <input
+          onInput={handleNameChange}
+          value={player.name}
+          id={`name-${player.id}`}
+        />
+      </li>
+      <li>
+        <label htmlFor={`corporation-${player.id}`}>{t("Corporation")}:</label>
+        <input
+          onInput={handleCorporationChange}
+          value={player.corporation?.name ?? ""}
+          id={`corporation-${player.id}`}
+        />
+      </li>
+      <li>
+        <label htmlFor={`color-${player.id}`} className="color-label">
+          {t("Color")}
+        </label>
+        <select
+          onInput={handleColorChange}
+          id={`color-${player.id}`}
+          value={player.color ?? undefined}
+        >
+          {COLORS.map(
+            (color: Color, i: number): JSX.Element => (
+              <option
+                value={color}
+                disabled={disabledColors.includes(color)}
+                key={i}
+              >
+                {t(color)}
+              </option>
+            ),
+          )}
+        </select>
+        {player.color && <Cube color={player.color} />}
+      </li>
+    </ul>
   )
 }

@@ -1,8 +1,9 @@
+.new-player-form {
+    padding: 8px;
+}
+
 .players-count {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-}
-.player-row {
-  display: flex;
 }

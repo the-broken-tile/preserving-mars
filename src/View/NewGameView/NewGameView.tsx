@@ -11,8 +11,8 @@ import { chooseNext } from "@/Model/Color"
 
 export default function NewGameView(): JSX.Element {
   const [players, setPlayers] = useState<Player[]>([
-    Player.create("black"),
-    Player.create("red"),
+    Player.create(1, "black"),
+    Player.create(2, "red"),
   ])
   const [errors, setErrors] = useState<string[]>([])
 
@@ -23,7 +23,7 @@ export default function NewGameView(): JSX.Element {
 
     setPlayers((prev: Player[]): Player[] => [
       ...prev,
-      Player.create(chooseNext(prev.map(p => p.color))),
+      Player.create(prev.length + 1, chooseNext(prev.map(p => p.color))),
     ])
   }
 
@@ -62,8 +62,7 @@ export default function NewGameView(): JSX.Element {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>{t("New game")}</h1>
+    <form onSubmit={handleSubmit} className="new-player-form">
       <div className="players-count">
         <button
           type="button"
@@ -88,7 +87,7 @@ export default function NewGameView(): JSX.Element {
       <ul>
         {players.map(
           (r: Player): JSX.Element => (
-            <li key={r.id} className="player-row">
+            <li key={r.id}>
               <CreatePlayerView
                 player={r}
                 onChange={handlePlayerChange}
