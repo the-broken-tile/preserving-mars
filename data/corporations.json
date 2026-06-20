@@ -1,0 +1,15 @@
+[
+  {
+    "name": "Inventrix",
+    "a": {
+      "tags": ["science"],
+      "startingMe": 47,
+      "missions": [1, 2, 3]
+    },
+    "b": {
+      "tags": ["science"],
+      "startingMe": 49,
+      "missions": [1, 2, 3]
+    }
+  }
+]
