@@ -27,8 +27,8 @@ export default class Legacy {
       return this._name
     }
 
-    return t("A legacy for %s", {
-      players: this.players.map(p => p.name).join(", "),
+    return t("A legacy of %players%", {
+      players: this.players.map((p: Player): string => p.name).join(", "),
     })
   }
 

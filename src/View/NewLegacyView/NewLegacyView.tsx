@@ -5,12 +5,12 @@ import { Toggle } from "@/Component"
 import { CreatePlayerView } from "@/View"
 import { ValidationError, validator } from "@/container/Validator"
 import { Color, Legacy, Player } from "@/Model"
+import { chooseNext } from "@/Model/Color"
 import { legacyRepository } from "@/Repository"
 
-import "./new-game-view.css"
-import { chooseNext } from "@/Model/Color"
+import "./new-legacy-view.css"
 
-export default function NewGameView(): JSX.Element {
+export default function NewLegacyView(): JSX.Element {
   const [players, setPlayers] = useState<Player[]>([
     Player.create("black"),
     Player.create("red"),

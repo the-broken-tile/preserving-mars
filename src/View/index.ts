@@ -1,2 +1,4 @@
 export { CreatePlayerView } from "./CreatePlayerView"
-export { NewGameView } from "./NewGameView"
+export { NewLegacyView } from "./NewLegacyView"
+export { LegacyView } from "./LegacyView"
+export { ListLegacyView } from "./ListLegacyView"

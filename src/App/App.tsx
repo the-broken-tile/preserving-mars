@@ -1,7 +1,19 @@
-import { JSX } from "react"
+import { HashRouter, Route, Routes } from "react-router"
+import { JSX, StrictMode } from "react"
+import { NewLegacyView, LegacyView } from "../View"
 import "./styles.css"
-import { NewGameView } from "../View"
+import { ListLegacyView } from "@/View"
 
 export default function App(): JSX.Element {
-  return <NewGameView />
+  return (
+    <StrictMode>
+      <HashRouter>
+        <Routes>
+          <Route path="/" Component={NewLegacyView} />
+          <Route path="/legacies" Component={ListLegacyView} />
+          <Route path="/legacy/:id" Component={LegacyView} />
+        </Routes>
+      </HashRouter>
+    </StrictMode>
+  )
 }
