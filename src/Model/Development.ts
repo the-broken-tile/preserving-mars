@@ -1,5 +1,10 @@
 import { Corporation } from "."
+import { v4 } from "uuid"
 
 export default class Development {
-  constructor(public readonly corporation: Corporation) {}
+  public readonly id: string = v4()
+  constructor(
+    public readonly name: string,
+    public readonly corporation: Corporation,
+  ) {}
 }

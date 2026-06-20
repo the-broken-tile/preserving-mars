@@ -1,5 +1,6 @@
 {
   "minPlayers": 2,
   "maxPlayers": 5,
-  "enableTeams": false
+  "enableTeams": false,
+  "missions": 7
 }

@@ -11,22 +11,13 @@ export default class PlayerValidator implements ValidatorInterface {
     const errors: ValidationError[] = []
 
     if (value.name === "") {
-      errors.push(this.createValidationError(value.index, t("name is missing")))
+      errors.push(new ValidationError(t("name is missing")))
     }
 
     if (value.corporation.name === "") {
-      errors.push(
-        this.createValidationError(value.index, t("corporation is missing")),
-      )
+      errors.push(new ValidationError(t("corporation is missing")))
     }
 
     return errors
-  }
-
-  private createValidationError(
-    index: number,
-    message: string,
-  ): ValidationError {
-    return new ValidationError(`[${index}] ${message}.`)
   }
 }

@@ -5,8 +5,8 @@ export default class Corporation {
   public readonly id: string = v4()
   private constructor(public readonly name: string) {}
 
-  public static create(): Corporation {
-    return new Corporation("")
+  public static create(name: string = ""): Corporation {
+    return new Corporation(name)
   }
 
   public setName(name: string): Corporation {

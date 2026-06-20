@@ -4,15 +4,16 @@ import { MAX_PLAYERS, MIN_PLAYERS, ENABLE_TEAMS } from "@/constants"
 import { Toggle } from "@/Component"
 import { CreatePlayerView } from "@/View"
 import { ValidationError, validator } from "@/container/Validator"
-import { Color, Player } from "@/Model"
+import { Color, Legacy, Player } from "@/Model"
+import { legacyRepository } from "@/Repository"
 
 import "./new-game-view.css"
 import { chooseNext } from "@/Model/Color"
 
 export default function NewGameView(): JSX.Element {
   const [players, setPlayers] = useState<Player[]>([
-    Player.create(1, "black"),
-    Player.create(2, "red"),
+    Player.create("black"),
+    Player.create("red"),
   ])
   const [errors, setErrors] = useState<string[]>([])
 
@@ -23,7 +24,7 @@ export default function NewGameView(): JSX.Element {
 
     setPlayers((prev: Player[]): Player[] => [
       ...prev,
-      Player.create(prev.length + 1, chooseNext(prev.map(p => p.color))),
+      Player.create(chooseNext(prev.map(p => p.color))),
     ])
   }
 
@@ -59,6 +60,9 @@ export default function NewGameView(): JSX.Element {
       .flat()
 
     setErrors(errs)
+    if (errs.length === 0) {
+      legacyRepository.save(Legacy.create(players).advance())
+    }
   }
 
   return (
@@ -108,7 +112,9 @@ export default function NewGameView(): JSX.Element {
         <ul>
           {errors.map(
             (error: string): JSX.Element => (
-              <li className="error">{error}</li>
+              <li className="error" key={error}>
+                {error}
+              </li>
             ),
           )}
         </ul>
