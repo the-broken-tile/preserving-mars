@@ -2,7 +2,12 @@ import { FormEvent, JSX, useState } from "react"
 import { Legacy, MissionResult, Player } from "@/Model"
 import { useLegacyContext } from "@/Context/LegacyContext"
 import { legacyRepository } from "@/Repository"
-import { PassingOrderView, PlayerRowView, TerraformingRatingView } from "@/View"
+import {
+  PassingOrderView,
+  PlayerRowView,
+  SavedCardsView,
+  TerraformingRatingView,
+} from "@/View"
 import { t } from "@/i18n"
 import { titleCalculator } from "@/TitleCalculator"
 
@@ -48,6 +53,7 @@ export default function DuringMissionView(): JSX.Element {
                 id={player.id}
               />
               {legacy.hasTies() && <PassingOrderView player={player} />}
+              <SavedCardsView player={player} type="innovation" />
             </PlayerRowView>
           ),
         )}

@@ -1,13 +1,20 @@
 import { FormEvent, JSX, useState } from "react"
-import { Legacy, MissionResult, Player, SavedCard } from "@/Model"
+import {
+  Legacy,
+  MissionResult,
+  Player,
+  SavedCard,
+  SavedCardType,
+} from "@/Model"
 import { t } from "@/i18n"
 import { useLegacyContext } from "@/Context"
 import { legacyRepository } from "@/Repository"
 
 type Props = {
   player: Player
+  type?: SavedCardType
 }
-export default function SavedCardsView({ player }: Props): JSX.Element {
+export default function SavedCardsView({ player, type }: Props): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
   const result: MissionResult = legacy.getCurrentMission(player)
   const [adding, setAdding] = useState<boolean>(false)
@@ -30,7 +37,9 @@ export default function SavedCardsView({ player }: Props): JSX.Element {
     if (currentCardName === "") {
       return
     }
-    onChange(result.addSavedCard(new SavedCard(currentCardName)))
+    onChange(
+      result.addSavedCard(new SavedCard(currentCardName, type ?? "project")),
+    )
     setCurrentCardName("")
     setAdding(false)
   }
