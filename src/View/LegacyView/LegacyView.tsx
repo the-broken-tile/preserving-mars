@@ -1,4 +1,4 @@
-import { JSX, useEffect, useState } from "react"
+import { FormEvent, JSX, useEffect, useState } from "react"
 import { useParams } from "react-router"
 import { legacyRepository } from "@/Repository"
 import { Loading } from "@/Component"
@@ -25,6 +25,7 @@ const PHASE_MAP: Record<
 export default function LegacyView(): JSX.Element {
   const { id } = useParams()
   const [legacy, setLegacy] = useState<Legacy | null | undefined>(undefined)
+  const [editing, setEditing] = useState(false)
 
   useEffect((): void => {
     if (id === undefined) {
@@ -46,9 +47,26 @@ export default function LegacyView(): JSX.Element {
     return <div className="error">Oops, something went wrong!</div>
   }
 
+  const handeStartEditing: VoidFunction = (): void => {
+    setEditing((prev: boolean): boolean => !prev)
+  }
+
+  const handleNameChange = (e: FormEvent<HTMLInputElement>): void => {
+    const l: Legacy = legacy.setName(e.currentTarget.value)
+    setLegacy(l)
+    legacyRepository.save(l)
+  }
+
   return (
     <LegacyContext value={{ legacy, setLegacy }}>
-      <h2>{legacy.name}</h2>
+      <h2>
+        {editing ?
+          <input value={legacy.name} onInput={handleNameChange} />
+        : legacy.name}
+        <button className="button" onClick={handeStartEditing}>
+          ✏️
+        </button>
+      </h2>
       {PHASE_MAP[legacy.phase](legacy)}
     </LegacyContext>
   )

@@ -15,7 +15,12 @@ export default function AfterMissionView(): JSX.Element {
         (player: Player): JSX.Element => (
           <PlayerRowView player={player} key={player.id}>
             <TitleView player={player} />
-            <hr />
+            <hr className="halfsies" />
+            <div>
+              {t("Title Points: %points%", {
+                points: legacy.getTitlePoints(player),
+              })}
+            </div>
           </PlayerRowView>
         ),
       )}

@@ -128,7 +128,7 @@ export default function NewLegacyView(): JSX.Element {
           )}
         </ul>
       )}
-      <input type="submit" value={`${t("Save")}`} />
+      <input type="submit" className="button" value={`${t("Save")}`} />
     </form>
   )
 }

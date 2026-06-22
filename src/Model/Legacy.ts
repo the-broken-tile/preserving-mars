@@ -162,4 +162,15 @@ export default class Legacy {
 
     return titles
   }
+
+  public getTitlePoints(player: Player): number {
+    let points: number = 0
+
+    for (let i: number = 0; i < this.mission + 1; i += 1) {
+      const result: MissionResult = this.missionResults[i]!.get(player)!
+      points += result.title?.points ?? 0
+    }
+
+    return points
+  }
 }

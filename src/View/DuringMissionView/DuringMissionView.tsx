@@ -113,7 +113,11 @@ export default function DuringMissionView(): JSX.Element {
           ),
         )}
       </ul>
-      <button type="submit" disabled={legacy.hasToResolveTies()}>
+      <button
+        type="submit"
+        disabled={legacy.hasToResolveTies()}
+        className="button"
+      >
         {t("Finish mission")}
       </button>
     </form>
