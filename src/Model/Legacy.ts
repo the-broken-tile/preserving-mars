@@ -5,16 +5,16 @@ import { Writeable } from "@/types"
 import { ADVANCEMENT_MAP } from "./Phase"
 import { FullTitle, Player, Phase, MissionResult } from "."
 
-export type MissionResults = Map<number, Map<Player, MissionResult>>
+export type MissionResults = Map<Player, MissionResult>[]
 
 export default class Legacy {
   public readonly id: string = v4()
   private constructor(
     private readonly _players: Player[],
-    public readonly mission: number = 1,
+    public readonly mission: number = 0,
     public readonly phase: Phase = "preparing",
     private readonly _name: string | null = null,
-    public readonly missionResults: MissionResults = new Map(),
+    public readonly missionResults: MissionResults = [],
   ) {}
 
   public static create(players: Player[]): Legacy {
@@ -74,7 +74,7 @@ export default class Legacy {
 
   public getCurrentPlayerMissions(): Map<Player, MissionResult> {
     let results: Map<Player, MissionResult> | undefined =
-      this.missionResults.get(this.mission)
+      this.missionResults[this.mission]
 
     if (results !== undefined) {
       return results
@@ -84,7 +84,7 @@ export default class Legacy {
     for (const player of this.players) {
       results.set(player, MissionResult.create())
     }
-    this.missionResults.set(this.mission, results)
+    this.missionResults[this.mission] = results
 
     return results
   }
@@ -98,7 +98,7 @@ export default class Legacy {
     missionResult: MissionResult,
   ): Legacy {
     const missionResults: MissionResults = this.missionResults
-    missionResults.get(this.mission)!.set(player, missionResult)
+    missionResults[this.mission]!.set(player, missionResult)
 
     const l: Writeable<Legacy> = new Legacy(
       this._players,
@@ -151,8 +151,8 @@ export default class Legacy {
   public getFullTitles(player: Player): FullTitle[] {
     const titles: FullTitle[] = []
 
-    for (let i: number = 1; i <= this.mission; i += 1) {
-      const result: MissionResult = this.missionResults.get(i)!.get(player)!
+    for (let i: number = 0; i < this.mission + 1; i += 1) {
+      const result: MissionResult = this.missionResults[i]!.get(player)!
       if (result.title === null) {
         continue
       }

@@ -3,7 +3,7 @@ import dictionary from "./dictionary"
 type DictionaryKey = keyof typeof dictionary
 
 export default function t(
-  key: string,
+  key: string | number,
   replacements: Record<string, string | number> = {},
   dict: DictionaryKey = "messages",
 ): string {

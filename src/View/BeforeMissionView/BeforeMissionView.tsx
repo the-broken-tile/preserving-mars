@@ -14,12 +14,12 @@ export default function BeforeMissionView(): JSX.Element {
   }
 
   // @todo add corporation choice - A or B (when corporations are known)
-  // @todo Add reminder of which cards are in hand, don't do that for mission === 1
+  // @todo Add reminder of which cards are in hand, don't do that for mission === 0
   return (
     <>
       <h3>
         {t("Preparation for mission %mission%", {
-          mission: legacy.mission,
+          mission: t(legacy.mission, {}, "missionNames"),
         })}
       </h3>
       <ul>

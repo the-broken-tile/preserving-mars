@@ -1,10 +1,7 @@
 import { SerializerInterface, SerializedPlayer, SerializedMission } from "."
 import { Legacy, MissionResult, MissionResults, Phase, Player } from "@/Model"
 
-export type SerializedMissionResults = Record<
-  number,
-  Record<string, SerializedMission>
->
+export type SerializedMissionResults = Record<string, SerializedMission>[]
 
 export type SerializedLegacy = {
   id: string
@@ -47,8 +44,8 @@ export default class LegacySerializer implements SerializerInterface<
 
   private serializeMissionResults(
     map: MissionResults,
-  ): Record<number, Record<string, SerializedMission>> {
-    const result: Record<number, Record<string, SerializedMission>> = {}
+  ): Record<string, SerializedMission>[] {
+    const result: Record<string, SerializedMission>[] = []
     map.forEach(
       (missionResults: Map<Player, MissionResult>, mission: number): void => {
         result[mission] = {} satisfies Record<string, SerializedMission>

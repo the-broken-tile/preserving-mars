@@ -24,7 +24,7 @@ export default class LegacyDeserializer implements DeserializerInterface<
     l.mission = value.mission
     l.phase = value.phase
     l.missionResults = this.deserializeMissionResults(
-      value.missionResults ?? {},
+      value.missionResults ?? [],
       l.players,
     )
 
@@ -43,7 +43,7 @@ export default class LegacyDeserializer implements DeserializerInterface<
     serializedMissionResults: SerializedMissionResults,
     players: Player[],
   ): MissionResults {
-    const missionResults = new Map<number, Map<Player, MissionResult>>()
+    const missionResults: MissionResults = [] //new Map<number, Map<Player, MissionResult>>()
     for (const [mission, playerMissions] of Object.entries(
       serializedMissionResults,
     )) {
@@ -56,7 +56,7 @@ export default class LegacyDeserializer implements DeserializerInterface<
         result.set(player, this.deserializer.deserialize(missionResults))
       }
 
-      missionResults.set(Number(mission), result)
+      missionResults[Number(mission)] = result
     }
 
     return missionResults
