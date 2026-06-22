@@ -1,4 +1,8 @@
+export { AfterMissionView } from "./AfterMissionView"
+export { BeforeMissionView } from "./BeforeMissionView"
 export { CreatePlayerView } from "./CreatePlayerView"
+export { DuringMissionView } from "./DuringMissionView"
+export { FinishedLegacyView } from "./FinishedLegacyView"
 export { NewLegacyView } from "./NewLegacyView"
 export { LegacyView } from "./LegacyView"
 export { ListLegacyView } from "./ListLegacyView"
