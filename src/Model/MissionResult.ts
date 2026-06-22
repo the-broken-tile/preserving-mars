@@ -38,4 +38,22 @@ export default class MissionResult {
       this.title,
     )
   }
+
+  public removeSavedCard(card: SavedCard): MissionResult {
+    return new MissionResult(
+      this.points,
+      this.savedCards.filter((c: SavedCard): boolean => c.id !== card.id),
+      this.passingOrder,
+      this.title,
+    )
+  }
+
+  public addSavedCard(card: SavedCard): MissionResult {
+    return new MissionResult(
+      this.points,
+      [...this.savedCards, card],
+      this.passingOrder,
+      this.title,
+    )
+  }
 }

@@ -3,6 +3,7 @@ import { SavedCard } from "@/Model"
 
 export type SerializedSavedCard = {
   name: string
+  id: string
   _type: "savedCard"
 }
 
@@ -17,6 +18,7 @@ export default class SavedCardSerializer implements SerializerInterface<
   public serialize(value: SavedCard): SerializedSavedCard {
     return {
       _type: "savedCard",
+      id: value.id,
       name: value.name,
     }
   }

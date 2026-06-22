@@ -1,6 +1,7 @@
 import DeserializerInterface from "./DeserializerInterface"
 import { SerializedSavedCard } from "@/Serializer"
 import { SavedCard } from "@/Model"
+import { Writeable } from "@/types"
 
 export default class SavedCardDeserializer implements DeserializerInterface<
   SerializedSavedCard,
@@ -11,6 +12,9 @@ export default class SavedCardDeserializer implements DeserializerInterface<
   }
 
   public deserialize(value: SerializedSavedCard): SavedCard {
-    return new SavedCard(value.name)
+    const c: Writeable<SavedCard> = new SavedCard(value.name)
+    c.id = value.id
+
+    return c
   }
 }
