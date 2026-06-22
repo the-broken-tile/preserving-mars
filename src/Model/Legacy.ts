@@ -3,7 +3,7 @@ import { t } from "@/i18n"
 import { MISSION_COUNT } from "@/constants"
 import { Writeable } from "@/types"
 import { ADVANCEMENT_MAP } from "./Phase"
-import { Player, Phase, MissionResult } from "."
+import { FullTitle, Player, Phase, MissionResult } from "."
 
 export type MissionResults = Map<number, Map<Player, MissionResult>>
 
@@ -41,22 +41,6 @@ export default class Legacy {
       this.mission,
       this.phase,
       name,
-      this.missionResults,
-    )
-    l.id = this.id
-
-    return l as Legacy
-  }
-
-  /**
-   * @todo temp
-   */
-  public setPhase(phase: Phase): Legacy {
-    const l: Writeable<Legacy> = new Legacy(
-      this._players,
-      this.mission,
-      phase,
-      this._name,
       this.missionResults,
     )
     l.id = this.id
@@ -162,5 +146,20 @@ export default class Legacy {
     return [...this.getCurrentPlayerMissions().values()].some(
       (mission: MissionResult): boolean => mission.passingOrder === null,
     )
+  }
+
+  public getFullTitles(player: Player): FullTitle[] {
+    const titles: FullTitle[] = []
+
+    for (let i: number = 1; i <= this.mission; i += 1) {
+      const result: MissionResult = this.missionResults.get(i)!.get(player)!
+      if (result.title === null) {
+        continue
+      }
+
+      titles.push(new FullTitle(result.title, i))
+    }
+
+    return titles
   }
 }

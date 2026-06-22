@@ -1,9 +1,5 @@
 import DeserializerInterface from "./DeserializerInterface"
-import {
-  SerializedLegacy,
-  SerializedMission,
-  SerializedPlayer,
-} from "@/Serializer"
+import { SerializedLegacy, SerializedPlayer } from "@/Serializer"
 import { Legacy, MissionResult, MissionResults, Player } from "@/Model"
 import { Writeable } from "@/types"
 import { SerializedMissionResults } from "@/Serializer/LegacySerializer"
@@ -25,7 +21,7 @@ export default class LegacyDeserializer implements DeserializerInterface<
       ),
     )
     l.id = value.id
-    l.mission = 1 //value.mission // @todo
+    l.mission = value.mission
     l.phase = value.phase
     l.missionResults = this.deserializeMissionResults(
       value.missionResults ?? {},

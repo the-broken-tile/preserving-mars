@@ -1,11 +1,12 @@
-import { Player } from "@/Model"
 import { JSX, ReactNode } from "react"
-import { Cube } from "@/Component/Cube"
+import { Player } from "@/Model"
+import { Cube } from "@/Component"
 
 type Props = {
   player: Player
   children?: ReactNode
 }
+
 export default function PlayerRowView({
   player,
   children,
@@ -14,7 +15,7 @@ export default function PlayerRowView({
     <li>
       <h3>
         <Cube color={player.color} />
-        {player.corporation.name}. CEO {player.name}
+        {player.name}, CEO of {player.corporation.name}
       </h3>
       {children}
     </li>
