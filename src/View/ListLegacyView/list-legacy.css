@@ -1,6 +1,5 @@
-
 .legacy-list li {
-  padding: 8px;
+  padding: var(--default-padding);
   display: flex;
   flex-direction: row;
   align-items: center;

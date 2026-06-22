@@ -1,3 +1,4 @@
+export { Cube } from "./Cube"
+export { HomeButton } from "./HomeButton"
 export { Loading } from "./Loading"
 export { Toggle } from "./Toggle"
-export { Cube } from "./Cube"

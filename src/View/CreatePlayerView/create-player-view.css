@@ -9,7 +9,7 @@
 }
 
 .create-player > li {
-    padding: 8px;
+    padding: var(--default-padding);
     display: flex;
     align-items: center;
     justify-content: space-between;

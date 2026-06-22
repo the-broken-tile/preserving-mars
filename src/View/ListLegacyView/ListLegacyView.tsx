@@ -5,9 +5,12 @@ import { Legacy } from "@/Model"
 
 import "./list-legacy.css"
 import { t } from "@/i18n"
+import { useBodyClassName } from "@/Context"
 
 export default function ListLegacyView(): JSX.Element {
   const [legacies, setLegacies] = useState<Legacy[]>(legacyRepository.findAll())
+
+  useBodyClassName("home")
 
   const handleDeleteLegacy = (legacy: Legacy): void => {
     legacyRepository.delete(legacy)

@@ -1,3 +1,7 @@
+:root {
+  --default-padding: 8px;
+}
+
 body {
   margin: 0;
   font-family:
@@ -7,6 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: black;
   color: white;
+  padding: var(--default-padding);
 }
 
 a {

@@ -1,1 +1,2 @@
-export { default as LegacyContext, useLegacyContext } from "./LegacyContext"
+export { useLegacyContext } from "./LegacyContext"
+export { useBodyClassName, BodyClassNameProvider } from "./BodyClassNameContext"
