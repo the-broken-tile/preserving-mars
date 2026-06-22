@@ -1,19 +1,25 @@
 import { FormEvent, JSX, useState } from "react"
-import { MissionResult, SavedCard } from "@/Model"
+import { Legacy, MissionResult, Player, SavedCard } from "@/Model"
 import { t } from "@/i18n"
+import { useLegacyContext } from "@/Context"
+import { legacyRepository } from "@/Repository"
 
 type Props = {
-  result: MissionResult
-  onChange: (result: MissionResult) => void
+  player: Player
 }
-export default function SavedCardsView({
-  result,
-  onChange,
-}: Props): JSX.Element {
+export default function SavedCardsView({ player }: Props): JSX.Element {
+  const { legacy, setLegacy } = useLegacyContext()
+  const result: MissionResult = legacy.getCurrentMission(player)
   const [adding, setAdding] = useState<boolean>(false)
   const [currentCardName, setCurrentCardName] = useState<string>("")
   const handleToggleSavingCards: VoidFunction = (): void => {
     setAdding((prev: boolean): boolean => !prev)
+  }
+
+  const onChange = (result: MissionResult): void => {
+    const l: Legacy = legacy.setMissionResult(player, result)
+    setLegacy(l)
+    legacyRepository.save(l)
   }
 
   const handleDeleteSavedCard = (card: SavedCard): void => {

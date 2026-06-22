@@ -9,14 +9,6 @@ import { MISSION_COUNT } from "@/constants"
 export default function AfterMissionView(): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
 
-  const handleResultChange =
-    (player: Player) =>
-    (result: MissionResult): void => {
-      const l: Legacy = legacy.setMissionResult(player, result)
-      setLegacy(l)
-      legacyRepository.save(l)
-    }
-
   const handleNexMissionClick: VoidFunction = (): void => {
     const l: Legacy = legacy.advance()
     setLegacy(l)
@@ -28,10 +20,7 @@ export default function AfterMissionView(): JSX.Element {
       {legacy.players.map(
         (player: Player, i: number): JSX.Element => (
           <PlayerRowView player={player} key={player.id}>
-            <SavedCardsView
-              result={legacy.getCurrentMission(player)}
-              onChange={handleResultChange(player)}
-            />
+            <SavedCardsView player={player} />
 
             <TitleView player={player} />
             <hr className="halfsies" />
