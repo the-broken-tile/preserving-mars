@@ -1,6 +1,6 @@
 import { v4 } from "uuid"
 import { t } from "@/i18n"
-import { MISSION_COUNT } from "@/constants"
+import { MISSION_COUNT, STARTING_TERRAFORMING_RATING } from "@/constants"
 import { Writeable } from "@/types"
 import { ADVANCEMENT_MAP } from "./Phase"
 import { Player, Phase, MissionResult, Title } from "."
@@ -82,7 +82,7 @@ export default class Legacy {
 
     results = new Map<Player, MissionResult>()
     for (const player of this.players) {
-      results.set(player, MissionResult.create())
+      results.set(player, MissionResult.create(STARTING_TERRAFORMING_RATING))
     }
     this.missionResults[this.mission] = results
 

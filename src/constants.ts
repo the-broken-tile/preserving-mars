@@ -6,3 +6,6 @@ export const MAX_PLAYERS: number = config.maxPlayers
 export const ENABLE_TEAMS: boolean = config.enableTeams
 
 export const MISSION_COUNT: number = config.missions
+
+export const STARTING_TERRAFORMING_RATING: number =
+  config.staringTerraformingRating

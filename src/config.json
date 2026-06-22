@@ -2,5 +2,6 @@
   "minPlayers": 2,
   "maxPlayers": 5,
   "enableTeams": false,
-  "missions": 7
+  "missions": 7,
+  "staringTerraformingRating": 20
 }
