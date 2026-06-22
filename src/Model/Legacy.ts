@@ -3,7 +3,9 @@ import { t } from "@/i18n"
 import { MISSION_COUNT } from "@/constants"
 import { Writeable } from "@/types"
 import { ADVANCEMENT_MAP } from "./Phase"
-import { Player, Phase } from "."
+import { Player, Phase, MissionResult } from "."
+
+export type MissionResults = Map<number, Map<Player, MissionResult>>
 
 export default class Legacy {
   public readonly id: string = v4()
@@ -12,6 +14,7 @@ export default class Legacy {
     public readonly mission: number = 1,
     public readonly phase: Phase = "preparing",
     private readonly _name: string | null = null,
+    public readonly missionResults: MissionResults = new Map(),
   ) {}
 
   public static create(players: Player[]): Legacy {
@@ -37,7 +40,24 @@ export default class Legacy {
       this._players,
       this.mission,
       this.phase,
+      name,
+      this.missionResults,
+    )
+    l.id = this.id
+
+    return l as Legacy
+  }
+
+  /**
+   * @todo temp
+   */
+  public setPhase(phase: Phase): Legacy {
+    const l: Writeable<Legacy> = new Legacy(
+      this._players,
+      this.mission,
+      phase,
       this._name,
+      this.missionResults,
     )
     l.id = this.id
 
@@ -61,6 +81,47 @@ export default class Legacy {
       mission,
       newPhase,
       this._name,
+      this.missionResults,
+    )
+    l.id = this.id
+
+    return l as Legacy
+  }
+
+  public getCurrentPlayerMissions(): Map<Player, MissionResult> {
+    let results: Map<Player, MissionResult> | undefined =
+      this.missionResults.get(this.mission)
+
+    if (results !== undefined) {
+      return results
+    }
+
+    results = new Map<Player, MissionResult>()
+    for (const player of this.players) {
+      results.set(player, MissionResult.create())
+    }
+    this.missionResults.set(this.mission, results)
+
+    return results
+  }
+
+  public getCurrentMission(player: Player): MissionResult {
+    return this.getCurrentPlayerMissions().get(player)!
+  }
+
+  public setMissionResult(
+    player: Player,
+    missionResult: MissionResult,
+  ): Legacy {
+    const missionResults: MissionResults = this.missionResults
+    missionResults.get(this.mission)!.set(player, missionResult)
+
+    const l: Writeable<Legacy> = new Legacy(
+      this._players,
+      this.mission,
+      this.phase,
+      this._name,
+      missionResults,
     )
     l.id = this.id
 

@@ -18,6 +18,6 @@ export default class Serializer implements SerializerInterface<any, any> {
       }
     }
 
-    throw new Error("Method not implemented.")
+    throw new Error(`Serializer not found for ${JSON.stringify(value)}`)
   }
 }

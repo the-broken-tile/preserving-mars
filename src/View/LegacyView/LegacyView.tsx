@@ -9,23 +9,16 @@ import {
   DuringMissionView,
   FinishedLegacyView,
 } from "@/View"
+import LegacyContext from "@/Context/LegacyContext"
 
 const PHASE_MAP: Record<
   Exclude<Phase, "preparing">,
   (legacy: Legacy) => JSX.Element
 > = {
-  beforeMission: (legacy: Legacy): JSX.Element => (
-    <BeforeMissionView legacy={legacy} />
-  ),
-  duringMission: (legacy: Legacy): JSX.Element => (
-    <DuringMissionView legacy={legacy} />
-  ),
-  afterMission: (legacy: Legacy): JSX.Element => (
-    <AfterMissionView legacy={legacy} />
-  ),
-  finished: (legacy: Legacy): JSX.Element => (
-    <FinishedLegacyView legacy={legacy} />
-  ),
+  beforeMission: (): JSX.Element => <BeforeMissionView />,
+  duringMission: (): JSX.Element => <DuringMissionView />,
+  afterMission: (): JSX.Element => <AfterMissionView />,
+  finished: (legacy: Legacy): JSX.Element => <FinishedLegacyView />,
 }
 
 export default function LegacyView(): JSX.Element {
@@ -49,9 +42,9 @@ export default function LegacyView(): JSX.Element {
   }
 
   return (
-    <>
+    <LegacyContext value={{ legacy, setLegacy }}>
       <h2>{legacy.name}</h2>
       {PHASE_MAP[legacy.phase](legacy)}
-    </>
+    </LegacyContext>
   )
 }

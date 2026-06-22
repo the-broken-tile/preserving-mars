@@ -1,10 +1,14 @@
 import { JSX } from "react"
-import { Legacy } from "@/Model"
+import { useLegacyContext } from "@/Context/LegacyContext"
 
-type Props = {
-  legacy: Legacy
-}
+export default function FinishedLegacyView(): JSX.Element {
+  const { legacy } = useLegacyContext()
 
-export default function FinishedLegacyView({ legacy }: Props): JSX.Element {
-  return <>finished legacy</>
+  return (
+    <div>
+      A finished legacy of
+      <br />
+      {legacy.name}
+    </div>
+  )
 }

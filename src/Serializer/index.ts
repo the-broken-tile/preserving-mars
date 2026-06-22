@@ -5,17 +5,22 @@ import DevelopmentSerializer, {
   type SerializedDevelopment,
 } from "./DevelopmentSerializer"
 import SerializerInterface from "./SerializerInterface"
-import Serializer from "@/Serializer/Serializer"
+import Serializer from "./Serializer"
 import PlayerSerializer, { type SerializedPlayer } from "./PlayerSerializer"
-import LegacySerializer, {
-  type SerializedLegacy,
-} from "@/Serializer/LegacySerializer"
+import LegacySerializer, { type SerializedLegacy } from "./LegacySerializer"
+import MissionSerializer, { type SerializedMission } from "./MissionSerializer"
+import {
+  default as SavedCardSerializer,
+  SerializedSavedCard,
+} from "./SavedCardSerializer"
 
 const serializer = new Serializer([
   new LegacySerializer(),
   new PlayerSerializer(),
   new DevelopmentSerializer(),
   new CorporationSerializer(),
+  new MissionSerializer(),
+  new SavedCardSerializer(),
 ])
 
 export {
@@ -25,6 +30,8 @@ export {
   Serializer,
   type SerializedCorporation,
   type SerializedDevelopment,
-  type SerializedPlayer,
   type SerializedLegacy,
+  type SerializedMission,
+  type SerializedPlayer,
+  type SerializedSavedCard,
 }
