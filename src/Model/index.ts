@@ -5,7 +5,7 @@ export { default as Legacy, type MissionResults } from "./Legacy"
 export type { default as Phase } from "./Phase"
 export { default as Player } from "./Player"
 export { default as MissionResult } from "./MissionResult"
-export { default as SavedCard } from "./SavedCard"
+export { default as SavedCard, type SavedCardType } from "./SavedCard"
 export {
   default as Title,
   type TitleName,

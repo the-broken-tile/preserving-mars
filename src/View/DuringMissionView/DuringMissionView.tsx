@@ -2,7 +2,7 @@ import { FormEvent, JSX, useState } from "react"
 import { Legacy, MissionResult, Player } from "@/Model"
 import { useLegacyContext } from "@/Context/LegacyContext"
 import { legacyRepository } from "@/Repository"
-import { PlayerRowView } from "@/View"
+import { PlayerRowView, TerraformingRatingView } from "@/View"
 import { t } from "@/i18n"
 import { titleCalculator } from "@/TitleCalculator"
 
@@ -10,21 +10,18 @@ export default function DuringMissionView(): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
   const [errors, setErrors] = useState<string[]>([])
 
-  const setPoints = (player: Player, points: number): void => {
-    const result: MissionResult = legacy.getCurrentMission(player)
-    const l: Legacy = legacy.setMissionResult(player, result.setPoints(points))
+  const handlePointsChange =
+    (player: Player) =>
+    (points: number): void => {
+      const result: MissionResult = legacy.getCurrentMission(player)
+      const l: Legacy = legacy.setMissionResult(
+        player,
+        result.setPoints(points),
+      )
 
-    legacyRepository.save(l)
-    setLegacy(l)
-  }
-
-  const handleDecreasePoints = (player: Player): void => {
-    setPoints(player, legacy.getCurrentMission(player).points - 1)
-  }
-
-  const handleIncreasePoints = (player: Player): void => {
-    setPoints(player, legacy.getCurrentMission(player).points + 1)
-  }
+      legacyRepository.save(l)
+      setLegacy(l)
+    }
 
   const handlePassingOrderChange =
     (player: Player) =>
@@ -61,32 +58,11 @@ export default function DuringMissionView(): JSX.Element {
         {legacy.players.map(
           (player: Player): JSX.Element => (
             <PlayerRowView player={player} key={player.id}>
-              <div>
-                <label htmlFor={`points-player-${player.id}`}>
-                  {t("Terraforming rating")}:{" "}
-                </label>
-                <button
-                  className="button"
-                  type="button"
-                  onClick={(): void => handleDecreasePoints(player)}
-                >
-                  -
-                </button>
-                <input
-                  type="number"
-                  id={`points-player-${player.id}`}
-                  onInput={(e: FormEvent<HTMLInputElement>): void =>
-                    setPoints(player, Number(e.currentTarget.value))
-                  }
-                  value={legacy.getCurrentMission(player).points}
-                />
-                <button
-                  type="button"
-                  onClick={(): void => handleIncreasePoints(player)}
-                >
-                  +
-                </button>
-              </div>
+              <TerraformingRatingView
+                points={legacy.getCurrentMission(player).points}
+                onChange={handlePointsChange(player)}
+                id={player.id}
+              />
               {legacy.hasTies() && (
                 <div>
                   <label htmlFor={`passing-order-${player.id}`}>

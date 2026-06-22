@@ -12,7 +12,10 @@ export default class SavedCardDeserializer implements DeserializerInterface<
   }
 
   public deserialize(value: SerializedSavedCard): SavedCard {
-    const c: Writeable<SavedCard> = new SavedCard(value.name)
+    const c: Writeable<SavedCard> = new SavedCard(
+      value.name,
+      value.type ?? "project", // @todo remove fallback once storage is cleared
+    )
     c.id = value.id
 
     return c
