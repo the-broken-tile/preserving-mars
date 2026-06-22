@@ -55,7 +55,7 @@ export default class Legacy {
 
     let newPhase: Phase = ADVANCEMENT_MAP[this.phase]
     const mission: number =
-      newPhase === "beforeMission" ? this.mission : this.mission + 1
+      this.phase === "afterMission" ? this.mission + 1 : this.mission
     if (mission > MISSION_COUNT) {
       newPhase = "finished"
     }

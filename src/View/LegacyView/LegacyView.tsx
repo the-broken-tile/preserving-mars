@@ -8,6 +8,7 @@ import {
   BeforeMissionView,
   DuringMissionView,
   FinishedLegacyView,
+  LegacyNotFoundView,
 } from "@/View"
 import LegacyContext from "@/Context/LegacyContext"
 
@@ -18,23 +19,27 @@ const PHASE_MAP: Record<
   beforeMission: (): JSX.Element => <BeforeMissionView />,
   duringMission: (): JSX.Element => <DuringMissionView />,
   afterMission: (): JSX.Element => <AfterMissionView />,
-  finished: (legacy: Legacy): JSX.Element => <FinishedLegacyView />,
+  finished: (): JSX.Element => <FinishedLegacyView />,
 }
 
 export default function LegacyView(): JSX.Element {
   const { id } = useParams()
-  const [legacy, setLegacy] = useState<Legacy | null>(null)
+  const [legacy, setLegacy] = useState<Legacy | null | undefined>(undefined)
 
   useEffect((): void => {
     if (id === undefined) {
       return
     }
 
-    setLegacy(legacyRepository.get(id))
+    setLegacy(legacyRepository.find(id))
   }, [id])
 
-  if (legacy === null) {
+  if (legacy === undefined) {
     return <Loading />
+  }
+
+  if (legacy === null) {
+    return <LegacyNotFoundView />
   }
 
   if (legacy.phase === "preparing") {

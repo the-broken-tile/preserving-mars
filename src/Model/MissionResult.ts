@@ -2,7 +2,7 @@ import { SavedCard, Title } from "."
 
 export default class MissionResult {
   private constructor(
-    public readonly points: number = 0,
+    public readonly points: number = 20,
     public readonly savedCards: SavedCard[] = [],
     public readonly passingOrder: number | null = null,
     public readonly title: Title | null = null,

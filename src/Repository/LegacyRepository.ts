@@ -41,15 +41,11 @@ export default class LegacyRepository {
     )
   }
 
-  public get(id: string): Legacy {
+  public find(id: string): Legacy | null {
     const all: Legacy[] = this.findAll()
     const l: Legacy | undefined = all.find((l: Legacy) => l.id === id)
 
-    if (l === undefined) {
-      throw new Error(`Legacy ${id} not found`)
-    }
-
-    return l
+    return l ?? null
   }
 
   public delete(legacy: Legacy): void {
