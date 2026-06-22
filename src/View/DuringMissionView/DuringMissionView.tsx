@@ -2,7 +2,7 @@ import { FormEvent, JSX, useState } from "react"
 import { Legacy, MissionResult, Player } from "@/Model"
 import { useLegacyContext } from "@/Context/LegacyContext"
 import { legacyRepository } from "@/Repository"
-import { PlayerRowView, TerraformingRatingView } from "@/View"
+import { PassingOrderView, PlayerRowView, TerraformingRatingView } from "@/View"
 import { t } from "@/i18n"
 import { titleCalculator } from "@/TitleCalculator"
 
@@ -17,22 +17,6 @@ export default function DuringMissionView(): JSX.Element {
       const l: Legacy = legacy.setMissionResult(
         player,
         result.setPoints(points),
-      )
-
-      legacyRepository.save(l)
-      setLegacy(l)
-    }
-
-  const handlePassingOrderChange =
-    (player: Player) =>
-    (e: FormEvent<HTMLInputElement>): void => {
-      const value: string = e.currentTarget.value
-      const passingOrder: number | null = value === "" ? null : Number(value)
-
-      const result: MissionResult = legacy.getCurrentMission(player)
-      const l: Legacy = legacy.setMissionResult(
-        player,
-        result.setPassingOrder(passingOrder),
       )
 
       legacyRepository.save(l)
@@ -63,19 +47,7 @@ export default function DuringMissionView(): JSX.Element {
                 onChange={handlePointsChange(player)}
                 id={player.id}
               />
-              {legacy.hasTies() && (
-                <div>
-                  <label htmlFor={`passing-order-${player.id}`}>
-                    {t("Passing order")}:
-                  </label>
-                  <input
-                    id={`passing-order-${player.id}`}
-                    type="number"
-                    value={legacy.getCurrentMission(player).passingOrder ?? ""}
-                    onInput={handlePassingOrderChange(player)}
-                  />
-                </div>
-              )}
+              {legacy.hasTies() && <PassingOrderView player={player} />}
             </PlayerRowView>
           ),
         )}
