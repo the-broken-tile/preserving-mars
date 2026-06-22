@@ -3,7 +3,7 @@ import { t } from "@/i18n"
 import { MISSION_COUNT } from "@/constants"
 import { Writeable } from "@/types"
 import { ADVANCEMENT_MAP } from "./Phase"
-import { FullTitle, Player, Phase, MissionResult } from "."
+import { Player, Phase, MissionResult, Title } from "."
 
 export type MissionResults = Map<Player, MissionResult>[]
 
@@ -148,8 +148,8 @@ export default class Legacy {
     )
   }
 
-  public getFullTitles(player: Player): FullTitle[] {
-    const titles: FullTitle[] = []
+  public getTitles(player: Player): Title[] {
+    const titles: Title[] = []
 
     for (let i: number = 0; i < this.mission + 1; i += 1) {
       const result: MissionResult = this.missionResults[i]!.get(player)!
@@ -157,7 +157,7 @@ export default class Legacy {
         continue
       }
 
-      titles.push(new FullTitle(result.title, i))
+      titles.push(result.title)
     }
 
     return titles

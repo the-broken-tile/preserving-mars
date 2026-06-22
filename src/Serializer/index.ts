@@ -13,14 +13,18 @@ import {
   default as SavedCardSerializer,
   SerializedSavedCard,
 } from "./SavedCardSerializer"
+import TitleSerializer from "./TitleSerializer"
+import NullSerializer from "./NullSerializer"
 
 const serializer = new Serializer([
+  new NullSerializer(),
   new LegacySerializer(),
   new PlayerSerializer(),
   new DevelopmentSerializer(),
   new CorporationSerializer(),
   new MissionSerializer(),
   new SavedCardSerializer(),
+  new TitleSerializer(),
 ])
 
 export {

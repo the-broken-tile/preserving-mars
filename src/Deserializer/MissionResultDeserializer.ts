@@ -16,7 +16,7 @@ export default class MissionResultDeserializer implements DeserializerInterface<
   public deserialize(value: SerializedMission): MissionResult {
     const result: Writeable<MissionResult> = MissionResult.create(value.points)
     result.passingOrder = value.passingOrder
-    result.title = value.title
+    result.title = this.deserializer.deserialize(value.title)
     result.savedCards = value.savedCards.map(
       (c: SerializedSavedCard): SavedCard => this.deserializer.deserialize(c),
       this,

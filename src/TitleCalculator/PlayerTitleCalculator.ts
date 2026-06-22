@@ -1,9 +1,10 @@
-import { Legacy, MissionResult, Player, Title } from "@/Model"
+import { Legacy, MissionResult, Player, Title, TitleName } from "@/Model"
 import { TitleCalculatorInterface } from "."
 
 export default class PlayerTitleCalculator implements TitleCalculatorInterface {
   constructor(
-    private readonly titleForPlace: Record<number, Title>,
+    private readonly titleForPlace: Record<number, TitleName>,
+    private readonly pointsPerTitle: Record<TitleName, number>,
     public readonly supports: (legacy: Legacy) => boolean,
   ) {}
 
@@ -15,8 +16,13 @@ export default class PlayerTitleCalculator implements TitleCalculatorInterface {
 
     players.forEach((player: Player, index: number): void => {
       let result: MissionResult = legacy.getCurrentMission(player)
-      const myTitle: Title | null = this.titleForPlace[index + 1] ?? null
-      result = result.addTitle(myTitle)
+      const titleName: TitleName | null = this.titleForPlace[index + 1] ?? null
+      if (titleName === null) {
+        return
+      }
+      result = result.addTitle(
+        new Title(titleName, legacy.mission, this.pointsPerTitle[titleName]),
+      )
       l = l.setMissionResult(player, result)
     })
 

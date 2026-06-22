@@ -1,5 +1,5 @@
 import { JSX } from "react"
-import { FullTitle, Player } from "@/Model"
+import { Player, Title } from "@/Model"
 import { useLegacyContext } from "@/Context"
 
 type Props = {
@@ -11,8 +11,8 @@ export default function TitleView({ player }: Props): JSX.Element {
 
   return (
     <ul>
-      {legacy.getFullTitles(player).map(
-        (title: FullTitle): JSX.Element => (
+      {legacy.getTitles(player).map(
+        (title: Title): JSX.Element => (
           <li key={`${title}`}>
             <h4>{`${title}`}</h4>
           </li>

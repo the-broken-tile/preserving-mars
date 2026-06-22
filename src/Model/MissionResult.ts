@@ -8,7 +8,7 @@ export default class MissionResult {
     public readonly title: Title | null = null,
   ) {}
 
-  public static create(points: number = 0): MissionResult {
+  public static create(points: number = 20): MissionResult {
     return new MissionResult(points)
   }
 
