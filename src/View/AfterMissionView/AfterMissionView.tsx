@@ -10,7 +10,7 @@ export default function AfterMissionView(): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
 
   return (
-    <form>
+    <div>
       {legacy.players.map(
         (player: Player): JSX.Element => (
           <PlayerRowView player={player} key={player.id}>
@@ -20,12 +20,12 @@ export default function AfterMissionView(): JSX.Element {
         ),
       )}
       {legacy.mission !== MISSION_COUNT ?
-        <button type="submit">
+        <button type="button" className="button">
           {t("Start mission %mission%", {
             mission: t(String(legacy.mission + 1), {}, "missionNames"),
           })}
         </button>
       : null}
-    </form>
+    </div>
   )
 }

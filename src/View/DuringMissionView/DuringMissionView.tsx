@@ -66,6 +66,7 @@ export default function DuringMissionView(): JSX.Element {
                   {t("Terraforming rating")}:{" "}
                 </label>
                 <button
+                  className="button"
                   type="button"
                   onClick={(): void => handleDecreasePoints(player)}
                 >

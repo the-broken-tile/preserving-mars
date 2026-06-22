@@ -29,7 +29,7 @@ export default function BeforeMissionView(): JSX.Element {
           ),
         )}
       </ul>
-      <button type="button" onClick={handleStartMission}>
+      <button type="button" onClick={handleStartMission} className="button">
         {t("Start mission")}
       </button>
     </>

@@ -77,6 +77,7 @@ export default function NewLegacyView(): JSX.Element {
       <div className="players-count">
         <button
           type="button"
+          className="button"
           onClick={handleRemovePlayer}
           disabled={players.length === MIN_PLAYERS}
         >
@@ -89,6 +90,7 @@ export default function NewLegacyView(): JSX.Element {
         </span>
         <button
           type="button"
+          className="button"
           onClick={handleAddPlayer}
           disabled={players.length === MAX_PLAYERS}
         >
