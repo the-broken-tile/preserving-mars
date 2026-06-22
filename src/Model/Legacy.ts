@@ -127,4 +127,40 @@ export default class Legacy {
 
     return l as Legacy
   }
+
+  public getSortedPlayers(): Player[] {
+    return this.players.sort((a: Player, b: Player): number => {
+      const missionA: MissionResult = this.getCurrentMission(a)
+      const pointsA: number = missionA.points
+
+      const missionB: MissionResult = this.getCurrentMission(b)
+      const pointsB: number = missionB.points
+
+      if (pointsA === pointsB) {
+        // @todo have to confirm - whoever passed first is first?
+        return missionA.passingOrder! - missionB.passingOrder!
+      }
+
+      return pointsB - pointsA
+    })
+  }
+
+  public hasTies(): boolean {
+    const points: number[] = [...this.getCurrentPlayerMissions().values()].map(
+      (mission: MissionResult): number => mission.points,
+    )
+    const set: Set<number> = new Set(points)
+
+    return points.length !== set.size
+  }
+
+  public hasToResolveTies(): boolean {
+    if (!this.hasTies()) {
+      return false
+    }
+
+    return [...this.getCurrentPlayerMissions().values()].some(
+      (mission: MissionResult): boolean => mission.passingOrder === null,
+    )
+  }
 }

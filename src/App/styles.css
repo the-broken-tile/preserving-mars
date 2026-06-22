@@ -44,3 +44,7 @@ input[type="submit"], button {
   color: #000000;
   background-color: #FFFFFF;
 }
+input[type="submit"]:disabled, button:disabled {
+  color: #444444;
+  background-color: #ddd;
+}
