@@ -7,6 +7,7 @@ import {
   AfterMissionView,
   BeforeMissionView,
   DuringMissionView,
+  ExportLegacyView,
   FinishedLegacyView,
   LegacyNotFoundView,
 } from "@/View"
@@ -68,6 +69,7 @@ export default function LegacyView(): JSX.Element {
         </button>
       </h2>
       {PHASE_MAP[legacy.phase](legacy)}
+      <ExportLegacyView legacy={legacy} />
     </LegacyContext>
   )
 }
