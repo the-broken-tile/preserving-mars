@@ -1,9 +1,0 @@
-.home-button {
-  position: absolute;
-  top: var(--default-padding);
-  right: var(--default-padding);
-}
-
-.home .home-button {
-  display: none;
-}

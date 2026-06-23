@@ -2,19 +2,19 @@
   display: none;
 }
 .create-player {
-    margin: 0;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .create-player > li {
-    padding: var(--default-padding);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  padding: var(--default-padding);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .create-player input {
-    display: block;
+  display: block;
 }

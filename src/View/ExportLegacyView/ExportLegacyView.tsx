@@ -1,34 +1,39 @@
-import { JSX, useState } from "react"
+import { JSX } from "react"
+import { Link, useParams } from "react-router"
+
 import { Legacy } from "@/Model"
-import { t } from "@/i18n"
 import { exportLegacy } from "@/util"
-import { QR } from "@/Component"
+import { BottomMenu, Loading, QR } from "@/Component"
+import { legacyRepository } from "@/Repository"
+import { LegacyNotFoundView } from ".."
+import { t } from "@/i18n"
+import { back } from "@/icons"
 
-type Props = {
-  legacy: Legacy
-}
+export default function ExportLegacyView(): JSX.Element {
+  const { id } = useParams()
 
-export default function ExportLegacyView({ legacy }: Props): JSX.Element {
-  const [qr, setQr] = useState<string | null>(null)
-  const handleExport: VoidFunction = (): void => {
-    if (qr !== null) {
-      setQr(null)
+  if (id === undefined) {
+    return <Loading />
+  }
 
-      return
-    }
+  const legacy: Legacy | null = legacyRepository.find(id)
 
-    const encoded: string = exportLegacy(legacy)
-
-    // @todo hardcoded without the use of React routes, as it doesn't support hahses.
-    setQr(`${window.location.origin}/#/import/${encodeURIComponent(encoded)}`)
+  if (legacy === null) {
+    return <LegacyNotFoundView />
   }
 
   return (
-    <>
-      <button className="button" onClick={handleExport}>
-        {t("Export legacy")}
-      </button>
-      {qr && <QR text={qr} alt={`Export of ${legacy.name}`} />}
-    </>
+    <div>
+      <h2>{t("Scan to import on another device.")}</h2>
+      <QR
+        text={`${window.location.origin}/#/import/${encodeURIComponent(exportLegacy(legacy))}`}
+        alt={`Export of ${legacy.name}`}
+      />
+      <BottomMenu>
+        <Link to={`/legacy/${legacy.id}`}>
+          <img src={back} alt="back" />
+        </Link>
+      </BottomMenu>
+    </div>
   )
 }

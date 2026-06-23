@@ -1,73 +1,98 @@
 .cube {
-    /*--color-bg-primary: #f00;*/
-    --x: 20px;
-    --y: var(--x);
-    --z: var(--x);
-    /*--main-color: #ff2222;*/
-    --top-color: color-mix(in srgb, var(--main-color) 100%, var(--color-bg-primary));
-    --front-color: color-mix(in srgb, var(--main-color) 90%, var(--color-bg-primary));
-    --bottom-color: color-mix(in srgb, var(--main-color) 20%, var(--color-bg-primary));
-    --back-color: color-mix(in srgb, var(--main-color) 60%, var(--color-bg-primary));
-    --side-color: color-mix(in srgb, var(--main-color) 80%, var(--color-bg-primary));
-    display: inline-block;
-    content: '';
-    position: relative;
-    transform-origin: center;
-    transform-style: preserve-3d;
-    transform: rotateX(75deg) rotateZ(210deg);
-    translate: 0 calc(-25% + var(--z));
+  /*--color-bg-primary: #f00;*/
+  --x: 20px;
+  --y: var(--x);
+  --z: var(--x);
+  /*--main-color: #ff2222;*/
+  --top-color: color-mix(
+    in srgb,
+    var(--main-color) 100%,
+    var(--color-bg-primary)
+  );
+  --front-color: color-mix(
+    in srgb,
+    var(--main-color) 90%,
+    var(--color-bg-primary)
+  );
+  --bottom-color: color-mix(
+    in srgb,
+    var(--main-color) 20%,
+    var(--color-bg-primary)
+  );
+  --back-color: color-mix(
+    in srgb,
+    var(--main-color) 60%,
+    var(--color-bg-primary)
+  );
+  --side-color: color-mix(
+    in srgb,
+    var(--main-color) 80%,
+    var(--color-bg-primary)
+  );
+  display: inline-block;
+  content: "";
+  position: relative;
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transform: rotateX(75deg) rotateZ(210deg);
+  translate: 0 calc(-25% + var(--z));
 
-    width: var(--x);
-    height: var(--y);
-    background: var(--bottom-color);
+  width: var(--x);
+  height: var(--y);
+  background: var(--bottom-color);
 }
 .cube::before,
 .cube::after,
 .cube div,
 .cube div::before,
 .cube div::after {
-    content: '';
-    position: absolute;
-    transform-style: preserve-3d;
+  content: "";
+  position: absolute;
+  transform-style: preserve-3d;
 }
 
 .cube::before {
-    right: 0; top: 0;
-    width: var(--z);
-    height: var(--y);
-    background: var(--side-color);
-    transform-origin: center right;
-    rotate: y 90deg;
+  right: 0;
+  top: 0;
+  width: var(--z);
+  height: var(--y);
+  background: var(--side-color);
+  transform-origin: center right;
+  rotate: y 90deg;
 }
 .cube::after {
-    right: 0; bottom: 0;
-    width: var(--x);
-    height: var(--z);
-    background: var(--back-color);
-    transform-origin: bottom center;
-    rotate: x -90deg;
+  right: 0;
+  bottom: 0;
+  width: var(--x);
+  height: var(--z);
+  background: var(--back-color);
+  transform-origin: bottom center;
+  rotate: x -90deg;
 }
 .cube div {
-    left: 0; top: 0;
-    width: var(--z);
-    height: var(--y);
-    background: var(--side-color);
-    transform-origin: center left;
-    rotate: y -90deg;
+  left: 0;
+  top: 0;
+  width: var(--z);
+  height: var(--y);
+  background: var(--side-color);
+  transform-origin: center left;
+  rotate: y -90deg;
 }
 .cube div::before {
-    right: 0; bottom: 0;
-    width: var(--x);
-    height: var(--y);
-    background: var(--top-color);
-    transform-origin: center right;
-    rotate: y -90deg;
+  right: 0;
+  bottom: 0;
+  width: var(--x);
+  height: var(--y);
+  background: var(--top-color);
+  transform-origin: center right;
+  rotate: y -90deg;
 }
 .cube div::after {
-    right: 0; top: 0;
-    width: var(--z);
-    height: var(--x);
-    background: var(--front-color);
-    transform-origin: top center;
-    rotate: x -90deg;
+  right: 0;
+  top: 0;
+  width: var(--z);
+  height: var(--x);
+  background: var(--front-color);
+  transform-origin: top center;
+  rotate: x -90deg;
 }

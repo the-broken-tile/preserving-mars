@@ -1,0 +1,11 @@
+import { JSX, ReactNode } from "react"
+
+import "./bottom-menu.css"
+
+type Props = {
+  children?: ReactNode
+}
+
+export default function BottomMenu({ children }: Props): JSX.Element {
+  return <nav className="bottom-menu">{children ?? null}</nav>
+}

@@ -1,17 +1,17 @@
 import { FormEvent, JSX, useEffect, useState } from "react"
-import { useParams } from "react-router"
+import { Link, useParams } from "react-router"
 import { legacyRepository } from "@/Repository"
-import { Loading } from "@/Component"
+import { BottomMenu, Loading } from "@/Component"
 import { Legacy, Phase } from "@/Model"
 import {
   AfterMissionView,
   BeforeMissionView,
   DuringMissionView,
-  ExportLegacyView,
   FinishedLegacyView,
   LegacyNotFoundView,
 } from "@/View"
 import LegacyContext from "@/Context/LegacyContext"
+import { home, share } from "@/icons"
 
 const PHASE_MAP: Record<
   Exclude<Phase, "preparing">,
@@ -69,7 +69,14 @@ export default function LegacyView(): JSX.Element {
         </button>
       </h2>
       {PHASE_MAP[legacy.phase](legacy)}
-      <ExportLegacyView legacy={legacy} />
+      <BottomMenu>
+        <Link to="/">
+          <img src={home} alt="home" />
+        </Link>
+        <Link to={`/legacy/${legacy.id}/export`}>
+          <img src={share} alt="" />
+        </Link>
+      </BottomMenu>
     </LegacyContext>
   )
 }

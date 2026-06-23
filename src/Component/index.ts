@@ -1,5 +1,5 @@
+export { BottomMenu } from "./BottomMenu"
 export { Cube } from "./Cube"
-export { HomeButton } from "./HomeButton"
 export { Loading } from "./Loading"
 export { Toggle } from "./Toggle"
 export { QR } from "./QR"
