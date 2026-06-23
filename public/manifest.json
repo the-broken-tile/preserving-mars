@@ -3,13 +3,13 @@
   "name": "Create React App Sample",
   "icons": [
     {
-      "src": "./img/mars-192x192.png",
+      "src": "./img/preserving-mars-192x192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "./img/mars-512x512.png",
+      "src": "./img/preserving-mars-512x512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
