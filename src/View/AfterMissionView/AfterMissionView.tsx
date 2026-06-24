@@ -1,5 +1,5 @@
 import { JSX } from "react"
-import { Legacy, MissionResult, Player } from "@/Model"
+import { Legacy, Player } from "@/Model"
 import { legacyRepository } from "@/Repository"
 import { useLegacyContext } from "@/Context/LegacyContext"
 import { PlayerRowView, SavedCardsView, TitleView } from "@/View"
