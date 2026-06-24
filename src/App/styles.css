@@ -88,3 +88,8 @@ button {
 .blur {
   filter: blur(10px);
 }
+
+.player-row {
+  display: flex;
+  gap: var(--default-padding);
+}

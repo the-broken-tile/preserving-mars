@@ -13,7 +13,7 @@ export default function PlayerRowView({
 }: Props): JSX.Element {
   return (
     <li>
-      <h3>
+      <h3 className="player-row">
         <Cube color={player.color} />
         {player.name}, CEO of {player.corporation.name}
       </h3>
