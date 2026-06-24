@@ -24,10 +24,10 @@ export function useBodyClassName(className: string): ContextType {
     throw new Error()
   }
 
-  useEffect((): (() => void) => {
+  useEffect((): VoidFunction => {
     context.setClassName(className)
 
-    return () => {
+    return (): void => {
       context.setClassName("")
     }
   }, [className, context])
