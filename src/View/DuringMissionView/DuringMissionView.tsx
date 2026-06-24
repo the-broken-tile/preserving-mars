@@ -13,6 +13,7 @@ import { titleCalculator } from "@/TitleCalculator"
 
 export default function DuringMissionView(): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
+  const [finishing, setFinishing] = useState<boolean>(false)
   const [errors, setErrors] = useState<string[]>([])
 
   const handlePointsChange =
@@ -31,8 +32,7 @@ export default function DuringMissionView(): JSX.Element {
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
     if (legacy.hasToResolveTies()) {
-      // Shouldn't happen, because the submit button is disabled.
-      setErrors([t("Specify passing order for tied players")])
+      setFinishing(true)
 
       return
     }
@@ -52,26 +52,13 @@ export default function DuringMissionView(): JSX.Element {
                 onChange={handlePointsChange(player)}
                 id={player.id}
               />
-              {legacy.hasTies() && <PassingOrderView player={player} />}
+              {finishing && <PassingOrderView player={player} />}
               <SavedCardsView player={player} type="innovation" />
             </PlayerRowView>
           ),
         )}
       </ul>
-      <ul>
-        {errors.map(
-          (error: string, i: number): JSX.Element => (
-            <li className="error" key={i}>
-              {error}
-            </li>
-          ),
-        )}
-      </ul>
-      <button
-        type="submit"
-        disabled={legacy.hasToResolveTies()}
-        className="button"
-      >
+      <button type="submit" className="button">
         {t("Finish mission")}
       </button>
     </form>

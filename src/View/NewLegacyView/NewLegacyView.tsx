@@ -101,10 +101,10 @@ export default function NewLegacyView(): JSX.Element {
         </div>
         <ul>
           {players.map(
-            (r: Player): JSX.Element => (
-              <li key={r.id}>
+            (player: Player): JSX.Element => (
+              <li key={player.id}>
                 <CreatePlayerView
-                  player={r}
+                  player={player}
                   onChange={handlePlayerChange}
                   disabledColors={players.map<Color>(
                     (p: Player): Color => p.color,

@@ -1,4 +1,4 @@
-import { FormEvent, JSX, useEffect, useState } from "react"
+import { JSX, useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
 import { legacyRepository } from "@/Repository"
 import { BottomMenu, Loading } from "@/Component"
@@ -8,6 +8,7 @@ import {
   BeforeMissionView,
   DuringMissionView,
   FinishedLegacyView,
+  LegacyNameView,
   LegacyNotFoundView,
 } from "@/View"
 import LegacyContext from "@/Context/LegacyContext"
@@ -26,7 +27,6 @@ const PHASE_MAP: Record<
 export default function LegacyView(): JSX.Element {
   const { id } = useParams()
   const [legacy, setLegacy] = useState<Legacy | null | undefined>(undefined)
-  const [editing, setEditing] = useState(false)
 
   useEffect((): void => {
     if (id === undefined) {
@@ -48,26 +48,9 @@ export default function LegacyView(): JSX.Element {
     return <div className="error">Oops, something went wrong!</div>
   }
 
-  const handeStartEditing: VoidFunction = (): void => {
-    setEditing((prev: boolean): boolean => !prev)
-  }
-
-  const handleNameChange = (e: FormEvent<HTMLInputElement>): void => {
-    const l: Legacy = legacy.setName(e.currentTarget.value)
-    setLegacy(l)
-    legacyRepository.save(l)
-  }
-
   return (
     <LegacyContext value={{ legacy, setLegacy }}>
-      <h2>
-        {editing ?
-          <input value={legacy.name} onInput={handleNameChange} />
-        : legacy.name}
-        <button className="button" onClick={handeStartEditing}>
-          ✏️
-        </button>
-      </h2>
+      <LegacyNameView />
       {PHASE_MAP[legacy.phase](legacy)}
       <BottomMenu>
         <Link to="/">

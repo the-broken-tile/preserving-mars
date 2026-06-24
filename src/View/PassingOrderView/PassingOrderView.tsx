@@ -1,4 +1,6 @@
-import { FormEvent, JSX } from "react"
+import { JSX, useEffect, useState } from "react"
+import classNames from "classnames"
+
 import { t } from "@/i18n"
 import { useLegacyContext } from "@/Context"
 import { Legacy, MissionResult, Player } from "@/Model"
@@ -10,39 +12,70 @@ type Props = {
 
 export default function PassingOrderView({ player }: Props): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
-  const playerMissions: Map<Player, MissionResult> =
-    legacy.getCurrentPlayerMissions()
-  const order: number | null = legacy.getCurrentMission(player).passingOrder
+  const [pills, setPills] = useState<boolean[]>([])
 
-  const handlePassingOrderChange = (e: FormEvent<HTMLInputElement>): void => {
-    const value: string = e.currentTarget.value
-    const o: number | null = value === "" ? null : Number(value)
-    const passingOrder: number | null = o === 0 ? null : o
+  useEffect((): void => {
+    const order: number | null = legacy.getCurrentMission(player).passingOrder
+    const l: number = legacy.players.length
+    const p: boolean[] = Array(l).fill(false)
+    if (order !== null) {
+      p[order - 1] = true
+    }
 
+    setPills(p)
+  }, [player, legacy])
+
+  const handleSelectPosition = (position: number): void => {
     const result: MissionResult = legacy.getCurrentMission(player)
-    const l: Legacy = legacy.setMissionResult(
+
+    if (result.passingOrder === position) {
+      const l: Legacy = legacy.setMissionResult(
+        player,
+        result.setPassingOrder(null),
+      )
+      setLegacy(l)
+      legacyRepository.save(l)
+
+      return
+    }
+
+    const [otherPlayer, otherMissionResult] = [
+      ...legacy.getCurrentPlayerMissions().entries(),
+    ].find(([_, mission]): boolean => {
+      return mission.passingOrder === position
+    }) ?? [null, null]
+
+    let l: Legacy = legacy.setMissionResult(
       player,
-      result.setPassingOrder(passingOrder),
+      result.setPassingOrder(position),
     )
 
-    legacyRepository.save(l)
+    if (otherPlayer !== null && otherMissionResult !== null) {
+      l = l.setMissionResult(
+        otherPlayer,
+        otherMissionResult.setPassingOrder(result.passingOrder), // exchange them
+      )
+    }
+
     setLegacy(l)
+    legacyRepository.save(l)
   }
 
   return (
     <div>
-      <label htmlFor={`passing-order-${player.id}`}>
-        {t("Passing order")}:
-      </label>
-      <input
-        id={`passing-order-${player.id}`}
-        type="number"
-        min={0 /** converted to null */}
-        step={1}
-        max={playerMissions.size}
-        value={order ?? ""}
-        onInput={handlePassingOrderChange}
-      />
+      <label>{t("Passing order")}:</label>
+      {pills.map(
+        (active: boolean, position: number): JSX.Element => (
+          <button
+            key={position}
+            className={classNames("button", { selected: active })}
+            type="button"
+            onClick={() => handleSelectPosition(position + 1)}
+          >
+            {position + 1}
+          </button>
+        ),
+      )}
     </div>
   )
 }

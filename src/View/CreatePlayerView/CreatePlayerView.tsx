@@ -41,6 +41,7 @@ export default function CreatePlayerView({
       <li>
         <label htmlFor={`name-${player.id}`}>{t("Name")}: </label>
         <input
+          className="button"
           onInput={handleNameChange}
           value={player.name}
           id={`name-${player.id}`}
@@ -49,6 +50,7 @@ export default function CreatePlayerView({
       <li>
         <label htmlFor={`corporation-${player.id}`}>{t("Corporation")}:</label>
         <input
+          className="button"
           onInput={handleCorporationChange}
           value={player.corporation?.name ?? ""}
           id={`corporation-${player.id}`}
@@ -59,6 +61,7 @@ export default function CreatePlayerView({
           {t("Color")}
         </label>
         <select
+          className="button"
           onInput={handleColorChange}
           id={`color-${player.id}`}
           value={player.color ?? undefined}

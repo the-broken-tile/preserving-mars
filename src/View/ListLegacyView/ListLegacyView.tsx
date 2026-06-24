@@ -36,7 +36,7 @@ export default function ListLegacyView(): JSX.Element {
         ),
       )}
       <li>
-        <Link to="/new" viewTransition>
+        <Link to="/new" className="button" viewTransition>
           {t("Create a new legacy")}
         </Link>
       </li>
