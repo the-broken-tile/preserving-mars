@@ -1,13 +1,14 @@
 import { FormEvent, FormEventHandler, JSX, useState } from "react"
-import { NavigateFunction, useNavigate } from "react-router"
+import { Link, NavigateFunction, useNavigate } from "react-router"
 import { t } from "@/i18n"
 import { MAX_PLAYERS, MIN_PLAYERS, ENABLE_TEAMS } from "@/constants"
-import { Toggle } from "@/Component"
+import { BottomMenu, Toggle } from "@/Component"
 import { CreatePlayerView } from "@/View"
 import { ValidationError, validator } from "@/container/Validator"
 import { Color, Legacy, Player } from "@/Model"
 import { chooseNext } from "@/Model/Color"
 import { legacyRepository } from "@/Repository"
+import { home } from "@/icons"
 
 import "./new-legacy-view.css"
 
@@ -73,62 +74,69 @@ export default function NewLegacyView(): JSX.Element {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="new-player-form">
-      <div className="players-count">
-        <button
-          type="button"
-          className="button"
-          onClick={handleRemovePlayer}
-          disabled={players.length === MIN_PLAYERS}
-        >
-          -
-        </button>
-        <span>
-          {t("Players: %players%", {
-            players: players.length,
-          })}
-        </span>
-        <button
-          type="button"
-          className="button"
-          onClick={handleAddPlayer}
-          disabled={players.length === MAX_PLAYERS}
-        >
-          +
-        </button>
-      </div>
-      <ul>
-        {players.map(
-          (r: Player): JSX.Element => (
-            <li key={r.id}>
-              <CreatePlayerView
-                player={r}
-                onChange={handlePlayerChange}
-                disabledColors={players.map<Color>(
-                  (p: Player): Color => p.color,
-                )}
-              />
-            </li>
-          ),
-        )}
-        {ENABLE_TEAMS && (
-          <li>
-            Teams: <Toggle value={false} onInput={(): void => {}} />
-          </li>
-        )}
-      </ul>
-      {errors.length > 0 && (
+    <>
+      <form onSubmit={handleSubmit} className="new-player-form">
+        <div className="players-count">
+          <button
+            type="button"
+            className="button"
+            onClick={handleRemovePlayer}
+            disabled={players.length === MIN_PLAYERS}
+          >
+            -
+          </button>
+          <span>
+            {t("Players: %players%", {
+              players: players.length,
+            })}
+          </span>
+          <button
+            type="button"
+            className="button"
+            onClick={handleAddPlayer}
+            disabled={players.length === MAX_PLAYERS}
+          >
+            +
+          </button>
+        </div>
         <ul>
-          {errors.map(
-            (error: string): JSX.Element => (
-              <li className="error" key={error}>
-                {error}
+          {players.map(
+            (r: Player): JSX.Element => (
+              <li key={r.id}>
+                <CreatePlayerView
+                  player={r}
+                  onChange={handlePlayerChange}
+                  disabledColors={players.map<Color>(
+                    (p: Player): Color => p.color,
+                  )}
+                />
               </li>
             ),
           )}
+          {ENABLE_TEAMS && (
+            <li>
+              Teams: <Toggle value={false} onInput={(): void => {}} />
+            </li>
+          )}
         </ul>
-      )}
-      <input type="submit" className="button" value={`${t("Save")}`} />
-    </form>
+        {errors.length > 0 && (
+          <ul>
+            {errors.map(
+              (error: string): JSX.Element => (
+                <li className="error" key={error}>
+                  {error}
+                </li>
+              ),
+            )}
+          </ul>
+        )}
+        <input type="submit" className="button" value={`${t("Save")}`} />
+      </form>
+      <BottomMenu>
+        <Link to="/">
+          <img src={home} alt="home" />
+        </Link>
+      </BottomMenu>
+    </>
   )
 }

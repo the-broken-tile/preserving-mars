@@ -74,7 +74,7 @@ export default function LegacyView(): JSX.Element {
           <img src={home} alt="home" />
         </Link>
         <Link to={`/legacy/${legacy.id}/export`}>
-          <img src={share} alt="" />
+          <img src={share} alt="share" />
         </Link>
       </BottomMenu>
     </LegacyContext>
