@@ -79,3 +79,7 @@ button {
 .bottom-menu img {
   width: 30px;
 }
+
+.blur {
+  filter: blur(10px);
+}

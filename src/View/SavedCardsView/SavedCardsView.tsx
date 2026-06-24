@@ -9,6 +9,7 @@ import {
 import { t } from "@/i18n"
 import { useLegacyContext } from "@/Context"
 import { legacyRepository } from "@/Repository"
+import { SavedCardView } from "@/View"
 
 type Props = {
   player: Player
@@ -63,13 +64,10 @@ export default function SavedCardsView({ player, type }: Props): JSX.Element {
         {result.savedCards.map(
           (card: SavedCard): JSX.Element => (
             <li key={card.id}>
-              {card.name}{" "}
-              <button
-                className="button"
-                onClick={() => handleDeleteSavedCard(card)}
-              >
-                ❌
-              </button>
+              <SavedCardView
+                card={card}
+                onDelete={(): void => handleDeleteSavedCard(card)}
+              />
             </li>
           ),
         )}

@@ -3,5 +3,6 @@
   "maxPlayers": 5,
   "enableTeams": false,
   "missions": 7,
-  "staringTerraformingRating": 20
+  "staringTerraformingRating": 20,
+  "hideSavedCards": true
 }
