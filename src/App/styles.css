@@ -1,6 +1,7 @@
 :root {
   --bottom-menu-height: 65px;
   --default-padding: 8px;
+  --border-color: rgb(75, 77, 76);
 }
 html {
   height: 100%;
@@ -67,7 +68,8 @@ button {
 }
 
 .bottom-menu {
-  background: #f1f1f1;
+  border-top: 2px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.7);
   position: fixed;
   bottom: 0;
   height: var(--bottom-menu-height);
