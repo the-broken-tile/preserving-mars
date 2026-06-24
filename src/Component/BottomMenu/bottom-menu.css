@@ -2,7 +2,7 @@
   background: #f1f1f1;
   position: fixed;
   bottom: 0;
-  height: 65px;
+  height: var(--bottom-menu-height);
   width: 100%;
   display: flex;
   justify-content: space-around;

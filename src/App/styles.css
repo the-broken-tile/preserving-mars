@@ -1,4 +1,5 @@
 :root {
+  --bottom-menu-height: 65px;
   --default-padding: 8px;
 }
 
@@ -12,6 +13,7 @@ body {
   background: black;
   color: white;
   padding: var(--default-padding);
+  padding-bottom: var(--bottom-menu-height);
 }
 
 a {
