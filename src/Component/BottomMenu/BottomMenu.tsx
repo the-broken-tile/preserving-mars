@@ -1,7 +1,5 @@
 import { JSX, ReactNode } from "react"
 
-import "./bottom-menu.css"
-
 type Props = {
   children?: ReactNode
 }
