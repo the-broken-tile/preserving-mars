@@ -1,7 +1,6 @@
-import { JSX, useState } from "react"
+import { JSX, useEffect, useState } from "react"
 import { SavedCard } from "@/Model"
-import classNames from "classnames"
-import { HIDE_SAVED_CARDS } from "@/constants"
+import { useLegacyContext } from "@/Context"
 
 type Props = {
   card: SavedCard
@@ -9,20 +8,33 @@ type Props = {
 }
 
 export default function SavedCardView({ card, onDelete }: Props): JSX.Element {
-  const [hidden, setHidden] = useState<boolean>(HIDE_SAVED_CARDS)
+  const { legacy } = useLegacyContext()
+  const [canRemove, setCanRemove] = useState<boolean>(true)
 
-  const handleClick: VoidFunction = (): void => {
-    setHidden((prevHidden: boolean): boolean => !prevHidden)
-  }
+  useEffect((): void => {
+    if (legacy.phase === "afterMission") {
+      setCanRemove(card.type === "project")
+
+      return
+    }
+
+    if (legacy.phase === "duringMission") {
+      setCanRemove(card.type === "innovation")
+
+      return
+    }
+  }, [legacy, card])
 
   return (
     <>
-      <span onClick={handleClick} className={classNames({ blur: hidden })}>
-        {card.name}
+      <span>
+        {card.name} [{card.type}]
       </span>
-      <button className="button" onClick={onDelete}>
-        ❌
-      </button>
+      {canRemove && (
+        <button className="button" onClick={onDelete}>
+          ❌
+        </button>
+      )}
     </>
   )
 }

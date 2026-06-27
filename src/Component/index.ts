@@ -1,4 +1,5 @@
 export { BottomMenu } from "./BottomMenu"
+export { Collapsible } from "./Collapsible"
 export { Cube } from "./Cube"
 export { Loading } from "./Loading"
 export { Toggle } from "./Toggle"

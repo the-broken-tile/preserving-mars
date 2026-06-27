@@ -3,11 +3,12 @@ import { t } from "@/i18n"
 import { MISSION_COUNT, STARTING_TERRAFORMING_RATING } from "@/constants"
 import { Writeable } from "@/types"
 import { ADVANCEMENT_MAP } from "./Phase"
-import { Player, Phase, MissionResult, Title } from "."
+import { Player, Phase, MissionResult, Title, SavedCard } from "."
 
 export type MissionResults = Map<Player, MissionResult>[]
 
 export default class Legacy {
+  private debug: Record<string, any> = {}
   public readonly id: string = v4()
   private constructor(
     private readonly _players: Player[],
@@ -93,6 +94,62 @@ export default class Legacy {
     return this.getCurrentPlayerMissions().get(player)!
   }
 
+  public getSavedCards(player: Player): SavedCard[] {
+    const cards: SavedCard[] = []
+    this.getMissionResultsForPlayer(player).forEach(
+      (missionResult: MissionResult, mission: number): void => {
+        for (const card of missionResult.savedCards) {
+          if (card.type === "innovation") {
+            // Always display innovation cards.
+            cards.push(card)
+
+            continue
+          }
+
+          if (this.phase === "afterMission" && mission === this.mission) {
+            // return only currently saved cards
+            cards.push(card)
+
+            return
+          }
+
+          if ("beforeMission" === this.phase && mission === this.mission - 1) {
+            // Return only project cards that were saved last mission.
+            cards.push(card)
+          }
+        }
+      },
+    )
+
+    return cards
+  }
+
+  public removeSavedCard(card: SavedCard): Legacy {
+    const missionResults: MissionResults = []
+    for (const missionResultMap of this.missionResults) {
+      const missionResultsPerPlayer: Map<Player, MissionResult> = new Map<
+        Player,
+        MissionResult
+      >()
+      for (const [player, missionResult] of missionResultMap) {
+        // No need for existence check
+        missionResultsPerPlayer.set(player, missionResult.removeSavedCard(card))
+      }
+      missionResults.push(missionResultsPerPlayer)
+    }
+
+    const l: Writeable<Legacy> = new Legacy(
+      this._players,
+      this.mission,
+      this.phase,
+      this._name,
+      missionResults,
+    )
+    l.id = this.id
+
+    return l as Legacy
+  }
+
   public setMissionResult(
     player: Player,
     missionResult: MissionResult,
@@ -172,5 +229,20 @@ export default class Legacy {
     }
 
     return points
+  }
+
+  private getMissionResultsForPlayer(player: Player): MissionResult[] {
+    return this.missionResults.map(
+      (missionResultMap: Map<Player, MissionResult>): MissionResult =>
+        missionResultMap.get(player)!,
+    )
+  }
+
+  private log(player: Player, missionResults: MissionResult[]): void {
+    if (this.debug[player.id]) {
+      return
+    }
+    this.debug[player.id] = missionResults
+    console.log(player.name, this.debug[player.id])
   }
 }

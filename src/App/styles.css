@@ -1,14 +1,14 @@
 :root {
   --bottom-menu-height: 65px;
-  --default-padding: 8px;
+  --default-padding: 16px;
   --border-color: rgb(75, 77, 76);
 }
 html {
-  height: 100%;
+  min-height: 100%;
   background: url("./background.jpg") black;
 }
 body {
-  height: 100%;
+  min-height: 100%;
   box-sizing: border-box;
   margin: 0;
   font-family:

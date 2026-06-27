@@ -10,4 +10,4 @@ export const MISSION_COUNT: number = config.missions
 export const STARTING_TERRAFORMING_RATING: number =
   config.staringTerraformingRating
 
-export const HIDE_SAVED_CARDS: boolean = config.hideSavedCards
+export const MAX_SAVED_PROJECT_CARDS: number = config.maxSavedProjectCards

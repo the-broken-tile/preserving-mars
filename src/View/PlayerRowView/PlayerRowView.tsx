@@ -12,12 +12,12 @@ export default function PlayerRowView({
   children,
 }: Props): JSX.Element {
   return (
-    <li>
+    <div>
       <h3 className="player-row">
         <Cube color={player.color} />
         {player.name}, CEO of {player.corporation.name}
       </h3>
       {children}
-    </li>
+    </div>
   )
 }
