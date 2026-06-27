@@ -19,7 +19,7 @@ export default function BeforeMissionView(): JSX.Element {
     <>
       <h3>
         {t("Preparation for mission %mission%", {
-          mission: t(legacy.mission, {}, "missionNames"),
+          mission: t(legacy.currentMission, {}, "missionNames"),
         })}
       </h3>
       <ul>

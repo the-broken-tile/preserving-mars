@@ -33,14 +33,14 @@ export default function AfterMissionView(): JSX.Element {
           </PlayerRowView>
         ),
       )}
-      {legacy.mission !== MISSION_COUNT ?
+      {legacy.currentMission !== MISSION_COUNT ?
         <button
           type="button"
           className="button"
           onClick={handleNexMissionClick}
         >
           {t("Start mission %mission%", {
-            mission: t(String(legacy.mission + 1), {}, "missionNames"),
+            mission: t(String(legacy.currentMission + 1), {}, "missionNames"),
           })}
         </button>
       : null}

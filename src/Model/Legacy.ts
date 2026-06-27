@@ -12,15 +12,15 @@ export default class Legacy {
   public readonly id: string = v4()
   private constructor(
     private readonly _players: Player[],
-    public readonly missions: number,
-    public readonly mission: number = 0,
+    public readonly totalMissions: number,
+    public readonly currentMission: number = 0,
     public readonly phase: Phase = "preparing",
     private readonly _name: string | null = null,
     public readonly missionResults: MissionResults = [],
   ) {}
 
   public static create(players: Player[], missions: number): Legacy {
-    return new Legacy(players, missions)
+    return new Legacy([...players], missions)
   }
 
   public get players(): Player[] {
@@ -40,11 +40,11 @@ export default class Legacy {
   public setName(name: string): Legacy {
     const l: Writeable<Legacy> = new Legacy(
       this._players,
-      this.missions,
-      this.mission,
+      this.totalMissions,
+      this.currentMission,
       this.phase,
       name,
-      this.missionResults,
+      [...this.missionResults],
     )
     l.id = this.id
 
@@ -58,18 +58,20 @@ export default class Legacy {
 
     let newPhase: Phase = ADVANCEMENT_MAP[this.phase]
     const mission: number =
-      this.phase === "afterMission" ? this.mission + 1 : this.mission
+      this.phase === "afterMission" ?
+        this.currentMission + 1
+      : this.currentMission
     if (mission > MISSION_COUNT) {
       newPhase = "finished"
     }
 
     const l: Writeable<Legacy> = new Legacy(
       this._players,
-      this.missions,
+      this.totalMissions,
       mission,
       newPhase,
       this._name,
-      this.missionResults,
+      [...this.missionResults],
     )
     l.id = this.id
 
@@ -78,7 +80,7 @@ export default class Legacy {
 
   public getCurrentPlayerMissions(): Map<Player, MissionResult> {
     let results: Map<Player, MissionResult> | undefined =
-      this.missionResults[this.mission]
+      this.missionResults[this.currentMission]
 
     if (results !== undefined) {
       return results
@@ -88,7 +90,7 @@ export default class Legacy {
     for (const player of this.players) {
       results.set(player, MissionResult.create(STARTING_TERRAFORMING_RATING))
     }
-    this.missionResults[this.mission] = results
+    this.missionResults[this.currentMission] = results
 
     return results
   }
@@ -109,14 +111,20 @@ export default class Legacy {
             continue
           }
 
-          if (this.phase === "afterMission" && mission === this.mission) {
+          if (
+            this.phase === "afterMission" &&
+            mission === this.currentMission
+          ) {
             // return only currently saved cards
             cards.push(card)
 
             return
           }
 
-          if ("beforeMission" === this.phase && mission === this.mission - 1) {
+          if (
+            "beforeMission" === this.phase &&
+            mission === this.currentMission - 1
+          ) {
             // Return only project cards that were saved last mission.
             cards.push(card)
           }
@@ -143,11 +151,11 @@ export default class Legacy {
 
     const l: Writeable<Legacy> = new Legacy(
       this._players,
-      this.mission,
-      this.mission,
+      this.currentMission,
+      this.currentMission,
       this.phase,
       this._name,
-      missionResults,
+      [...missionResults],
     )
     l.id = this.id
 
@@ -159,15 +167,15 @@ export default class Legacy {
     missionResult: MissionResult,
   ): Legacy {
     const missionResults: MissionResults = this.missionResults
-    missionResults[this.mission]!.set(player, missionResult)
+    missionResults[this.currentMission]!.set(player, missionResult)
 
     const l: Writeable<Legacy> = new Legacy(
       this._players,
-      this.mission,
-      this.missions,
+      this.totalMissions,
+      this.currentMission,
       this.phase,
       this._name,
-      missionResults,
+      [...missionResults],
     )
     l.id = this.id
 
@@ -213,8 +221,9 @@ export default class Legacy {
   public getTitles(player: Player): Title[] {
     const titles: Title[] = []
 
-    for (let i: number = 0; i < this.mission + 1; i += 1) {
-      const result: MissionResult = this.missionResults[i]!.get(player)!
+    const missionResults: MissionResult[] =
+      this.getMissionResultsForPlayer(player)
+    for (const result of missionResults) {
       if (result.title === null) {
         continue
       }
@@ -228,8 +237,9 @@ export default class Legacy {
   public getTitlePoints(player: Player): number {
     let points: number = 0
 
-    for (let i: number = 0; i < this.mission + 1; i += 1) {
-      const result: MissionResult = this.missionResults[i]!.get(player)!
+    const missionResults: MissionResult[] =
+      this.getMissionResultsForPlayer(player)
+    for (const result of missionResults) {
       points += result.title?.points ?? 0
     }
 

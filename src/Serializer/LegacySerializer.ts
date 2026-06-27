@@ -5,8 +5,8 @@ export type SerializedMissionResults = Record<string, SerializedMission>[]
 
 export type SerializedLegacy = {
   id: string
-  mission: number
-  missions: number
+  currentMission: number
+  totalMissions: number
   phase: Phase
   name: string | null
   players: SerializedPlayer[]
@@ -27,8 +27,8 @@ export default class LegacySerializer implements SerializerInterface<
   public serialize(value: Legacy): SerializedLegacy {
     return {
       id: value.id,
-      mission: value.mission,
-      missions: value.missions,
+      currentMission: value.currentMission,
+      totalMissions: value.totalMissions,
       phase: value.phase,
       name: value["_name"],
       players: value.players.map(

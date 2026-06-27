@@ -122,8 +122,8 @@ export default function NewLegacyView(): JSX.Element {
         {errors.length > 0 && (
           <ul>
             {errors.map(
-              (error: string): JSX.Element => (
-                <li className="error" key={error}>
+              (error: string, i: number): JSX.Element => (
+                <li className="error" key={i}>
                   {error}
                 </li>
               ),
@@ -134,7 +134,7 @@ export default function NewLegacyView(): JSX.Element {
           <div>{t("Missions")}:</div>
           {MISSION_LENGTHS.map(
             (m: number): JSX.Element => (
-              <label>
+              <label key={m}>
                 <input
                   type="radio"
                   value={m}

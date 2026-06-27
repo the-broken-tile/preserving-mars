@@ -15,18 +15,16 @@ export default class LegacyDeserializer implements DeserializerInterface<
   }
 
   public deserialize(value: SerializedLegacy): Legacy {
-    const l: Writeable<Legacy> = Legacy.create(
-      value.players.map(
-        (p: SerializedPlayer): Player => this.deserializer.deserialize(p),
-      ),
-      value.missions,
+    const players: Player[] = value.players.map(
+      (p: SerializedPlayer): Player => this.deserializer.deserialize(p),
     )
+    const l: Writeable<Legacy> = Legacy.create(players, value.totalMissions)
     l.id = value.id
-    l.mission = value.mission
+    l.currentMission = value.currentMission
     l.phase = value.phase
     l.missionResults = this.deserializeMissionResults(
-      value.missionResults ?? [],
-      l.players,
+      value.missionResults,
+      players,
     )
 
     if (value.name !== null) {
@@ -44,7 +42,7 @@ export default class LegacyDeserializer implements DeserializerInterface<
     serializedMissionResults: SerializedMissionResults,
     players: Player[],
   ): MissionResults {
-    const missionResults: MissionResults = [] //new Map<number, Map<Player, MissionResult>>()
+    const missionResults: MissionResults = []
     for (const [mission, playerMissions] of Object.entries(
       serializedMissionResults,
     )) {

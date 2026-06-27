@@ -21,7 +21,11 @@ export default class PlayerTitleCalculator implements TitleCalculatorInterface {
         return
       }
       result = result.addTitle(
-        new Title(titleName, legacy.mission, this.pointsPerTitle[titleName]),
+        new Title(
+          titleName,
+          legacy.currentMission,
+          this.pointsPerTitle[titleName],
+        ),
       )
       l = l.setMissionResult(player, result)
     })
