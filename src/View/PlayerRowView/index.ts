@@ -1,1 +1,1 @@
-export { default as PlayerRowView } from "./PlayerRowView"
+export { default as PlayerNameView } from "./PlayerNameView"

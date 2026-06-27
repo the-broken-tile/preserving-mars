@@ -1,5 +1,3 @@
-import { t } from "@/i18n"
-
 export type TitleName = "Governor" | "Administrator" | "Prefect"
 
 export const POINTS_PER_TITLE: Record<TitleName, number> = {
@@ -25,11 +23,4 @@ export default class Title {
     public readonly mission: number,
     public readonly points: number,
   ) {}
-
-  public toString(): string {
-    return t("The %title% of %planet%", {
-      title: this.name,
-      planet: t(String(this.mission), {}, "missionNames"),
-    })
-  }
 }

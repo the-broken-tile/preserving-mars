@@ -1,10 +1,10 @@
-import { FormEvent, JSX, useState } from "react"
+import { FormEvent, Fragment, JSX, useState } from "react"
 import { Legacy, MissionResult, Player } from "@/Model"
 import { useLegacyContext } from "@/Context/LegacyContext"
 import { legacyRepository } from "@/Repository"
 import {
   PassingOrderView,
-  PlayerRowView,
+  PlayerNameView,
   SavedCardsView,
   TerraformingRatingView,
 } from "@/View"
@@ -46,7 +46,8 @@ export default function DuringMissionView(): JSX.Element {
       <ul>
         {legacy.players.map(
           (player: Player): JSX.Element => (
-            <PlayerRowView player={player} key={player.id}>
+            <Fragment key={player.id}>
+              <PlayerNameView player={player} />
               <TerraformingRatingView
                 points={legacy.getCurrentMission(player).points}
                 onChange={handlePointsChange(player)}
@@ -54,7 +55,7 @@ export default function DuringMissionView(): JSX.Element {
               />
               {finishing && <PassingOrderView player={player} />}
               <SavedCardsView player={player} type="innovation" />
-            </PlayerRowView>
+            </Fragment>
           ),
         )}
       </ul>

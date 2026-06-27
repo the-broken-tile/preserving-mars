@@ -1,4 +1,4 @@
-import { JSX } from "react"
+import { JSX, Fragment } from "react"
 import { Player, Title } from "@/Model"
 import { useLegacyContext } from "@/Context"
 import { Badge } from "@/Component"
@@ -14,20 +14,17 @@ export default function TitleView({ player }: Props): JSX.Element {
   const { legacy } = useLegacyContext()
 
   return (
-    <ul>
+    <h4 className="title-row">
       {legacy.getTitles(player).map(
-        (title: Title): JSX.Element => (
-          <li key={`${title}`}>
-            <h4 className="title-row">
-              <Badge
-                title={title.name}
-                mission={t(title.mission, {}, "missionNames")}
-              />
-              {`${title}`}
-            </h4>
-          </li>
+        (title: Title, i: number): JSX.Element => (
+          <Fragment key={i}>
+            <Badge
+              title={title.name}
+              mission={t(title.mission, {}, "missionNames")}
+            />
+          </Fragment>
         ),
       )}
-    </ul>
+    </h4>
   )
 }

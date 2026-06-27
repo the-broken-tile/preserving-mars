@@ -1,7 +1,7 @@
 import { JSX } from "react"
 import { Legacy, Player } from "@/Model"
 import { t } from "@/i18n"
-import { PlayerRowView } from "@/View"
+import { PlayerNameView } from "@/View"
 import { useLegacyContext } from "@/Context/LegacyContext"
 import { legacyRepository } from "@/Repository"
 
@@ -25,7 +25,7 @@ export default function BeforeMissionView(): JSX.Element {
       <ul>
         {legacy.players.map(
           (player: Player): JSX.Element => (
-            <PlayerRowView player={player} key={player.id} />
+            <PlayerNameView player={player} key={player.id} />
           ),
         )}
       </ul>

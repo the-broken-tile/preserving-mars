@@ -68,11 +68,6 @@ ul {
   color: red;
 }
 
-.halfsies {
-  width: 50%;
-  margin: 0 50% 0 0;
-}
-
 .bottom-menu {
   border-top: 2px solid var(--border-color);
   background: rgba(0, 0, 0, 0.7);
@@ -98,6 +93,5 @@ ul {
 }
 
 .player-row {
-  display: flex;
-  gap: var(--default-padding);
+  text-align: center;
 }
