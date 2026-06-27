@@ -32,6 +32,9 @@ export default function LegacyNameView(): JSX.Element {
             onInput={handleNameChange}
             className="button"
           />
+          <button className="button" type="submit">
+            ✏️
+          </button>
         </form>
       : <h2>
           {legacy.name}{" "}
