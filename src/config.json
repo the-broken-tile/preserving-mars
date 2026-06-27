@@ -1,8 +1,8 @@
 {
   "minPlayers": 2,
   "maxPlayers": 5,
-  "enableTeams": false,
   "missions": 7,
   "staringTerraformingRating": 25,
-  "maxSavedProjectCards": 2
+  "maxSavedProjectCards": 2,
+  "missionLengths": [4, 7]
 }

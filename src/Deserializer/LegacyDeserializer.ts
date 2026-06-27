@@ -19,6 +19,7 @@ export default class LegacyDeserializer implements DeserializerInterface<
       value.players.map(
         (p: SerializedPlayer): Player => this.deserializer.deserialize(p),
       ),
+      value.missions,
     )
     l.id = value.id
     l.mission = value.mission

@@ -12,14 +12,15 @@ export default class Legacy {
   public readonly id: string = v4()
   private constructor(
     private readonly _players: Player[],
+    public readonly missions: number,
     public readonly mission: number = 0,
     public readonly phase: Phase = "preparing",
     private readonly _name: string | null = null,
     public readonly missionResults: MissionResults = [],
   ) {}
 
-  public static create(players: Player[]): Legacy {
-    return new Legacy(players)
+  public static create(players: Player[], missions: number): Legacy {
+    return new Legacy(players, missions)
   }
 
   public get players(): Player[] {
@@ -39,6 +40,7 @@ export default class Legacy {
   public setName(name: string): Legacy {
     const l: Writeable<Legacy> = new Legacy(
       this._players,
+      this.missions,
       this.mission,
       this.phase,
       name,
@@ -63,6 +65,7 @@ export default class Legacy {
 
     const l: Writeable<Legacy> = new Legacy(
       this._players,
+      this.missions,
       mission,
       newPhase,
       this._name,
@@ -141,6 +144,7 @@ export default class Legacy {
     const l: Writeable<Legacy> = new Legacy(
       this._players,
       this.mission,
+      this.mission,
       this.phase,
       this._name,
       missionResults,
@@ -160,6 +164,7 @@ export default class Legacy {
     const l: Writeable<Legacy> = new Legacy(
       this._players,
       this.mission,
+      this.missions,
       this.phase,
       this._name,
       missionResults,

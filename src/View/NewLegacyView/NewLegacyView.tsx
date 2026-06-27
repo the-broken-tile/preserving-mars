@@ -1,7 +1,7 @@
 import { FormEvent, FormEventHandler, JSX, useState } from "react"
 import { Link, NavigateFunction, useNavigate } from "react-router"
 import { t } from "@/i18n"
-import { MAX_PLAYERS, MIN_PLAYERS, ENABLE_TEAMS } from "@/constants"
+import { MAX_PLAYERS, MIN_PLAYERS, MISSION_LENGTHS } from "@/constants"
 import { BottomMenu, Toggle } from "@/Component"
 import { CreatePlayerView } from "@/View"
 import { ValidationError, validator } from "@/container/Validator"
@@ -13,6 +13,7 @@ import { home } from "@/icons"
 import "./new-legacy-view.css"
 
 export default function NewLegacyView(): JSX.Element {
+  const [missions, setMissions] = useState<number>(MISSION_LENGTHS[0])
   const [players, setPlayers] = useState<Player[]>([
     Player.create("black"),
     Player.create("red"),
@@ -67,10 +68,14 @@ export default function NewLegacyView(): JSX.Element {
       return
     }
 
-    const legacy: Legacy = Legacy.create(players).advance()
+    const legacy: Legacy = Legacy.create(players, missions).advance()
     legacyRepository.save(legacy)
 
     navigate(`/legacy/${legacy.id}`)
+  }
+
+  const handleMissionsChange = (e: FormEvent<HTMLInputElement>): void => {
+    setMissions(Number(e.currentTarget.value))
   }
 
   return (
@@ -113,11 +118,6 @@ export default function NewLegacyView(): JSX.Element {
               </li>
             ),
           )}
-          {ENABLE_TEAMS && (
-            <li>
-              Teams: <Toggle value={false} onInput={(): void => {}} />
-            </li>
-          )}
         </ul>
         {errors.length > 0 && (
           <ul>
@@ -130,6 +130,22 @@ export default function NewLegacyView(): JSX.Element {
             )}
           </ul>
         )}
+        <div>
+          <div>{t("Missions")}:</div>
+          {MISSION_LENGTHS.map(
+            (m: number): JSX.Element => (
+              <label>
+                <input
+                  type="radio"
+                  value={m}
+                  checked={m === missions}
+                  onChange={handleMissionsChange}
+                />
+                {m}
+              </label>
+            ),
+          )}
+        </div>
         <input type="submit" className="button" value={`${t("Save")}`} />
       </form>
       <BottomMenu>
