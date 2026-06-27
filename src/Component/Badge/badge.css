@@ -1,0 +1,36 @@
+.title-badge {
+  width: 75px;
+  height: 75px;
+}
+
+.mission-mars .badge-planet,
+.mission-mars .badge-banner {
+  fill: #833713
+}
+
+.mission-ganymede .badge-planet,
+.mission-ganymede .badge-banner {
+  fill: #383334;
+}
+
+.mission-medea .badge-planet,
+.mission-medea .badge-banner {
+  fill: #016f26;
+}
+
+.mission-proxima .badge-planet,
+.mission-proxima .badge-banner {
+  fill: #da221e;
+}
+
+.title-badge .planet-name {
+  fill: white;
+  font-size: 2em;
+}
+.title-badge g {
+  fill: yellow;
+}
+
+.badge-frame {
+  fill: yellow;
+}
