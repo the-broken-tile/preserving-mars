@@ -1,4 +1,4 @@
-import { Fragment, JSX } from "react"
+import { JSX } from "react"
 import { Legacy, Player } from "@/Model"
 import { legacyRepository } from "@/Repository"
 import { useLegacyContext } from "@/Context/LegacyContext"
@@ -16,10 +16,10 @@ export default function AfterMissionView(): JSX.Element {
   }
 
   return (
-    <div>
+    <>
       {legacy.players.map(
-        (player: Player, i: number): JSX.Element => (
-          <Fragment key={i}>
+        (player: Player): JSX.Element => (
+          <div key={player.id} className="player-panel">
             <PlayerNameView player={player} />
             <TitleView player={player} />
             <div>
@@ -27,9 +27,8 @@ export default function AfterMissionView(): JSX.Element {
                 points: legacy.getTitlePoints(player),
               })}
             </div>
-            {i < legacy.players.length - 1 && <hr />}
             <SavedCardsView player={player} type="project" />
-          </Fragment>
+          </div>
         ),
       )}
       {legacy.currentMission !== MISSION_COUNT ?
@@ -43,6 +42,6 @@ export default function AfterMissionView(): JSX.Element {
           })}
         </button>
       : null}
-    </div>
+    </>
   )
 }

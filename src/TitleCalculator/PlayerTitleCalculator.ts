@@ -5,6 +5,7 @@ export default class PlayerTitleCalculator implements TitleCalculatorInterface {
   constructor(
     private readonly titleForPlace: Record<number, TitleName>,
     private readonly pointsPerTitle: Record<TitleName, number>,
+    private readonly megaCreditsForPlace: Record<number, number>,
     public readonly supports: (legacy: Legacy) => boolean,
   ) {}
 
@@ -15,16 +16,16 @@ export default class PlayerTitleCalculator implements TitleCalculatorInterface {
     let l: Legacy = legacy
 
     players.forEach((player: Player, index: number): void => {
+      const place: number = index + 1
       let result: MissionResult = legacy.getCurrentMission(player)
-      const titleName: TitleName | null = this.titleForPlace[index + 1] ?? null
-      if (titleName === null) {
-        return
-      }
-      result = result.addTitle(
+      const titleName: TitleName = this.titleForPlace[place]
+
+      result = result.setTitle(
         new Title(
           titleName,
           legacy.currentMission,
           this.pointsPerTitle[titleName],
+          this.megaCreditsForPlace[place]!,
         ),
       )
       l = l.setMissionResult(player, result)

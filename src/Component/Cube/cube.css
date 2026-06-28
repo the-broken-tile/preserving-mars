@@ -1,4 +1,6 @@
 .cube {
+  display: inline-block;
+  margin-right: var(--default-padding);
   width: 34px;
   height: 34px;
 }

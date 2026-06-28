@@ -5,6 +5,7 @@ import { PlayerNameView, TitleView } from "@/View"
 import { useLegacyContext } from "@/Context/LegacyContext"
 import { legacyRepository } from "@/Repository"
 import SavedCardsView from "../SavedCardsView/SavedCardsView"
+import StartingMegaCreditsView from "../StartingMegaCreditsView/StartingMegaCreditsView"
 
 export default function BeforeMissionView(): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
@@ -14,7 +15,6 @@ export default function BeforeMissionView(): JSX.Element {
     setLegacy(l)
   }
 
-  // @todo Add reminder of which cards are in hand, don't do that for mission === 0
   return (
     <>
       <h3>
@@ -25,11 +25,12 @@ export default function BeforeMissionView(): JSX.Element {
       <ul>
         {legacy.players.map(
           (player: Player): JSX.Element => (
-            <Fragment key={player.id}>
+            <div key={player.id} className="player-panel">
               <PlayerNameView player={player} />
               <TitleView player={player} />
+              <StartingMegaCreditsView player={player} />
               <SavedCardsView player={player} type="development" />
-            </Fragment>
+            </div>
           ),
         )}
       </ul>

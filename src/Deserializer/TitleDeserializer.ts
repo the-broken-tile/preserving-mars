@@ -11,6 +11,11 @@ export default class TitleDeserializer implements DeserializerInterface<
   }
 
   public deserialize(value: SerializedTitle): Title {
-    return new Title(value.name, value.mission, value.points)
+    return new Title(
+      value.name,
+      value.mission,
+      value.points,
+      value.startingMegaCredits,
+    )
   }
 }

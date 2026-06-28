@@ -4,9 +4,10 @@ import { SerializedTitle } from "@/Serializer/TitleSerializer"
 
 export type SerializedMission = {
   points: number
+  title: SerializedTitle
+  mission: number
   savedCards: SerializedSavedCard[]
   passingOrder: number | null
-  title: SerializedTitle | null
   _type: "missionResult"
 }
 export default class MissionSerializer implements SerializerInterface<
@@ -21,12 +22,13 @@ export default class MissionSerializer implements SerializerInterface<
   public serialize(value: MissionResult): SerializedMission {
     return {
       points: value.points,
+      title: this.serializer.serialize(value.title),
+      mission: value.mission,
       savedCards: value.savedCards.map(
         (c: SavedCard): SerializedSavedCard => this.serializer.serialize(c),
         this,
       ),
       passingOrder: value.passingOrder,
-      title: this.serializer.serialize(value.title),
       _type: "missionResult",
     }
   }

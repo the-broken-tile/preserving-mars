@@ -44,16 +44,16 @@ ul {
 .button {
   display: inline-block;
   padding: var(--default-padding);
-  border: 0.1em solid var(--border-color);
+  border: 1px solid var(--border-color);
   box-sizing: border-box;
   text-decoration: none;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
   font-size: 1.2rem;
   color: black;
-  background: whitesmoke;
+  background: rgba(230, 230, 230, 0.8);
   text-align: center;
-  border-radius: 7px;
+  border-radius: var(--default-padding);
   transition: all 0.25s ease-out;
   min-width: calc(3 * var(--default-padding));
 }
@@ -93,4 +93,17 @@ ul {
 
 .player-row {
   text-align: center;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.player-panel {
+  border-radius: var(--default-padding);
+  box-sizing: border-box;
+  padding: var(--default-padding);
+  background-color: rgba(100, 100, 100, 0.3);
+  border: 1px solid var(--border-color);
+  margin: var(--default-padding) 0;
 }

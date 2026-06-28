@@ -18,6 +18,7 @@ const MAP: Record<TitleName, (mission: string) => JSX.Element> = {
     <AdministratorBadge mission={mission} />
   ),
   Prefect: (mission: string): JSX.Element => <PrefectBadge mission={mission} />,
+  none: (): JSX.Element => <></>,
 }
 
 export default function Badge({ title, mission }: Props): JSX.Element {

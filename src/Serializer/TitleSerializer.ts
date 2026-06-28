@@ -6,6 +6,7 @@ export type SerializedTitle = {
   name: TitleName
   mission: number
   points: number
+  startingMegaCredits: number
 }
 
 export default class TitleSerializer implements SerializerInterface<
@@ -21,6 +22,7 @@ export default class TitleSerializer implements SerializerInterface<
       name: value.name,
       mission: value.mission,
       points: value.points,
+      startingMegaCredits: value.startingMegaCredits,
     }
   }
 }

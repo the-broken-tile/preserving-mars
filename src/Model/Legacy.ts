@@ -95,6 +95,14 @@ export default class Legacy {
     return results
   }
 
+  public getPreviousMissionResult(player: Player): MissionResult | undefined {
+    if (this.currentMission === 0) {
+      return undefined
+    }
+
+    return this.missionResults[this.currentMission - 1].get(player)!
+  }
+
   public getCurrentMission(player: Player): MissionResult {
     return this.getCurrentPlayerMissions().get(player)!
   }
