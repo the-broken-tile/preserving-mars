@@ -1,16 +1,11 @@
-import {
-  SerializerInterface,
-  SerializedCorporation,
-  SerializedDevelopment,
-} from "."
-import { Color, Development, Player } from "@/Model"
+import { SerializerInterface, SerializedCorporation } from "."
+import { Color, Player } from "@/Model"
 
 export type SerializedPlayer = {
   id: string
   name: string
   color: Color
   corporation: SerializedCorporation
-  developments: SerializedDevelopment[]
   _type: "player"
 }
 export default class PlayerSerializer implements SerializerInterface<
@@ -27,10 +22,6 @@ export default class PlayerSerializer implements SerializerInterface<
       name: value.name,
       color: value.color,
       corporation: this.serializer.serialize(value.corporation),
-      developments: value.developments.map(
-        (d: Development): SerializedDevelopment => this.serializer.serialize(d),
-        this,
-      ),
       _type: "player",
     }
   }

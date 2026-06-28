@@ -1,6 +1,5 @@
 export { type default as Color, COLORS } from "./Color"
 export { default as Corporation } from "./Corporation"
-export { default as Development } from "./Development"
 export { default as Legacy, type MissionResults } from "./Legacy"
 export type { default as Phase } from "./Phase"
 export { default as Player } from "./Player"

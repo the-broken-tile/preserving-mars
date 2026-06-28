@@ -16,10 +16,6 @@ export default class PlayerDeserializer implements DeserializerInterface<
     let p: Writeable<Player> = Player.create(value.color)
     p.id = value.id
 
-    for (const development of value.developments) {
-      p = p.addDevelopment(this.deserializer.deserialize(development))
-    }
-
     return p
       .setCorporation(this.deserializer.deserialize(value.corporation))
       .setName(value.name)
