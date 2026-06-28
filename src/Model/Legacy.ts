@@ -104,8 +104,8 @@ export default class Legacy {
     this.getMissionResultsForPlayer(player).forEach(
       (missionResult: MissionResult, mission: number): void => {
         for (const card of missionResult.savedCards) {
-          if (card.type === "innovation") {
-            // Always display innovation cards.
+          if (["innovation", "development"].includes(card.type)) {
+            // Always display innovation and development cards.
             cards.push(card)
 
             continue

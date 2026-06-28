@@ -15,16 +15,34 @@ import { Collapsible } from "@/Component"
 
 type Props = {
   player: Player
-  type?: SavedCardType
+  type: SavedCardType
 }
+
 export default function SavedCardsView({ player, type }: Props): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
   const result: MissionResult = legacy.getCurrentMission(player)
   const [currentCardName, setCurrentCardName] = useState<string | null>(null)
 
-  const canAddCards: boolean =
-    legacy.getSavedCards(player).filter(c => c.type === "project").length <
-    MAX_SAVED_PROJECT_CARDS
+  const canAdd = (): boolean => {
+    if (type === "project") {
+      return (
+        legacy.getSavedCards(player).filter(c => c.type === "project").length <
+        MAX_SAVED_PROJECT_CARDS
+      )
+    }
+
+    if (type === "development") {
+      return (
+        legacy
+          .getCurrentMission(player)
+          .savedCards.find(
+            (c: SavedCard): boolean => c.type === "development",
+          ) === undefined
+      )
+    }
+
+    return true
+  }
 
   const handleToggleSavingCards: VoidFunction = (): void => {
     setCurrentCardName((prev: null | string): string | null =>
@@ -42,13 +60,12 @@ export default function SavedCardsView({ player, type }: Props): JSX.Element {
     onChange(result.removeSavedCard(card))
   }
 
-  const handleSaveCurrentCard: VoidFunction = (): void => {
+  const handleSaveCurrentCard = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault()
     if (currentCardName === null) {
       return
     }
-    onChange(
-      result.addSavedCard(new SavedCard(currentCardName, type ?? "project")),
-    )
+    onChange(result.addSavedCard(new SavedCard(currentCardName, type)))
     setCurrentCardName(null)
   }
 
@@ -63,36 +80,34 @@ export default function SavedCardsView({ player, type }: Props): JSX.Element {
   }
 
   return (
-    <div>
-      <Collapsible title={t("Saved cards")}>
-        <ul>
-          {legacy.getSavedCards(player).map(
-            (card: SavedCard): JSX.Element => (
-              <li key={card.id}>
-                <SavedCardView
-                  card={card}
-                  onDelete={(): void => handleDeleteSavedCard(card)}
-                />
-              </li>
-            ),
-          )}
-          {currentCardName !== null && (
-            <li>
-              <input
-                value={currentCardName}
-                onInput={handleCurrentCardNameChange}
-              />{" "}
-              <button onClick={handleSaveCurrentCard}>✅</button>
-              <button onClick={handleCancelAddingCard}>❌</button>
+    <Collapsible title={t("Saved cards")}>
+      <ul>
+        {legacy.getSavedCards(player).map(
+          (card: SavedCard): JSX.Element => (
+            <li key={card.id}>
+              <SavedCardView
+                card={card}
+                onDelete={(): void => handleDeleteSavedCard(card)}
+              />
             </li>
-          )}
-          {canAddCards && currentCardName === null && (
-            <button className="button" onClick={handleToggleSavingCards}>
-              {t("Save a card")}
-            </button>
-          )}
-        </ul>
-      </Collapsible>
-    </div>
+          ),
+        )}
+      </ul>
+      {currentCardName !== null && (
+        <form onSubmit={handleSaveCurrentCard}>
+          <input
+            value={currentCardName}
+            onInput={handleCurrentCardNameChange}
+          />{" "}
+          <button type="submit">✅</button>
+          <button onClick={handleCancelAddingCard}>❌</button>
+        </form>
+      )}
+      {canAdd() && currentCardName === null && (
+        <button className="button" onClick={handleToggleSavingCards}>
+          {t("Save a card")}
+        </button>
+      )}
+    </Collapsible>
   )
 }

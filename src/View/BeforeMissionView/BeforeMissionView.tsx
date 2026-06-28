@@ -1,9 +1,10 @@
-import { JSX } from "react"
+import { Fragment, JSX } from "react"
 import { Legacy, Player } from "@/Model"
 import { t } from "@/i18n"
-import { PlayerNameView } from "@/View"
+import { PlayerNameView, TitleView } from "@/View"
 import { useLegacyContext } from "@/Context/LegacyContext"
 import { legacyRepository } from "@/Repository"
+import SavedCardsView from "../SavedCardsView/SavedCardsView"
 
 export default function BeforeMissionView(): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
@@ -13,7 +14,6 @@ export default function BeforeMissionView(): JSX.Element {
     setLegacy(l)
   }
 
-  // @todo add corporation choice - A or B (when corporations are known)
   // @todo Add reminder of which cards are in hand, don't do that for mission === 0
   return (
     <>
@@ -25,7 +25,11 @@ export default function BeforeMissionView(): JSX.Element {
       <ul>
         {legacy.players.map(
           (player: Player): JSX.Element => (
-            <PlayerNameView player={player} key={player.id} />
+            <Fragment key={player.id}>
+              <PlayerNameView player={player} />
+              <TitleView player={player} />
+              <SavedCardsView player={player} type="development" />
+            </Fragment>
           ),
         )}
       </ul>

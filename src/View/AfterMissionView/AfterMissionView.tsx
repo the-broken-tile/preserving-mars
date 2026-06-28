@@ -28,7 +28,7 @@ export default function AfterMissionView(): JSX.Element {
               })}
             </div>
             {i < legacy.players.length - 1 && <hr />}
-            <SavedCardsView player={player} />
+            <SavedCardsView player={player} type="project" />
           </Fragment>
         ),
       )}
