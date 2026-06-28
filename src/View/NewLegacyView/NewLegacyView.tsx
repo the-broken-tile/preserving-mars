@@ -18,7 +18,7 @@ export default function NewLegacyView(): JSX.Element {
     Player.create("black"),
     Player.create("red"),
   ])
-  const [errors, setErrors] = useState<string[]>([])
+  const [errors, setErrors] = useState<ValidationError[]>([])
   const navigate: NavigateFunction = useNavigate()
 
   const handleAddPlayer: VoidFunction = (): void => {
@@ -55,11 +55,9 @@ export default function NewLegacyView(): JSX.Element {
     event: FormEvent<HTMLFormElement>,
   ): void => {
     event.preventDefault()
-    const errs: string[] = players
-      .map((r: Player): string[] => {
-        return validator
-          .validate(r)
-          .map((e: ValidationError): string => e.message)
+    const errs: ValidationError[] = players
+      .map((r: Player): ValidationError[] => {
+        return validator.validate(r)
       })
       .flat()
 
@@ -109,6 +107,7 @@ export default function NewLegacyView(): JSX.Element {
             (player: Player): JSX.Element => (
               <li key={player.id}>
                 <CreatePlayerView
+                  errors={errors.filter(e => e.entityId === player.id)}
                   player={player}
                   onChange={handlePlayerChange}
                   disabledColors={players.map<Color>(
@@ -121,13 +120,15 @@ export default function NewLegacyView(): JSX.Element {
         </ul>
         {errors.length > 0 && (
           <ul>
-            {errors.map(
-              (error: string, i: number): JSX.Element => (
-                <li className="error" key={i}>
-                  {error}
-                </li>
-              ),
-            )}
+            {errors
+              .filter((e: ValidationError): boolean => e.entityId === undefined)
+              .map(
+                (error: ValidationError, i: number): JSX.Element => (
+                  <li className="error" key={i}>
+                    {error.message}
+                  </li>
+                ),
+              )}
           </ul>
         )}
         <div>

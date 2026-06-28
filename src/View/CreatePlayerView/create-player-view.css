@@ -8,7 +8,7 @@
   flex-direction: column;
 }
 
-.create-player > li {
+.create-player > li > div {
   padding: var(--default-padding);
   display: flex;
   align-items: center;

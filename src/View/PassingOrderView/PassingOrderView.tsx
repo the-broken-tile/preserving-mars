@@ -68,7 +68,7 @@ export default function PassingOrderView({ player }: Props): JSX.Element {
         (active: boolean, position: number): JSX.Element => (
           <button
             key={position}
-            className={classNames("button", { selected: active })}
+            className={classNames({ selected: active })}
             type="button"
             onClick={() => handleSelectPosition(position + 1)}
           >

@@ -30,11 +30,7 @@ export default function SavedCardView({ card, onDelete }: Props): JSX.Element {
       <span>
         {card.name} [{card.type}]
       </span>
-      {canRemove && (
-        <button className="button" onClick={onDelete}>
-          ❌
-        </button>
-      )}
+      {canRemove && <button onClick={onDelete}>❌</button>}
     </>
   )
 }

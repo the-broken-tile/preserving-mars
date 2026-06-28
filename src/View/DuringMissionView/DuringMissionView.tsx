@@ -14,7 +14,6 @@ import { titleCalculator } from "@/TitleCalculator"
 export default function DuringMissionView(): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
   const [finishing, setFinishing] = useState<boolean>(false)
-  const [errors, setErrors] = useState<string[]>([])
 
   const handlePointsChange =
     (player: Player) =>

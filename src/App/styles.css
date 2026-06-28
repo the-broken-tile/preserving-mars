@@ -43,25 +43,24 @@ ul {
 
 .button {
   display: inline-block;
-  padding: 0.35em 1.2em;
+  padding: var(--default-padding);
   border: 0.1em solid var(--border-color);
-  margin: 0 0.3em 0.3em 0;
-  border-radius: 0.12em;
   box-sizing: border-box;
   text-decoration: none;
   font-family: "Roboto", sans-serif;
-  font-weight: 300;
-  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: black;
+  background: whitesmoke;
   text-align: center;
-  transition: all 0.2s;
+  border-radius: 7px;
+  transition: all 0.25s ease-out;
+  min-width: calc(3 * var(--default-padding));
 }
-.button {
-  color: #000000;
-  background-color: #ffffff;
-}
+
 .button:disabled {
   color: #444444;
-  background-color: #ddd;
+  background-color: #bbb;
 }
 .button.selected {
   border: 2px solid var(--border-color);

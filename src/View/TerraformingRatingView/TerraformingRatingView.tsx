@@ -29,7 +29,7 @@ export default function TerraformingRatingView({
       <label htmlFor={`points-player-${id}`}>
         {t("Terraforming rating")}:{" "}
       </label>
-      <button className="button" type="button" onClick={handleDecreasePoints}>
+      <button type="button" onClick={handleDecreasePoints}>
         -
       </button>
       <input

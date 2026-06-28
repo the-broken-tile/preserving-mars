@@ -26,12 +26,7 @@ export default function ListLegacyView(): JSX.Element {
             <Link to={`/legacy/${l.id}`} viewTransition>
               {l.name}
             </Link>
-            <button
-              className="button"
-              onClick={(): void => handleDeleteLegacy(l)}
-            >
-              ❌
-            </button>
+            <button onClick={(): void => handleDeleteLegacy(l)}>❌</button>
           </li>
         ),
       )}

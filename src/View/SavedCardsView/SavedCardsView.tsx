@@ -82,12 +82,8 @@ export default function SavedCardsView({ player, type }: Props): JSX.Element {
                 value={currentCardName}
                 onInput={handleCurrentCardNameChange}
               />{" "}
-              <button className="button" onClick={handleSaveCurrentCard}>
-                ✅
-              </button>
-              <button className="button" onClick={handleCancelAddingCard}>
-                ❌
-              </button>
+              <button onClick={handleSaveCurrentCard}>✅</button>
+              <button onClick={handleCancelAddingCard}>❌</button>
             </li>
           )}
           {canAddCards && currentCardName === null && (

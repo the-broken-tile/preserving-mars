@@ -1,6 +1,6 @@
 .cube {
-  width: 24px;
-  height: 24px;
+  width: 34px;
+  height: 34px;
 }
 .cube .front-side {
   fill: color-mix(in srgb, var(--color) 85%, white);
