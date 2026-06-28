@@ -9,7 +9,6 @@ export type MissionResults = Map<Player, MissionResult>[]
 type PlayerPointTuple = [Player, number]
 
 export default class Legacy {
-  private debug: Record<string, any> = {}
   public readonly id: string = v4()
   private constructor(
     private readonly _players: Player[],
