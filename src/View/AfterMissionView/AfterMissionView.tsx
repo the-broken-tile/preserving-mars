@@ -4,7 +4,6 @@ import { legacyRepository } from "@/Repository"
 import { useLegacyContext } from "@/Context/LegacyContext"
 import { PlayerNameView, SavedCardsView, TitleView } from "@/View"
 import { t } from "@/i18n"
-import { MISSION_COUNT } from "@/constants"
 
 export default function AfterMissionView(): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
@@ -31,17 +30,13 @@ export default function AfterMissionView(): JSX.Element {
           </div>
         ),
       )}
-      {legacy.currentMission !== MISSION_COUNT ?
-        <button
-          type="button"
-          className="button"
-          onClick={handleNexMissionClick}
-        >
-          {t("Start mission %mission%", {
+      <button type="button" className="button" onClick={handleNexMissionClick}>
+        {legacy.currentMission + 1 < legacy.totalMissions ?
+          t("Start mission %mission%", {
             mission: t(String(legacy.currentMission + 1), {}, "missionNames"),
-          })}
-        </button>
-      : null}
+          })
+        : t("Finish")}
+      </button>
     </>
   )
 }

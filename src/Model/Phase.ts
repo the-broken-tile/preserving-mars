@@ -7,7 +7,7 @@ type Phase =
 
 export const ADVANCEMENT_MAP: Record<
   Exclude<Phase, "finished">,
-  Exclude<Phase, "preparing">
+  Exclude<Phase, "preparing" | "finished">
 > = {
   preparing: "beforeMission",
   beforeMission: "duringMission",

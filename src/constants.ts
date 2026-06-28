@@ -3,8 +3,6 @@ import config from "@/config.json"
 export const MIN_PLAYERS: number = config.minPlayers
 export const MAX_PLAYERS: number = config.maxPlayers
 
-export const MISSION_COUNT: number = config.missions
-
 export const STARTING_TERRAFORMING_RATING: number =
   config.staringTerraformingRating
 

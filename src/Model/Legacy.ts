@@ -1,11 +1,12 @@
 import { v4 } from "uuid"
 import { t } from "@/i18n"
-import { MISSION_COUNT, STARTING_TERRAFORMING_RATING } from "@/constants"
+import { STARTING_TERRAFORMING_RATING } from "@/constants"
 import { Writeable } from "@/types"
 import { ADVANCEMENT_MAP } from "./Phase"
 import { Player, Phase, MissionResult, Title, SavedCard } from "."
 
 export type MissionResults = Map<Player, MissionResult>[]
+type PlayerPointTuple = [Player, number]
 
 export default class Legacy {
   private debug: Record<string, any> = {}
@@ -61,14 +62,14 @@ export default class Legacy {
       this.phase === "afterMission" ?
         this.currentMission + 1
       : this.currentMission
-    if (mission > MISSION_COUNT) {
+    if (mission >= this.totalMissions) {
       newPhase = "finished"
     }
 
     const l: Writeable<Legacy> = new Legacy(
       this._players,
       this.totalMissions,
-      mission,
+      Math.min(mission, this.totalMissions),
       newPhase,
       this._name,
       [...this.missionResults],
@@ -248,10 +249,32 @@ export default class Legacy {
     const missionResults: MissionResult[] =
       this.getMissionResultsForPlayer(player)
     for (const result of missionResults) {
+      if (result.mission === this.totalMissions - 1) {
+        // Do not take into account last mission.
+        continue
+      }
       points += result.title?.points ?? 0
     }
 
     return points
+  }
+
+  public getFinalStanding(): PlayerPointTuple[] {
+    if (this.phase !== "finished") {
+      throw new Error("No final standing")
+    }
+
+    const tuples: PlayerPointTuple[] = this.players.map(
+      (player: Player): [Player, number] => {
+        const mission: MissionResult = this.getCurrentMission(player)
+
+        return [player, mission.points + this.getTitlePoints(player)]
+      },
+    )
+
+    return tuples.sort((a: PlayerPointTuple, b: PlayerPointTuple): number => {
+      return b[1] - a[1]
+    })
   }
 
   private getMissionResultsForPlayer(player: Player): MissionResult[] {
@@ -259,13 +282,5 @@ export default class Legacy {
       (missionResultMap: Map<Player, MissionResult>): MissionResult =>
         missionResultMap.get(player)!,
     )
-  }
-
-  private log(player: Player, missionResults: MissionResult[]): void {
-    if (this.debug[player.id]) {
-      return
-    }
-    this.debug[player.id] = missionResults
-    console.log(player.name, this.debug[player.id])
   }
 }
