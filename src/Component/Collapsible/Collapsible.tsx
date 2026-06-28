@@ -19,7 +19,7 @@ export default function Collapsible({
   return (
     <div className="wrap-collapsible">
       <input id={realId} className="toggle" type="checkbox" />
-      <label htmlFor={realId} className="lbl-toggle">
+      <label htmlFor={realId} className="label-toggle">
         {title}
       </label>
       <div className="collapsible-content">
