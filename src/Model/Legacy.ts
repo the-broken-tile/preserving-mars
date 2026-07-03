@@ -9,7 +9,7 @@ export type MissionResults = Map<Player, MissionResult>[]
 type PlayerPointTuple = [Player, number]
 
 export default class Legacy {
-  public readonly id: string = v4()
+  public readonly id: string
   private constructor(
     private readonly _players: Player[],
     public readonly totalMissions: number,
@@ -17,7 +17,13 @@ export default class Legacy {
     public readonly phase: Phase = "preparing",
     private readonly _name: string | null = null,
     public readonly missionResults: MissionResults = [],
-  ) {}
+  ) {
+    this.id = Legacy.id
+  }
+
+  private static get id(): string {
+    return v4()
+  }
 
   public static create(players: Player[], missions: number): Legacy {
     return new Legacy([...players], missions)

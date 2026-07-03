@@ -2,9 +2,14 @@ import { Writeable } from "@/types"
 import { v4 } from "uuid"
 
 export default class Corporation {
-  public readonly id: string = v4()
-  private constructor(public readonly name: string) {}
+  public readonly id: string
+  private constructor(public readonly name: string) {
+    this.id = Corporation.id
+  }
 
+  private static get id(): string {
+    return v4()
+  }
   public static create(name: string = ""): Corporation {
     return new Corporation(name)
   }
