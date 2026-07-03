@@ -25,7 +25,7 @@ export default class Legacy implements IdentityInterface<Legacy> {
   }
 
   private static get id(): string {
-    return v4()
+    return v4().split("-")[0]
   }
 
   public static create(players: Player[], missions: number): Legacy {

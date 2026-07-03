@@ -14,7 +14,7 @@ export default function Collapsible({
   title,
   id,
 }: Props): JSX.Element {
-  const realId: string = id ?? `collapsible-${v4()}`
+  const realId: string = id ?? `collapsible-${v4().split("-")[0]}`
 
   return (
     <div className="wrap-collapsible">
