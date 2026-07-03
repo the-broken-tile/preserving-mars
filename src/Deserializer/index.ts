@@ -10,7 +10,6 @@ import TitleDeserializer from "./TitleDeserializer"
 import NullDeserializer from "./NullDeserializer"
 
 const deserializer: Deserializer = new Deserializer([
-  new ArrayDeserializer(),
   new NullDeserializer(),
   new CorporationDeserializer(),
   new LegacyDeserializer(),
@@ -18,6 +17,7 @@ const deserializer: Deserializer = new Deserializer([
   new MissionResultDeserializer(),
   new SavedCardDeserializer(),
   new TitleDeserializer(),
+  new ArrayDeserializer(),
 ])
 
 export { type DeserializerInterface, deserializer }

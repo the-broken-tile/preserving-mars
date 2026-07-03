@@ -11,9 +11,6 @@ export default class CorporationSerializer implements SerializerInterface<
   }
 
   public serialize(value: Corporation): SerializedCorporation {
-    return {
-      n: value.name,
-      _t: "o",
-    }
+    return ["o", value.name]
   }
 }

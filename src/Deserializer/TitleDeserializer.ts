@@ -7,10 +7,10 @@ export default class TitleDeserializer implements DeserializerInterface<
   Title
 > {
   public supports(value: any): value is SerializedTitle {
-    return value._type === "title"
+    return Array.isArray(value) && value[0] === "t"
   }
 
   public deserialize(value: SerializedTitle): Title {
-    return new Title(value.n, value.m, value.p, value.c)
+    return new Title(value[1], value[2], value[3], value[4])
   }
 }

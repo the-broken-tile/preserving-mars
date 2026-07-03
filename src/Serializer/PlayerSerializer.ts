@@ -11,13 +11,13 @@ export default class PlayerSerializer implements SerializerInterface<
     return value instanceof Player
   }
   public serialize(value: Player): SerializedPlayer {
-    return {
-      _t: "p",
-      n: value.name,
-      c: value.color,
-      o: this.serializer.serialize(value.corporation),
-      m: this.serializer.serialize(value.missionResults),
-    }
+    return [
+      "p",
+      value.name,
+      value.color,
+      this.serializer.serialize(value.corporation),
+      this.serializer.serialize(value.missionResults),
+    ]
   }
   public setSerializer?(serializer: SerializerInterface<any, any>): void {
     this.serializer = serializer

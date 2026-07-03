@@ -9,18 +9,18 @@ export default class PlayerDeserializer implements DeserializerInterface<
 > {
   private deserializer!: DeserializerInterface<any, any>
   public supports(value: any): value is SerializedPlayer {
-    return value._t === "p"
+    return Array.isArray(value) && value[0] === "p"
   }
 
   public deserialize(value: SerializedPlayer): Player {
     let p: Writeable<Player> = Player.create(
-      value.c,
-      this.deserializer.deserialize(value.m),
+      value[2],
+      this.deserializer.deserialize(value[4]),
     )
 
     return p
-      .setCorporation(this.deserializer.deserialize(value.o))
-      .setName(value.n)
+      .setName(value[1])
+      .setCorporation(this.deserializer.deserialize(value[3]))
   }
 
   public setDeserializer(deserializer: DeserializerInterface<any, any>): void {

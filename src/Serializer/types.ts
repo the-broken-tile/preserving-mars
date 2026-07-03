@@ -4,48 +4,45 @@ type Serialized = {
   _t: string
 }
 
-export type SerializedLegacy = Serialized & {
-  _t: "l"
-  i: string
-  c: number
-  t: number
-  f: Phase
-  n: string | null
-  p: SerializedPlayer[]
-}
+export type SerializedLegacy = [
+  "l", // type
+  string, //id
+  number, // current mission
+  number, // total missions
+  Phase,
+  string | null, // name
+  SerializedPlayer[],
+]
 
-export type SerializedCorporation = Serialized & {
-  _t: "o"
-  n: string
-}
+export type SerializedCorporation = ["o", string]
 
-export type SerializedTitle = Serialized & {
-  _t: "t"
-  n: TitleName
-  m: number
-  p: number
-  c: number
-}
+export type SerializedTitle = [
+  "t", // type
+  TitleName,
+  number, // mission
+  number, // title points
+  number, // starting credits
+]
 
-export type SerializedMission = Serialized & {
-  _t: "m"
-  p: number
-  t: SerializedTitle
-  m: number
-  s: SerializedSavedCard[]
-  o: number | null
-}
+export type SerializedMission = [
+  "m", // type
+  number, // points
+  SerializedTitle,
+  number, // mission
+  SerializedSavedCard[],
+  number | null, // passing order
+]
 
-export type SerializedPlayer = Serialized & {
-  _t: "p"
-  n: string
-  c: Color
-  o: SerializedCorporation
-  m: SerializedMission[]
-}
+export type SerializedPlayer = [
+  "p", // type
+  string, // name
+  Color,
+  SerializedCorporation,
+  SerializedMission[],
+]
 
-export type SerializedSavedCard = Serialized & {
-  _t: "c"
-  n: string
-  t: SavedCardType
-}
+export type SerializedSavedCard = [
+  "c", // type
+  string, // name
+  SavedCardType,
+]

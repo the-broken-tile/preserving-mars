@@ -10,20 +10,20 @@ export default class LegacyDeserializer implements DeserializerInterface<
   private deserializer!: DeserializerInterface<any, any>
 
   public supports(value: any): value is SerializedLegacy {
-    return value._t === "l"
+    return Array.isArray(value) && value[0] === "l"
   }
 
   public deserialize(value: SerializedLegacy): Legacy {
     const l: Writeable<Legacy> = Legacy.create(
-      this.deserializer.deserialize(value.p),
-      value.t,
+      this.deserializer.deserialize(value[6]),
+      value[3],
     )
-    l.id = value.i
-    l.currentMission = value.c
-    l.phase = value.f
+    l.id = value[1]
+    l.currentMission = value[2]
+    l.phase = value[4]
 
-    if (value.n !== null) {
-      return l.setName(value.n)
+    if (value[5] !== null) {
+      return l.setName(value[5])
     }
 
     return l as Legacy

@@ -7,10 +7,10 @@ export default class SavedCardDeserializer implements DeserializerInterface<
   SavedCard
 > {
   public supports(value: any): value is SerializedSavedCard {
-    return value._t === "c"
+    return Array.isArray(value) && value[0] === "c"
   }
 
   public deserialize(value: SerializedSavedCard): SavedCard {
-    return new SavedCard(value.n, value.t)
+    return new SavedCard(value[1], value[2])
   }
 }

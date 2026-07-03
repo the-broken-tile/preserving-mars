@@ -10,14 +10,15 @@ export default class MissionResultDeserializer implements DeserializerInterface<
   private deserializer!: DeserializerInterface<any, any>
 
   public supports(value: any): value is SerializedMission {
-    return value._t === "m"
+    return Array.isArray(value) && value[0] === "m"
   }
 
   public deserialize(value: SerializedMission): MissionResult {
-    const result: Writeable<MissionResult> = MissionResult.create(value.m)
-    result.passingOrder = value.o
-    result.title = this.deserializer.deserialize(value.t)
-    result.savedCards = this.deserializer.deserialize(value.s)
+    const result: Writeable<MissionResult> = MissionResult.create(value[3])
+    result.points = value[1]
+    result.title = this.deserializer.deserialize(value[2])
+    result.savedCards = this.deserializer.deserialize(value[4])
+    result.passingOrder = value[5]
 
     return result
   }

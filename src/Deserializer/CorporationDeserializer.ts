@@ -7,9 +7,9 @@ export default class CorporationDeserializer implements DeserializerInterface<
   Corporation
 > {
   public supports(value: any): value is SerializedCorporation {
-    return value._t === "o"
+    return Array.isArray(value) && value[0] === "o"
   }
   public deserialize(value: SerializedCorporation): Corporation {
-    return Corporation.create(value.n)
+    return Corporation.create(value[1])
   }
 }

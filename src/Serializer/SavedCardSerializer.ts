@@ -10,10 +10,6 @@ export default class SavedCardSerializer implements SerializerInterface<
   }
 
   public serialize(value: SavedCard): SerializedSavedCard {
-    return {
-      _t: "c",
-      t: value.type,
-      n: value.name,
-    }
+    return ["c", value.name, value.type]
   }
 }

@@ -9,12 +9,12 @@ export default class TitleSerializer implements SerializerInterface<
     return value instanceof Title
   }
   public serialize(value: Title): SerializedTitle {
-    return {
-      _t: "t",
-      n: value.name,
-      m: value.mission,
-      p: value.points,
-      c: value.startingMegaCredits,
-    }
+    return [
+      "t",
+      value.name,
+      value.mission,
+      value.points,
+      value.startingMegaCredits,
+    ]
   }
 }
