@@ -2,7 +2,6 @@ import SerializerInterface from "@/Serializer/SerializerInterface"
 import { Corporation } from "@/Model"
 
 export type SerializedCorporation = {
-  id: string
   name: string
   _type: "corporation"
 }
@@ -17,7 +16,6 @@ export default class CorporationSerializer implements SerializerInterface<
 
   public serialize(value: Corporation): SerializedCorporation {
     return {
-      id: value.id,
       name: value.name,
       _type: "corporation",
     }

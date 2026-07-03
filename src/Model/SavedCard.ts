@@ -1,10 +1,10 @@
-import { v4 } from "uuid"
 import IdentityInterface from "@/Model/IdentityInterface"
 
 export type SavedCardType = "project" | "innovation" | "development"
 
 export default class SavedCard implements IdentityInterface<SavedCard> {
-  public readonly id: string
+  private static nextId: number = 1
+  private readonly id: string
   constructor(
     public readonly name: string,
     public readonly type: SavedCardType = "project",
@@ -17,6 +17,10 @@ export default class SavedCard implements IdentityInterface<SavedCard> {
   }
 
   private static get id(): string {
-    return v4()
+    try {
+      return String(SavedCard.nextId)
+    } finally {
+      SavedCard.nextId++
+    }
   }
 }

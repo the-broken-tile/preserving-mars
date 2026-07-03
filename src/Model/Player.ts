@@ -1,9 +1,8 @@
-import { v4 } from "uuid"
 import { Color, Corporation, MissionResult } from "."
-import { STARTING_TERRAFORMING_RATING } from "@/constants"
 import IdentityInterface from "@/Model/IdentityInterface"
 
 export default class Player implements IdentityInterface<Player> {
+  private static nextId: number = 1
   public readonly id: string
   private constructor(
     public readonly name: string,
@@ -13,6 +12,7 @@ export default class Player implements IdentityInterface<Player> {
   ) {
     this.id = Player.id
   }
+
   public static create(
     color: Color,
     missionResults: MissionResult[] = [],
@@ -41,9 +41,7 @@ export default class Player implements IdentityInterface<Player> {
 
   public getMissionResult(mission: number): MissionResult {
     if (this.missionResults[mission] === undefined) {
-      this.missionResults[mission] = MissionResult.create(
-        STARTING_TERRAFORMING_RATING,
-      )
+      this.missionResults[mission] = MissionResult.create(mission)
     }
 
     return this.missionResults[mission]
@@ -79,7 +77,11 @@ export default class Player implements IdentityInterface<Player> {
   }
 
   private static get id(): string {
-    return v4()
+    try {
+      return String(Player.nextId)
+    } finally {
+      Player.nextId++
+    }
   }
 
   private clone(props: Record<string, any>): Player {

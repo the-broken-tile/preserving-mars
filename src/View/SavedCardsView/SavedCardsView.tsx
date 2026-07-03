@@ -81,8 +81,8 @@ export default function SavedCardsView({ player, type }: Props): JSX.Element {
     <Collapsible title={t("Saved cards")}>
       <ul>
         {legacy.getSavedCards(player).map(
-          (card: SavedCard): JSX.Element => (
-            <li key={card.id}>
+          (card: SavedCard, i: number): JSX.Element => (
+            <li key={i}>
               <SavedCardView
                 card={card}
                 onDelete={(): void => handleDeleteSavedCard(card)}
@@ -94,6 +94,7 @@ export default function SavedCardsView({ player, type }: Props): JSX.Element {
       {currentCardName !== null && (
         <form onSubmit={handleSaveCurrentCard}>
           <input
+            autoFocus={true}
             value={currentCardName}
             onInput={handleCurrentCardNameChange}
           />{" "}

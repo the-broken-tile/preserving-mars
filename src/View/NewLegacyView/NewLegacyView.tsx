@@ -12,12 +12,11 @@ import { home } from "@/icons"
 
 import "./new-legacy-view.css"
 
+const initialValues: Player[] = [Player.create("black"), Player.create("red")]
+
 export default function NewLegacyView(): JSX.Element {
   const [missions, setMissions] = useState<number>(MISSION_LENGTHS[0])
-  const [players, setPlayers] = useState<Player[]>([
-    Player.create("black"),
-    Player.create("red"),
-  ])
+  const [players, setPlayers] = useState<Player[]>(initialValues)
   const [errors, setErrors] = useState<ValidationError[]>([])
   const navigate: NavigateFunction = useNavigate()
 

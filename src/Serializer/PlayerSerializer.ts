@@ -6,7 +6,6 @@ import {
 import { Color, Player } from "@/Model"
 
 export type SerializedPlayer = {
-  id: string
   name: string
   color: Color
   corporation: SerializedCorporation
@@ -23,7 +22,6 @@ export default class PlayerSerializer implements SerializerInterface<
   }
   public serialize(value: Player): SerializedPlayer {
     return {
-      id: value.id,
       name: value.name,
       color: value.color,
       corporation: this.serializer.serialize(value.corporation),

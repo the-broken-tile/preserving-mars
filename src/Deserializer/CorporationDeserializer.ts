@@ -1,6 +1,5 @@
 import { SerializedCorporation } from "@/Serializer"
 import { Corporation } from "@/Model"
-import { Writeable } from "@/types"
 import DeserializerInterface from "./DeserializerInterface"
 
 export default class CorporationDeserializer implements DeserializerInterface<
@@ -11,9 +10,6 @@ export default class CorporationDeserializer implements DeserializerInterface<
     return value._type === "corporation"
   }
   public deserialize(value: SerializedCorporation): Corporation {
-    const c: Writeable<Corporation> = Corporation.create(value.name)
-    c.id = value.id
-
-    return c
+    return Corporation.create(value.name)
   }
 }

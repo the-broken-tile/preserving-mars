@@ -17,7 +17,6 @@ export default class PlayerDeserializer implements DeserializerInterface<
       value.color,
       this.deserializer.deserialize(value.missionResults),
     )
-    p.id = value.id
 
     return p
       .setCorporation(this.deserializer.deserialize(value.corporation))
