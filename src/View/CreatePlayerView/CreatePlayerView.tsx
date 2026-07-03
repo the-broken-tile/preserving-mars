@@ -92,13 +92,13 @@ export default function CreatePlayerView({
             value={player.color ?? undefined}
           >
             {COLORS.map(
-              (color: Color, i: number): JSX.Element => (
+              (color: Color): JSX.Element => (
                 <option
                   value={color}
                   disabled={disabledColors.includes(color)}
-                  key={i}
+                  key={color}
                 >
-                  {t(color)}
+                  {t(color, {}, "color")}
                 </option>
               ),
             )}

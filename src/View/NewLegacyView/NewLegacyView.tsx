@@ -12,7 +12,7 @@ import { home } from "@/icons"
 
 import "./new-legacy-view.css"
 
-const initialValues: Player[] = [Player.create("black"), Player.create("red")]
+const initialValues: Player[] = [Player.create("b"), Player.create("r")]
 
 export default function NewLegacyView(): JSX.Element {
   const [missions, setMissions] = useState<number>(MISSION_LENGTHS[0])

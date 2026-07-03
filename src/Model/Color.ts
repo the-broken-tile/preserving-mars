@@ -1,14 +1,14 @@
 export const COLORS = [
-  "green",
-  "blue",
-  "red",
-  "yellow",
-  "black",
-  "white",
-  "cyan",
-  "orange",
-  "purple",
-  "pink",
+  "g",
+  "u",
+  "r",
+  "y",
+  "b",
+  "w",
+  "c",
+  "o",
+  "p",
+  "k",
 ] as const
 
 type Color = (typeof COLORS)[number]

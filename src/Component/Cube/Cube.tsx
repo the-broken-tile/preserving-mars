@@ -1,5 +1,8 @@
-import { Color } from "@/Model"
 import { CSSProperties, JSX } from "react"
+
+import { Color } from "@/Model"
+import { t } from "@/i18n"
+
 import "./cube.css"
 
 type Props = {
@@ -8,7 +11,7 @@ type Props = {
 export default function Cube({ color }: Props): JSX.Element {
   return (
     <svg
-      style={{ "--color": color } as CSSProperties}
+      style={{ "--color": t(color, {}, "color") } as CSSProperties}
       className="cube"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
