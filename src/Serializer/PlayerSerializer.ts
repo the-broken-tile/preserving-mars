@@ -1,4 +1,8 @@
-import { SerializerInterface, SerializedCorporation } from "."
+import {
+  SerializerInterface,
+  SerializedCorporation,
+  SerializedMission,
+} from "."
 import { Color, Player } from "@/Model"
 
 export type SerializedPlayer = {
@@ -6,6 +10,7 @@ export type SerializedPlayer = {
   name: string
   color: Color
   corporation: SerializedCorporation
+  missionResults: SerializedMission[]
   _type: "player"
 }
 export default class PlayerSerializer implements SerializerInterface<
@@ -22,6 +27,7 @@ export default class PlayerSerializer implements SerializerInterface<
       name: value.name,
       color: value.color,
       corporation: this.serializer.serialize(value.corporation),
+      missionResults: this.serializer.serialize(value.missionResults),
       _type: "player",
     }
   }

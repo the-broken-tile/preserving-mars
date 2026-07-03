@@ -13,7 +13,10 @@ export default class PlayerDeserializer implements DeserializerInterface<
   }
 
   public deserialize(value: SerializedPlayer): Player {
-    let p: Writeable<Player> = Player.create(value.color)
+    let p: Writeable<Player> = Player.create(
+      value.color,
+      this.deserializer.deserialize(value.missionResults),
+    )
     p.id = value.id
 
     return p

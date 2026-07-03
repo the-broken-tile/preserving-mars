@@ -1,3 +1,4 @@
+import ArraySerializer from "./ArraySerializer"
 import CorporationSerializer, {
   type SerializedCorporation,
 } from "./CorporationSerializer"
@@ -14,6 +15,7 @@ import TitleSerializer from "./TitleSerializer"
 import NullSerializer from "./NullSerializer"
 
 const serializer = new Serializer([
+  new ArraySerializer(),
   new NullSerializer(),
   new LegacySerializer(),
   new PlayerSerializer(),

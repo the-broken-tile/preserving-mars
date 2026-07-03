@@ -15,7 +15,7 @@ export default function ListLegacyView(): JSX.Element {
   const handleDeleteLegacy = (legacy: Legacy): void => {
     legacyRepository.delete(legacy)
     setLegacies((prev: Legacy[]): Legacy[] =>
-      prev.filter(l => legacy.id !== l.id),
+      prev.filter((l: Legacy): boolean => !l.is(legacy)),
     )
   }
   return (

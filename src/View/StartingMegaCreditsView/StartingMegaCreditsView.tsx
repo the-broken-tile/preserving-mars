@@ -13,7 +13,7 @@ export default function StartingMegaCreditsView({
   const { legacy } = useLegacyContext()
 
   const missionResult: MissionResult | undefined =
-    legacy.getPreviousMissionResult(player)
+    player.getPreviousMissionResult()
 
   if (legacy.currentMission === 0) {
     // @todo add per corporation. Add per side A / side B.

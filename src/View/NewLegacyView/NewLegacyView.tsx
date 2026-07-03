@@ -40,9 +40,7 @@ export default function NewLegacyView(): JSX.Element {
   }
 
   const handlePlayerChange = (player: Player): void => {
-    const i: number = players.findIndex(
-      (p: Player): boolean => p.id === player.id,
-    )
+    const i: number = players.findIndex((p: Player): boolean => p.is(player))
 
     setPlayers((prev: Player[]): Player[] => [
       ...prev.slice(0, i),

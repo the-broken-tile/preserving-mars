@@ -1,17 +1,16 @@
 import { v4 } from "uuid"
 import { t } from "@/i18n"
-import { STARTING_TERRAFORMING_RATING } from "@/constants"
-import { Writeable } from "@/types"
 import { ADVANCEMENT_MAP } from "./Phase"
-import { Player, Phase, MissionResult, Title, SavedCard } from "."
+import { MissionResult, Phase, Player, SavedCard, Title } from "."
+import IdentityInterface from "@/Model/IdentityInterface"
 
 export type MissionResults = Map<Player, MissionResult>[]
 type PlayerPointTuple = [Player, number]
 
-export default class Legacy {
+export default class Legacy implements IdentityInterface<Legacy> {
   public readonly id: string
   private constructor(
-    private readonly _players: Player[],
+    public readonly players: Player[],
     public readonly totalMissions: number,
     public readonly currentMission: number = 0,
     public readonly phase: Phase = "preparing",
@@ -21,16 +20,16 @@ export default class Legacy {
     this.id = Legacy.id
   }
 
+  public is(other: Legacy): boolean {
+    return other.id === this.id
+  }
+
   private static get id(): string {
     return v4()
   }
 
   public static create(players: Player[], missions: number): Legacy {
     return new Legacy([...players], missions)
-  }
-
-  public get players(): Player[] {
-    return [...this._players]
   }
 
   public get name(): string {
@@ -44,17 +43,7 @@ export default class Legacy {
   }
 
   public setName(name: string): Legacy {
-    const l: Writeable<Legacy> = new Legacy(
-      this._players,
-      this.totalMissions,
-      this.currentMission,
-      this.phase,
-      name,
-      [...this.missionResults],
-    )
-    l.id = this.id
-
-    return l as Legacy
+    return this.clone({ name })
   }
 
   public advance(): Legacy {
@@ -71,42 +60,19 @@ export default class Legacy {
       newPhase = "finished"
     }
 
-    const l: Writeable<Legacy> = new Legacy(
-      this._players,
-      this.totalMissions,
-      Math.min(mission, this.totalMissions),
-      newPhase,
-      this._name,
-      [...this.missionResults],
-    )
-    l.id = this.id
-
-    return l as Legacy
+    return this.clone({
+      phase: newPhase,
+      mission: Math.min(mission, this.totalMissions),
+    })
   }
 
   public getCurrentPlayerMissions(): Map<Player, MissionResult> {
-    let results: Map<Player, MissionResult> | undefined =
-      this.missionResults[this.currentMission]
-
-    if (results !== undefined) {
-      return results
-    }
-
-    results = new Map<Player, MissionResult>()
+    const result: Map<Player, MissionResult> = new Map<Player, MissionResult>()
     for (const player of this.players) {
-      results.set(player, MissionResult.create(STARTING_TERRAFORMING_RATING))
-    }
-    this.missionResults[this.currentMission] = results
-
-    return results
-  }
-
-  public getPreviousMissionResult(player: Player): MissionResult | undefined {
-    if (this.currentMission === 0) {
-      return undefined
+      result.set(player, player.getMissionResult(this.currentMission))
     }
 
-    return this.missionResults[this.currentMission - 1].get(player)!
+    return result
   }
 
   public getCurrentMission(player: Player): MissionResult {
@@ -115,7 +81,7 @@ export default class Legacy {
 
   public getSavedCards(player: Player): SavedCard[] {
     const cards: SavedCard[] = []
-    this.getMissionResultsForPlayer(player).forEach(
+    player.missionResults.forEach(
       (missionResult: MissionResult, mission: number): void => {
         for (const card of missionResult.savedCards) {
           if (["innovation", "development"].includes(card.type)) {
@@ -163,45 +129,28 @@ export default class Legacy {
       missionResults.push(missionResultsPerPlayer)
     }
 
-    const l: Writeable<Legacy> = new Legacy(
-      this._players,
-      this.currentMission,
-      this.currentMission,
-      this.phase,
-      this._name,
-      [...missionResults],
-    )
-    l.id = this.id
-
-    return l as Legacy
+    return this.clone({ missionResults })
   }
 
   public setMissionResult(
     player: Player,
     missionResult: MissionResult,
   ): Legacy {
-    const missionResults: MissionResults = this.missionResults
-    missionResults[this.currentMission]!.set(player, missionResult)
+    let p: Player = player.setMissionResult(missionResult)
 
-    const l: Writeable<Legacy> = new Legacy(
-      this._players,
-      this.totalMissions,
-      this.currentMission,
-      this.phase,
-      this._name,
-      [...missionResults],
-    )
-    l.id = this.id
-
-    return l as Legacy
+    return this.clone({
+      players: this.players.map((player: Player): Player => {
+        return player.is(p) ? p : player
+      }),
+    })
   }
 
   public getSortedPlayers(): Player[] {
     return this.players.sort((a: Player, b: Player): number => {
-      const missionA: MissionResult = this.getCurrentMission(a)
+      const missionA: MissionResult = a.currentMissionResult
       const pointsA: number = missionA.points
 
-      const missionB: MissionResult = this.getCurrentMission(b)
+      const missionB: MissionResult = b.currentMissionResult
       const pointsB: number = missionB.points
 
       if (pointsA === pointsB) {
@@ -235,9 +184,7 @@ export default class Legacy {
   public getTitles(player: Player): Title[] {
     const titles: Title[] = []
 
-    const missionResults: MissionResult[] =
-      this.getMissionResultsForPlayer(player)
-    for (const result of missionResults) {
+    for (const result of player.missionResults) {
       if (result.title === null) {
         continue
       }
@@ -251,9 +198,7 @@ export default class Legacy {
   public getTitlePoints(player: Player): number {
     let points: number = 0
 
-    const missionResults: MissionResult[] =
-      this.getMissionResultsForPlayer(player)
-    for (const result of missionResults) {
+    for (const result of player.missionResults) {
       if (result.mission === this.totalMissions - 1) {
         // Do not take into account last mission.
         continue
@@ -271,7 +216,7 @@ export default class Legacy {
 
     const tuples: PlayerPointTuple[] = this.players.map(
       (player: Player): [Player, number] => {
-        const mission: MissionResult = this.getCurrentMission(player)
+        const mission: MissionResult = player.currentMissionResult
 
         return [player, mission.points + this.getTitlePoints(player)]
       },
@@ -282,10 +227,16 @@ export default class Legacy {
     })
   }
 
-  private getMissionResultsForPlayer(player: Player): MissionResult[] {
-    return this.missionResults.map(
-      (missionResultMap: Map<Player, MissionResult>): MissionResult =>
-        missionResultMap.get(player)!,
+  private clone(props: Record<string, any>): Legacy {
+    const l: Legacy = new Legacy(
+      this.players,
+      this.totalMissions,
+      this.currentMission,
+      this.phase,
+      this._name,
     )
+    Object.assign(l, { ...props, id: this.id })
+
+    return l
   }
 }

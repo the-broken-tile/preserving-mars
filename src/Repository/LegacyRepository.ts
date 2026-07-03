@@ -24,7 +24,7 @@ export default class LegacyRepository {
 
   public save(legacy: Legacy): void {
     let all: Legacy[] = this.findAll()
-    const i: number = all.findIndex((l: Legacy): boolean => l.id === legacy.id)
+    const i: number = all.findIndex((l: Legacy): boolean => l.is(legacy))
 
     if (i >= 0) {
       all = [...all.slice(0, i), legacy, ...all.slice(i + 1)]
@@ -43,14 +43,14 @@ export default class LegacyRepository {
 
   public find(id: string): Legacy | null {
     const all: Legacy[] = this.findAll()
-    const l: Legacy | undefined = all.find((l: Legacy) => l.id === id)
+    const l: Legacy | undefined = all.find((l: Legacy): boolean => l.id === id)
 
     return l ?? null
   }
 
   public delete(legacy: Legacy): void {
     const all: Legacy[] = this.findAll().filter(
-      (l: Legacy): boolean => l.id !== legacy.id,
+      (l: Legacy): boolean => !l.is(legacy),
     )
 
     this.store.set<SerializedLegacy[]>(

@@ -21,7 +21,7 @@ const BodyClassNameContext: Context<ContextType> = createContext<ContextType>({
 export function useBodyClassName(className: string): ContextType {
   const context: ContextType = useContext(BodyClassNameContext)
   if (context.body === null) {
-    throw new Error()
+    throw new Error("no body context")
   }
 
   useEffect((): VoidFunction => {

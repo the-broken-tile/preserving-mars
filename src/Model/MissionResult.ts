@@ -53,7 +53,7 @@ export default class MissionResult {
       this.points,
       this.title,
       this.mission,
-      this.savedCards.filter((c: SavedCard): boolean => c.id !== card.id),
+      this.savedCards.filter((c: SavedCard): boolean => !c.is(card)),
       this.passingOrder,
     )
   }

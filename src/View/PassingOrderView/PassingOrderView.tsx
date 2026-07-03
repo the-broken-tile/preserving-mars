@@ -15,7 +15,7 @@ export default function PassingOrderView({ player }: Props): JSX.Element {
   const [pills, setPills] = useState<boolean[]>([])
 
   useEffect((): void => {
-    const order: number | null = legacy.getCurrentMission(player).passingOrder
+    const order: number | null = player.currentMissionResult.passingOrder
     const l: number = legacy.players.length
     const p: boolean[] = Array(l).fill(false)
     if (order !== null) {
@@ -26,7 +26,7 @@ export default function PassingOrderView({ player }: Props): JSX.Element {
   }, [player, legacy])
 
   const handleSelectPosition = (position: number): void => {
-    const result: MissionResult = legacy.getCurrentMission(player)
+    const result: MissionResult = player.currentMissionResult
 
     if (result.passingOrder === position) {
       const l: Legacy = legacy.setMissionResult(

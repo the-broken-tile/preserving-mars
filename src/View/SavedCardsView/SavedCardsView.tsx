@@ -20,7 +20,7 @@ type Props = {
 
 export default function SavedCardsView({ player, type }: Props): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
-  const result: MissionResult = legacy.getCurrentMission(player)
+  const result: MissionResult = player.currentMissionResult
   const [currentCardName, setCurrentCardName] = useState<string | null>(null)
 
   const canAdd = (): boolean => {
@@ -33,11 +33,9 @@ export default function SavedCardsView({ player, type }: Props): JSX.Element {
 
     if (type === "development") {
       return (
-        legacy
-          .getCurrentMission(player)
-          .savedCards.find(
-            (c: SavedCard): boolean => c.type === "development",
-          ) === undefined
+        result.savedCards.find(
+          (c: SavedCard): boolean => c.type === "development",
+        ) === undefined
       )
     }
 

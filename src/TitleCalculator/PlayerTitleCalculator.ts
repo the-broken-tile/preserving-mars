@@ -17,7 +17,7 @@ export default class PlayerTitleCalculator implements TitleCalculatorInterface {
 
     players.forEach((player: Player, index: number): void => {
       const place: number = index + 1
-      let result: MissionResult = legacy.getCurrentMission(player)
+      let result: MissionResult = player.currentMissionResult
       const titleName: TitleName = this.titleForPlace[place]
 
       result = result.setTitle(

@@ -1,14 +1,16 @@
-import DeserializerInterface from "./DeserializerInterface"
+import ArrayDeserializer from "./ArrayDeserializer"
 import CorporationDeserializer from "./CorporationDeserializer"
+import DeserializerInterface from "./DeserializerInterface"
 import Deserializer from "./Deserializer"
 import LegacyDeserializer from "./LegacyDeserializer"
 import MissionResultDeserializer from "./MissionResultDeserializer"
 import PlayerDeserializer from "./PlayerDeserializer"
-import SavedCardDeserializer from "@/Deserializer/SavedCardDeserializer"
-import TitleDeserializer from "@/Deserializer/TitleDeserializer"
-import NullDeserializer from "@/Deserializer/NullDeserializer"
+import SavedCardDeserializer from "./SavedCardDeserializer"
+import TitleDeserializer from "./TitleDeserializer"
+import NullDeserializer from "./NullDeserializer"
 
 const deserializer: Deserializer = new Deserializer([
+  new ArrayDeserializer(),
   new NullDeserializer(),
   new CorporationDeserializer(),
   new LegacyDeserializer(),
