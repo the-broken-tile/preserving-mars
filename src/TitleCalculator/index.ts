@@ -3,22 +3,22 @@ import PlayerTitleCalculator from "./PlayerTitleCalculator"
 import { Legacy, TitleName } from "@/Model"
 
 const TITLE_FOR_PLACE_TWO_PLAYERS: Record<number, TitleName> = {
-  1: "Governor",
-  2: "Prefect",
+  1: "g",
+  2: "p",
 }
 
 const TITLE_FOR_PLACE: Record<number, TitleName> = {
-  1: "Governor",
-  2: "Administrator",
-  3: "Prefect",
-  4: "none",
+  1: "g",
+  2: "a",
+  3: "p",
+  4: "n",
 }
 
 const POINTS_PER_TITLE: Record<TitleName, number> = {
-  Governor: 15,
-  Administrator: 10,
-  Prefect: 5,
-  none: 0,
+  g: 15,
+  a: 10,
+  p: 5,
+  n: 0,
 }
 
 const MEGA_CREDITS_FOR_PLACE: Record<number, number> = {

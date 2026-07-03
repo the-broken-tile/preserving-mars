@@ -1,4 +1,4 @@
-export type TitleName = "Governor" | "Administrator" | "Prefect" | "none"
+export type TitleName = "g" | "a" | "p" | "n"
 
 export default class Title {
   constructor(
@@ -9,6 +9,6 @@ export default class Title {
   ) {}
 
   public static none(mission: number): Title {
-    return new Title("none", mission, 0, 0)
+    return new Title("n", mission, 0, 0)
   }
 }

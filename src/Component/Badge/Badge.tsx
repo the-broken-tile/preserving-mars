@@ -11,14 +11,10 @@ type Props = {
 }
 
 const MAP: Record<TitleName, (mission: string) => JSX.Element> = {
-  Governor: (mission: string): JSX.Element => (
-    <GovernorBadge mission={mission} />
-  ),
-  Administrator: (mission: string): JSX.Element => (
-    <AdministratorBadge mission={mission} />
-  ),
-  Prefect: (mission: string): JSX.Element => <PrefectBadge mission={mission} />,
-  none: (): JSX.Element => <></>,
+  g: (mission: string): JSX.Element => <GovernorBadge mission={mission} />,
+  a: (mission: string): JSX.Element => <AdministratorBadge mission={mission} />,
+  p: (mission: string): JSX.Element => <PrefectBadge mission={mission} />,
+  n: (): JSX.Element => <></>,
 }
 
 export default function Badge({ title, mission }: Props): JSX.Element {

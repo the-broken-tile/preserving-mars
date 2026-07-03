@@ -1,5 +1,5 @@
 import { Legacy } from "@/Model"
-import { encode } from "@/util/index"
+import { encode } from "@/util"
 import { serializer } from "@/Serializer"
 
 export default function exportLegacy(legacy: Legacy): string {
