@@ -9,3 +9,5 @@ export const STARTING_TERRAFORMING_RATING: number =
 export const MAX_SAVED_PROJECT_CARDS: number = config.maxSavedProjectCards
 
 export const MISSION_LENGTHS: number[] = config.missionLengths
+
+export const CACHE_PREFIX: string = config.cachePrefix

@@ -1,10 +1,10 @@
-const PREFIX: string = "preserving_mars_"
+import { CACHE_PREFIX } from "@/constants"
 
 export default class Store {
   private storage: Storage = window.localStorage
 
   public get<T>(key: string): T | null {
-    const v: string | null = this.storage.getItem(`${PREFIX}${key}`)
+    const v: string | null = this.storage.getItem(`${CACHE_PREFIX}${key}`)
 
     if (v === null) {
       return v
@@ -14,6 +14,6 @@ export default class Store {
   }
 
   public set<T>(key: string, value: T): void {
-    this.storage.setItem(`${PREFIX}${key}`, JSON.stringify(value))
+    this.storage.setItem(`${CACHE_PREFIX}${key}`, JSON.stringify(value))
   }
 }

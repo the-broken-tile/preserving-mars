@@ -1,4 +1,5 @@
 {
+  "cachePrefix": "preserving_mars:v1:",
   "minPlayers": 2,
   "maxPlayers": 5,
   "staringTerraformingRating": 25,
