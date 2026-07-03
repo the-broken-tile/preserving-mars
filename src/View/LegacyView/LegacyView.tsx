@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router"
 import { legacyRepository } from "@/Repository"
 import { BottomMenu, Loading } from "@/Component"
 import { Legacy, Phase } from "@/Model"
+import { AFTER, BEFORE, DURING, FINISHED, PREPARING } from "@/Model/Phase"
 import {
   AfterMissionView,
   BeforeMissionView,
@@ -15,13 +16,13 @@ import LegacyContext from "@/Context/LegacyContext"
 import { home, share } from "@/icons"
 
 const PHASE_MAP: Record<
-  Exclude<Phase, "preparing">,
+  Exclude<Phase, "p">,
   (legacy: Legacy) => JSX.Element
 > = {
-  beforeMission: (): JSX.Element => <BeforeMissionView />,
-  duringMission: (): JSX.Element => <DuringMissionView />,
-  afterMission: (): JSX.Element => <AfterMissionView />,
-  finished: (): JSX.Element => <FinishedLegacyView />,
+  [BEFORE]: (): JSX.Element => <BeforeMissionView />,
+  [DURING]: (): JSX.Element => <DuringMissionView />,
+  [AFTER]: (): JSX.Element => <AfterMissionView />,
+  [FINISHED]: (): JSX.Element => <FinishedLegacyView />,
 }
 
 export default function LegacyView(): JSX.Element {
@@ -44,7 +45,7 @@ export default function LegacyView(): JSX.Element {
     return <LegacyNotFoundView />
   }
 
-  if (legacy.phase === "preparing") {
+  if (legacy.phase === PREPARING) {
     return <div className="error">Oops, something went wrong!</div>
   }
 

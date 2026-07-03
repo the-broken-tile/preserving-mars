@@ -1,6 +1,6 @@
 import { v4 } from "uuid"
 import { t } from "@/i18n"
-import { ADVANCEMENT_MAP } from "./Phase"
+import { ADVANCEMENT_MAP, AFTER, BEFORE, FINISHED, PREPARING } from "./Phase"
 import { MissionResult, Phase, Player, SavedCard, Title } from "."
 import IdentityInterface from "@/Model/IdentityInterface"
 
@@ -13,7 +13,7 @@ export default class Legacy implements IdentityInterface<Legacy> {
     public readonly players: Player[],
     public readonly totalMissions: number,
     public readonly currentMission: number = 0,
-    public readonly phase: Phase = "preparing",
+    public readonly phase: Phase = PREPARING,
     private readonly _name: string | null = null,
     public readonly missionResults: MissionResults = [],
   ) {
@@ -47,17 +47,15 @@ export default class Legacy implements IdentityInterface<Legacy> {
   }
 
   public advance(): Legacy {
-    if (this.phase === "finished") {
+    if (this.phase === FINISHED) {
       return this
     }
 
     let newPhase: Phase = ADVANCEMENT_MAP[this.phase]
     const mission: number =
-      this.phase === "afterMission" ?
-        this.currentMission + 1
-      : this.currentMission
+      this.phase === AFTER ? this.currentMission + 1 : this.currentMission
     if (mission >= this.totalMissions) {
-      newPhase = "finished"
+      newPhase = FINISHED
     }
 
     return this.clone({
@@ -91,20 +89,14 @@ export default class Legacy implements IdentityInterface<Legacy> {
             continue
           }
 
-          if (
-            this.phase === "afterMission" &&
-            mission === this.currentMission
-          ) {
+          if (this.phase === AFTER && mission === this.currentMission) {
             // return only currently saved cards
             cards.push(card)
 
             return
           }
 
-          if (
-            "beforeMission" === this.phase &&
-            mission === this.currentMission - 1
-          ) {
+          if (this.phase === BEFORE && mission === this.currentMission - 1) {
             // Return only project cards that were saved last mission.
             cards.push(card)
           }
@@ -210,7 +202,7 @@ export default class Legacy implements IdentityInterface<Legacy> {
   }
 
   public getFinalStanding(): PlayerPointTuple[] {
-    if (this.phase !== "finished") {
+    if (this.phase !== FINISHED) {
       throw new Error("No final standing")
     }
 

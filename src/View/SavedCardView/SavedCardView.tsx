@@ -1,6 +1,7 @@
 import { JSX, useEffect, useState } from "react"
 import { SavedCard } from "@/Model"
 import { useLegacyContext } from "@/Context"
+import { AFTER, DURING } from "@/Model/Phase"
 
 type Props = {
   card: SavedCard
@@ -12,13 +13,13 @@ export default function SavedCardView({ card, onDelete }: Props): JSX.Element {
   const [canRemove, setCanRemove] = useState<boolean>(true)
 
   useEffect((): void => {
-    if (legacy.phase === "afterMission") {
+    if (legacy.phase === AFTER) {
       setCanRemove(card.type === "project")
 
       return
     }
 
-    if (legacy.phase === "duringMission") {
+    if (legacy.phase === DURING) {
       setCanRemove(card.type === "innovation")
 
       return

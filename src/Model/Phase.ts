@@ -1,18 +1,19 @@
-type Phase =
-  | "preparing"
-  | "beforeMission"
-  | "duringMission"
-  | "afterMission"
-  | "finished"
+export const PREPARING = "p"
+export const BEFORE = "b"
+export const DURING = "d"
+export const AFTER = "a"
+export const FINISHED = "f"
+
+type Phase = "p" | "b" | "d" | "a" | "f"
 
 export const ADVANCEMENT_MAP: Record<
-  Exclude<Phase, "finished">,
-  Exclude<Phase, "preparing" | "finished">
+  Exclude<Phase, "f">,
+  Exclude<Phase, "p" | "f">
 > = {
-  preparing: "beforeMission",
-  beforeMission: "duringMission",
-  duringMission: "afterMission",
-  afterMission: "beforeMission",
+  [PREPARING]: BEFORE,
+  [BEFORE]: DURING,
+  [DURING]: AFTER,
+  [AFTER]: BEFORE,
 }
 
 export default Phase
