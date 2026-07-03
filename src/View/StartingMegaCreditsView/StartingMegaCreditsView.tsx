@@ -15,6 +15,11 @@ export default function StartingMegaCreditsView({
   const missionResult: MissionResult | undefined =
     legacy.getPreviousMissionResult(player)
 
+  if (legacy.currentMission === 0) {
+    // @todo add per corporation. Add per side A / side B.
+    return <></>
+  }
+
   if (missionResult === undefined) {
     console.error("Invalid StartingMegaCreditsView usage.")
 
