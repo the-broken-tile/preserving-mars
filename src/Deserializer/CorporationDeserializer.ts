@@ -1,15 +1,15 @@
-import { SerializedCorporation } from "@/Serializer"
 import { Corporation } from "@/Model"
-import DeserializerInterface from "./DeserializerInterface"
+import { SerializedCorporation } from "@/Serializer"
+import { DeserializerInterface } from "."
 
 export default class CorporationDeserializer implements DeserializerInterface<
   SerializedCorporation,
   Corporation
 > {
   public supports(value: any): value is SerializedCorporation {
-    return value._type === "corporation"
+    return value._t === "o"
   }
   public deserialize(value: SerializedCorporation): Corporation {
-    return Corporation.create(value.name)
+    return Corporation.create(value.n)
   }
 }

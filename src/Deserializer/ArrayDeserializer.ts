@@ -1,4 +1,4 @@
-import DeserializerInterface from "@/Deserializer/DeserializerInterface"
+import { DeserializerInterface } from "."
 
 export default class ArrayDeserializer<S, T> implements DeserializerInterface<
   S[],

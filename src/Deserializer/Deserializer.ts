@@ -1,4 +1,4 @@
-import DeserializerInterface from "./DeserializerInterface"
+import { DeserializerInterface } from "."
 
 export default class Deserializer implements DeserializerInterface<any, any> {
   constructor(

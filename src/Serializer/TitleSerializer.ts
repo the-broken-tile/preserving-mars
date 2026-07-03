@@ -1,13 +1,5 @@
-import SerializerInterface from "@/Serializer/SerializerInterface"
-import { Title, TitleName } from "@/Model"
-
-export type SerializedTitle = {
-  _type: "title"
-  name: TitleName
-  mission: number
-  points: number
-  startingMegaCredits: number
-}
+import { SerializerInterface, type SerializedTitle } from "."
+import { Title } from "@/Model"
 
 export default class TitleSerializer implements SerializerInterface<
   Title,
@@ -18,11 +10,11 @@ export default class TitleSerializer implements SerializerInterface<
   }
   public serialize(value: Title): SerializedTitle {
     return {
-      _type: "title",
-      name: value.name,
-      mission: value.mission,
-      points: value.points,
-      startingMegaCredits: value.startingMegaCredits,
+      _t: "t",
+      n: value.name,
+      m: value.mission,
+      p: value.points,
+      c: value.startingMegaCredits,
     }
   }
 }

@@ -1,11 +1,5 @@
-import SerializerInterface from "@/Serializer/SerializerInterface"
-import { SavedCard, SavedCardType } from "@/Model"
-
-export type SerializedSavedCard = {
-  name: string
-  type: SavedCardType
-  _type: "savedCard"
-}
+import { SavedCard } from "@/Model"
+import { SerializerInterface, SerializedSavedCard } from "."
 
 export default class SavedCardSerializer implements SerializerInterface<
   SavedCard,
@@ -17,9 +11,9 @@ export default class SavedCardSerializer implements SerializerInterface<
 
   public serialize(value: SavedCard): SerializedSavedCard {
     return {
-      _type: "savedCard",
-      type: value.type,
-      name: value.name,
+      _t: "c",
+      t: value.type,
+      n: value.name,
     }
   }
 }

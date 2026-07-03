@@ -1,6 +1,6 @@
-import DeserializerInterface from "@/Deserializer/DeserializerInterface"
-import { SerializedTitle } from "@/Serializer/TitleSerializer"
 import { Title } from "@/Model"
+import { SerializedTitle } from "@/Serializer"
+import { DeserializerInterface } from "."
 
 export default class TitleDeserializer implements DeserializerInterface<
   SerializedTitle,
@@ -11,11 +11,6 @@ export default class TitleDeserializer implements DeserializerInterface<
   }
 
   public deserialize(value: SerializedTitle): Title {
-    return new Title(
-      value.name,
-      value.mission,
-      value.points,
-      value.startingMegaCredits,
-    )
+    return new Title(value.n, value.m, value.p, value.c)
   }
 }

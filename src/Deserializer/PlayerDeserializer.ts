@@ -1,7 +1,7 @@
-import DeserializerInterface from "@/Deserializer/DeserializerInterface"
-import { SerializedPlayer } from "@/Serializer"
 import { Player } from "@/Model"
+import { SerializedPlayer } from "@/Serializer"
 import { Writeable } from "@/types"
+import { DeserializerInterface } from "."
 
 export default class PlayerDeserializer implements DeserializerInterface<
   SerializedPlayer,
@@ -9,18 +9,18 @@ export default class PlayerDeserializer implements DeserializerInterface<
 > {
   private deserializer!: DeserializerInterface<any, any>
   public supports(value: any): value is SerializedPlayer {
-    return value._type === "player"
+    return value._t === "p"
   }
 
   public deserialize(value: SerializedPlayer): Player {
     let p: Writeable<Player> = Player.create(
-      value.color,
-      this.deserializer.deserialize(value.missionResults),
+      value.c,
+      this.deserializer.deserialize(value.m),
     )
 
     return p
-      .setCorporation(this.deserializer.deserialize(value.corporation))
-      .setName(value.name)
+      .setCorporation(this.deserializer.deserialize(value.o))
+      .setName(value.n)
   }
 
   public setDeserializer(deserializer: DeserializerInterface<any, any>): void {

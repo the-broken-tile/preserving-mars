@@ -3,5 +3,9 @@ import { encode } from "@/util/index"
 import { serializer } from "@/Serializer"
 
 export default function exportLegacy(legacy: Legacy): string {
-  return encode(serializer.serialize(legacy))
+  const r = encode(serializer.serialize(legacy))
+
+  console.log(r.length)
+
+  return r
 }

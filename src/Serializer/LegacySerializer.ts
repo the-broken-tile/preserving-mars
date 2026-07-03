@@ -1,15 +1,5 @@
-import { SerializerInterface, SerializedPlayer } from "."
-import { Legacy, Phase, Player } from "@/Model"
-
-export type SerializedLegacy = {
-  id: string
-  currentMission: number
-  totalMissions: number
-  phase: Phase
-  name: string | null
-  players: SerializedPlayer[]
-  _type: "legacy"
-}
+import { SerializerInterface, SerializedPlayer, SerializedLegacy } from "."
+import { Legacy, Player } from "@/Model"
 
 export default class LegacySerializer implements SerializerInterface<
   Legacy,
@@ -23,16 +13,16 @@ export default class LegacySerializer implements SerializerInterface<
 
   public serialize(value: Legacy): SerializedLegacy {
     return {
-      id: value.id,
-      currentMission: value.currentMission,
-      totalMissions: value.totalMissions,
-      phase: value.phase,
-      name: value["_name"],
-      players: value.players.map(
+      i: value.id,
+      c: value.currentMission,
+      t: value.totalMissions,
+      f: value.phase,
+      n: value["_name"],
+      p: value.players.map(
         (player: Player): SerializedPlayer => this.serializer.serialize(player),
         this,
       ),
-      _type: "legacy",
+      _t: "l",
     }
   }
 

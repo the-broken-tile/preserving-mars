@@ -1,17 +1,7 @@
-import {
-  SerializerInterface,
-  SerializedCorporation,
-  SerializedMission,
-} from "."
-import { Color, Player } from "@/Model"
+import { SerializerInterface } from "."
+import { Player } from "@/Model"
+import { SerializedPlayer } from "./types"
 
-export type SerializedPlayer = {
-  name: string
-  color: Color
-  corporation: SerializedCorporation
-  missionResults: SerializedMission[]
-  _type: "player"
-}
 export default class PlayerSerializer implements SerializerInterface<
   Player,
   SerializedPlayer
@@ -22,11 +12,11 @@ export default class PlayerSerializer implements SerializerInterface<
   }
   public serialize(value: Player): SerializedPlayer {
     return {
-      name: value.name,
-      color: value.color,
-      corporation: this.serializer.serialize(value.corporation),
-      missionResults: this.serializer.serialize(value.missionResults),
-      _type: "player",
+      _t: "p",
+      n: value.name,
+      c: value.color,
+      o: this.serializer.serialize(value.corporation),
+      m: this.serializer.serialize(value.missionResults),
     }
   }
   public setSerializer?(serializer: SerializerInterface<any, any>): void {

@@ -1,7 +1,7 @@
-import DeserializerInterface from "./DeserializerInterface"
-import { SerializedLegacy, SerializedPlayer } from "@/Serializer"
-import { Legacy, Player } from "@/Model"
+import { Legacy } from "@/Model"
+import { SerializedLegacy } from "@/Serializer"
 import { Writeable } from "@/types"
+import { DeserializerInterface } from "."
 
 export default class LegacyDeserializer implements DeserializerInterface<
   SerializedLegacy,
@@ -10,20 +10,20 @@ export default class LegacyDeserializer implements DeserializerInterface<
   private deserializer!: DeserializerInterface<any, any>
 
   public supports(value: any): value is SerializedLegacy {
-    return value._type === "legacy"
+    return value._t === "l"
   }
 
   public deserialize(value: SerializedLegacy): Legacy {
-    const players: Player[] = value.players.map(
-      (p: SerializedPlayer): Player => this.deserializer.deserialize(p),
+    const l: Writeable<Legacy> = Legacy.create(
+      this.deserializer.deserialize(value.p),
+      value.t,
     )
-    const l: Writeable<Legacy> = Legacy.create(players, value.totalMissions)
-    l.id = value.id
-    l.currentMission = value.currentMission
-    l.phase = value.phase
+    l.id = value.i
+    l.currentMission = value.c
+    l.phase = value.f
 
-    if (value.name !== null) {
-      return l.setName(value.name)
+    if (value.n !== null) {
+      return l.setName(value.n)
     }
 
     return l as Legacy

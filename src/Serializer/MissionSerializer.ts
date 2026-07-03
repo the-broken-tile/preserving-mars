@@ -1,15 +1,7 @@
 import { SerializerInterface, SerializedSavedCard } from "."
 import { MissionResult, SavedCard } from "@/Model"
-import { SerializedTitle } from "@/Serializer/TitleSerializer"
+import { SerializedMission } from "./types"
 
-export type SerializedMission = {
-  points: number
-  title: SerializedTitle
-  mission: number
-  savedCards: SerializedSavedCard[]
-  passingOrder: number | null
-  _type: "missionResult"
-}
 export default class MissionSerializer implements SerializerInterface<
   MissionResult,
   SerializedMission
@@ -21,15 +13,15 @@ export default class MissionSerializer implements SerializerInterface<
   }
   public serialize(value: MissionResult): SerializedMission {
     return {
-      points: value.points,
-      title: this.serializer.serialize(value.title),
-      mission: value.mission,
-      savedCards: value.savedCards.map(
+      p: value.points,
+      t: this.serializer.serialize(value.title),
+      m: value.mission,
+      s: value.savedCards.map(
         (c: SavedCard): SerializedSavedCard => this.serializer.serialize(c),
         this,
       ),
-      passingOrder: value.passingOrder,
-      _type: "missionResult",
+      o: value.passingOrder,
+      _t: "m",
     }
   }
 

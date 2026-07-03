@@ -1,10 +1,6 @@
-import SerializerInterface from "@/Serializer/SerializerInterface"
+import { SerializerInterface } from "."
 import { Corporation } from "@/Model"
-
-export type SerializedCorporation = {
-  name: string
-  _type: "corporation"
-}
+import { SerializedCorporation } from "./types"
 
 export default class CorporationSerializer implements SerializerInterface<
   Corporation,
@@ -16,8 +12,8 @@ export default class CorporationSerializer implements SerializerInterface<
 
   public serialize(value: Corporation): SerializedCorporation {
     return {
-      name: value.name,
-      _type: "corporation",
+      n: value.name,
+      _t: "o",
     }
   }
 }
