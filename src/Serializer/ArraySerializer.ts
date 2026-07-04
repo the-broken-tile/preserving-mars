@@ -1,19 +1,27 @@
-import SerializerInterface from "@/Serializer/SerializerInterface"
+import { DeserializerInterface, SerializerInterface } from "."
 
-export default class ArraySerializer<T, S> implements SerializerInterface<
-  T[],
-  S[]
-> {
-  private serializer!: SerializerInterface<T, S>
-  public supports(value: any): value is T[] {
-    return Array.isArray(value)
+export default class ArraySerializer
+  implements SerializerInterface, DeserializerInterface
+{
+  private serializer!: SerializerInterface
+  private deserializer!: DeserializerInterface
+  public serialize(value: any): any[] | undefined {
+    return Array.isArray(value) ?
+        value.map((v: any): any => this.serializer.serialize(v)!)
+      : undefined
   }
 
-  public serialize(value: T[]): S[] {
-    return value.map((v: T): S => this.serializer.serialize(v))
-  }
-
-  public setSerializer(serializer: SerializerInterface<any, any>): void {
+  public setSerializer(serializer: SerializerInterface): void {
     this.serializer = serializer
+  }
+
+  public deserialize(value: any): any[] | undefined {
+    return Array.isArray(value) ?
+        value.map((v: any): any => this.deserializer.deserialize(v)!)
+      : undefined
+  }
+
+  public setDeserializer(deserializer: DeserializerInterface): void {
+    this.deserializer = deserializer
   }
 }

@@ -1,11 +1,7 @@
 import { Color, Phase, SavedCardType, TitleName } from "@/Model"
 
-type Serialized = {
-  _t: string
-}
-
 export type SerializedLegacy = [
-  "l", // type
+  string, // type
   string, //id
   number, // current mission
   number, // total missions
@@ -14,10 +10,10 @@ export type SerializedLegacy = [
   SerializedPlayer[],
 ]
 
-export type SerializedCorporation = ["o", string]
+export type SerializedCorporation = [string, string]
 
 export type SerializedTitle = [
-  "t", // type
+  string, // type
   TitleName,
   number, // mission
   number, // title points
@@ -25,7 +21,7 @@ export type SerializedTitle = [
 ]
 
 export type SerializedMission = [
-  "m", // type
+  string, // type
   number, // points
   SerializedTitle,
   number, // mission
@@ -34,7 +30,7 @@ export type SerializedMission = [
 ]
 
 export type SerializedPlayer = [
-  "p", // type
+  string, // type
   string, // name
   Color,
   SerializedCorporation,
@@ -42,7 +38,7 @@ export type SerializedPlayer = [
 ]
 
 export type SerializedSavedCard = [
-  "c", // type
+  string, // type
   string, // name
   SavedCardType,
 ]

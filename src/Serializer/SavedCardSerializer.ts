@@ -1,15 +1,24 @@
 import { SavedCard } from "@/Model"
-import { SerializerInterface, SerializedSavedCard } from "."
+import { DeserializerInterface, SerializerInterface } from "."
+import { SerializedSavedCard } from "./types"
 
-export default class SavedCardSerializer implements SerializerInterface<
-  SavedCard,
-  SerializedSavedCard
-> {
-  public supports(value: any): value is SavedCard {
-    return value instanceof SavedCard
+export default class SavedCardSerializer
+  implements SerializerInterface, DeserializerInterface
+{
+  private key!: string
+
+  public alias(alias: string): void {
+    this.key = alias
+  }
+  public serialize(value: any): SerializedSavedCard | undefined {
+    return value instanceof SavedCard ?
+        [this.key, value.name, value.type]
+      : undefined
   }
 
-  public serialize(value: SavedCard): SerializedSavedCard {
-    return ["c", value.name, value.type]
+  public deserialize(value: any): SavedCard | undefined {
+    return Array.isArray(value) && value[0] === this.key ?
+        new SavedCard(value[1], value[2])
+      : undefined
   }
 }

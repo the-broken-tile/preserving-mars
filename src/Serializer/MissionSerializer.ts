@@ -1,28 +1,50 @@
-import { SerializerInterface } from "."
+import { DeserializerInterface, SerializerInterface } from "."
 import { MissionResult } from "@/Model"
 import { SerializedMission } from "./types"
+import { Writeable } from "@/types"
 
-export default class MissionSerializer implements SerializerInterface<
-  MissionResult,
-  SerializedMission
-> {
-  private serializer!: SerializerInterface<any, any>
+export default class MissionSerializer
+  implements SerializerInterface, DeserializerInterface
+{
+  private key!: string
+  private serializer!: SerializerInterface
+  private deserializer!: DeserializerInterface
 
-  public supports(value: any): value is MissionResult {
-    return value instanceof MissionResult
-  }
-  public serialize(value: MissionResult): SerializedMission {
-    return [
-      "m",
-      value.points,
-      this.serializer.serialize(value.title),
-      value.mission,
-      this.serializer.serialize(value.savedCards),
-      value.passingOrder,
-    ]
+  public alias(alias: string) {
+    this.key = alias
   }
 
-  public setSerializer(serializer: SerializerInterface<any, any>): void {
+  public serialize(value: any): SerializedMission | undefined {
+    return value instanceof MissionResult ?
+        [
+          this.key,
+          value.points,
+          this.serializer.serialize(value.title),
+          value.mission,
+          this.serializer.serialize(value.savedCards),
+          value.passingOrder,
+        ]
+      : undefined
+  }
+
+  public deserialize(value: SerializedMission): MissionResult | undefined {
+    if (!Array.isArray(value) || value[0] !== "m") {
+      return undefined
+    }
+    const result: Writeable<MissionResult> = MissionResult.create(value[3])
+    result.points = value[1]
+    result.title = this.deserializer.deserialize(value[2])
+    result.savedCards = this.deserializer.deserialize(value[4])
+    result.passingOrder = value[5]
+
+    return result
+  }
+
+  public setSerializer(serializer: SerializerInterface): void {
     this.serializer = serializer
+  }
+
+  public setDeserializer(deserializer: DeserializerInterface): void {
+    this.deserializer = deserializer
   }
 }

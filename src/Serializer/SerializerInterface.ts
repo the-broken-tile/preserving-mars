@@ -1,5 +1,5 @@
-export default interface SerializerInterface<T, S> {
-  supports(value: any): value is T
-  serialize(value: T): S
-  setSerializer?(serializer: SerializerInterface<any, any>): void
+export default interface SerializerInterface {
+  serialize(value: any): any | undefined
+  setSerializer?(serializer: SerializerInterface): void
+  alias?(alias: string): void
 }

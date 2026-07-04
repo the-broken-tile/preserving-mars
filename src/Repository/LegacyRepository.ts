@@ -1,23 +1,23 @@
 import { Store } from "@/Store"
 import { Legacy } from "@/Model"
-import { SerializerInterface, SerializedLegacy } from "@/Serializer"
-import { DeserializerInterface } from "@/Deserializer"
+import {
+  DeserializerInterface,
+  SerializerInterface,
+  SerializedLegacy,
+} from "@/Serializer"
 
 const KEY: string = "legacies"
 export default class LegacyRepository {
   constructor(
     private readonly store: Store,
-    private readonly serializer: SerializerInterface<Legacy, SerializedLegacy>,
-    private readonly deserializer: DeserializerInterface<
-      SerializedLegacy,
-      Legacy
-    >,
+    private readonly serializer: SerializerInterface,
+    private readonly deserializer: DeserializerInterface,
   ) {}
 
   public findAll(): Legacy[] {
     return (this.store.get<SerializedLegacy[]>(KEY) ?? []).map(
       (legacy: SerializedLegacy): Legacy =>
-        this.deserializer.deserialize(legacy),
+        this.deserializer.deserialize(legacy)!,
       this,
     )
   }
@@ -35,7 +35,7 @@ export default class LegacyRepository {
     this.store.set<SerializedLegacy[]>(
       KEY,
       all.map(
-        (l: Legacy): SerializedLegacy => this.serializer.serialize(l),
+        (l: Legacy): SerializedLegacy => this.serializer.serialize(l)!,
         this,
       ),
     )
@@ -55,10 +55,7 @@ export default class LegacyRepository {
 
     this.store.set<SerializedLegacy[]>(
       KEY,
-      all.map(
-        (l: Legacy): SerializedLegacy => this.serializer.serialize(l),
-        this,
-      ),
+      all.map((l: Legacy): SerializedLegacy => this.serializer.serialize(l)!),
     )
   }
 }

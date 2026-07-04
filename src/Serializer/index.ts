@@ -8,25 +8,27 @@ import MissionSerializer from "./MissionSerializer"
 import SavedCardSerializer from "./SavedCardSerializer"
 import TitleSerializer from "./TitleSerializer"
 import NullSerializer from "./NullSerializer"
+import DeserializerInterface from "@/Serializer/DeserializerInterface"
 
-const serializer = new Serializer([
-  new ArraySerializer(),
-  new NullSerializer(),
-  new LegacySerializer(),
-  new PlayerSerializer(),
-  new CorporationSerializer(),
-  new MissionSerializer(),
-  new SavedCardSerializer(),
-  new TitleSerializer(),
-])
+const serializers: Record<string, SerializerInterface & DeserializerInterface> =
+  {
+    /**
+     * Types are here to guarantee and more easily manage uniqueness.
+     */
+    _null: new NullSerializer(),
+    l: new LegacySerializer(),
+    p: new PlayerSerializer(),
+    o: new CorporationSerializer(),
+    m: new MissionSerializer(),
+    c: new SavedCardSerializer(),
+    t: new TitleSerializer(),
+    // Must be last 👇
+    _array: new ArraySerializer(),
+  }
+const serializer: Serializer = new Serializer(serializers)
+const deserializer: Serializer = serializer
 
-export {
-  type SerializedCorporation,
-  type SerializedPlayer,
-  type SerializedMission,
-  type SerializedLegacy,
-  type SerializedTitle,
-  type SerializedSavedCard,
-} from "./types"
+export { type SerializedLegacy } from "./types"
 
-export { type SerializerInterface, serializer, Serializer }
+export type { default as DeserializerInterface } from "./DeserializerInterface"
+export { deserializer, type SerializerInterface, serializer, Serializer }
