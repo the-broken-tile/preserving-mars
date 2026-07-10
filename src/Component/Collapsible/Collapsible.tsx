@@ -1,30 +1,15 @@
 import { JSX, ReactNode } from "react"
-import { v4 } from "uuid"
-
-import "./collapsible.css"
 
 type Props = {
-  id?: string
   children: ReactNode
   title: ReactNode
 }
 
-export default function Collapsible({
-  children,
-  title,
-  id,
-}: Props): JSX.Element {
-  const realId: string = id ?? `collapsible-${v4().split("-")[0]}`
-
+export default function Collapsible({ children, title }: Props): JSX.Element {
   return (
-    <div className="wrap-collapsible">
-      <input id={realId} className="toggle" type="checkbox" />
-      <label htmlFor={realId} className="label-toggle button">
-        {title}
-      </label>
-      <div className="collapsible-content">
-        <div className="content-inner">{children}</div>
-      </div>
-    </div>
+    <details>
+      <summary role="button">{title}</summary>
+      <div>{children}</div>
+    </details>
   )
 }

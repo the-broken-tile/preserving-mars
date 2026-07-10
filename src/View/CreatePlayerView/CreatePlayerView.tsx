@@ -1,10 +1,8 @@
 import { FormEvent, FormEventHandler, JSX } from "react"
-import { Color, COLORS, Player } from "@/Model"
-import { Cube } from "@/Component/Cube"
 import { t } from "@/i18n"
-
-import "./create-player-view.css"
 import { ValidationError } from "@/container/Validator"
+import { Cube } from "@/Component/Cube"
+import { Color, COLORS, Player } from "@/Model"
 
 type Props = {
   player: Player
@@ -40,72 +38,70 @@ export default function CreatePlayerView({
   }
 
   return (
-    <ul className="create-player">
-      <li>
-        <div>
-          <label htmlFor={`name-${player.id}`}>{t("Name")}: </label>
+    <article>
+      <fieldset role="group">
+        <label htmlFor={`name-${player.id}`}>
+          {t("Name")}:
           <input
             onInput={handleNameChange}
             value={player.name}
             id={`name-${player.id}`}
           />
-        </div>
-        {errors
-          .filter((e: ValidationError): boolean => e.field === "name")
-          .map(
-            (e: ValidationError, i: number): JSX.Element => (
-              <div key={i} className="error">
-                {e.message}
-              </div>
-            ),
-          )}
-      </li>
-      <li>
-        <div>
-          <label htmlFor={`corporation-${player.id}`}>
-            {t("Corporation")}:
-          </label>
+        </label>
+      </fieldset>
+      {errors
+        .filter((e: ValidationError): boolean => e.field === "name")
+        .map(
+          (e: ValidationError, i: number): JSX.Element => (
+            <small key={i}>{e.message}</small>
+          ),
+        )}
+      <fieldset role="group">
+        <label>
+          {t("Corporation")}:
           <input
             onInput={handleCorporationChange}
             value={player.corporation?.name ?? ""}
             id={`corporation-${player.id}`}
           />
-        </div>
-        {errors
-          .filter((e: ValidationError): boolean => e.field === "corporation")
-          .map(
-            (e: ValidationError, i: number): JSX.Element => (
-              <div key={i} className="error">
-                {e.message}
-              </div>
-            ),
-          )}
-      </li>
-      <li>
-        <div>
-          <label htmlFor={`color-${player.id}`} className="color-label">
+        </label>
+      </fieldset>
+      {errors
+        .filter((e: ValidationError): boolean => e.field === "corporation")
+        .map(
+          (e: ValidationError, i: number): JSX.Element => (
+            <div key={i} className="error">
+              {e.message}
+            </div>
+          ),
+        )}
+      <div>
+        <fieldset>
+          <label htmlFor={`color-${player.id}`}>
             {t("Color")}
+            <div role="group">
+              <select
+                onInput={handleColorChange}
+                id={`color-${player.id}`}
+                value={player.color ?? undefined}
+              >
+                {COLORS.map(
+                  (color: Color): JSX.Element => (
+                    <option
+                      value={color}
+                      disabled={disabledColors.includes(color)}
+                      key={color}
+                    >
+                      {t(color, {}, "color")}
+                    </option>
+                  ),
+                )}
+              </select>
+              {player.color && <Cube color={player.color} />}
+            </div>
           </label>
-          <select
-            onInput={handleColorChange}
-            id={`color-${player.id}`}
-            value={player.color ?? undefined}
-          >
-            {COLORS.map(
-              (color: Color): JSX.Element => (
-                <option
-                  value={color}
-                  disabled={disabledColors.includes(color)}
-                  key={color}
-                >
-                  {t(color, {}, "color")}
-                </option>
-              ),
-            )}
-          </select>
-          {player.color && <Cube color={player.color} />}
-        </div>
-      </li>
-    </ul>
+        </fieldset>
+      </div>
+    </article>
   )
 }

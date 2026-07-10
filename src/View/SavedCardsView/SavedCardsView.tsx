@@ -93,13 +93,17 @@ export default function SavedCardsView({ player, type }: Props): JSX.Element {
       </ul>
       {currentCardName !== null && (
         <form onSubmit={handleSaveCurrentCard}>
-          <input
-            autoFocus={true}
-            value={currentCardName}
-            onInput={handleCurrentCardNameChange}
-          />{" "}
-          <button type="submit">✅</button>
-          <button onClick={handleCancelAddingCard}>❌</button>
+          <fieldset role="group">
+            <input
+              autoFocus={true}
+              value={currentCardName}
+              onInput={handleCurrentCardNameChange}
+            />{" "}
+            <button type="submit">✅</button>
+            <button type="reset" onClick={handleCancelAddingCard}>
+              ❌
+            </button>
+          </fieldset>
         </form>
       )}
       {canAdd() && currentCardName === null && (

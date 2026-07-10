@@ -23,20 +23,22 @@ export default function LegacyNameView(): JSX.Element {
   }
 
   return (
-    <>
+    <header>
       {editing ?
         <form onSubmit={handleFormSubmit}>
-          <input
-            autoFocus={true}
-            value={legacy.name}
-            onInput={handleNameChange}
-          />
-          <button type="submit">✏️</button>
+          <fieldset role="group">
+            <input
+              autoFocus={true}
+              value={legacy.name}
+              onInput={handleNameChange}
+            />
+            <button type="submit">✏️</button>
+          </fieldset>
         </form>
       : <h2>
           {legacy.name} <button onClick={handeStartEditing}>✏️</button>
         </h2>
       }
-    </>
+    </header>
   )
 }

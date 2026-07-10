@@ -1,7 +1,6 @@
 export { Badge } from "./Badge"
-export { BottomMenu } from "./BottomMenu"
 export { Collapsible } from "./Collapsible"
 export { Cube } from "./Cube"
+export { Icon } from "./Icon"
 export { Loading } from "./Loading"
-export { Toggle } from "./Toggle"
 export { QR } from "./QR"

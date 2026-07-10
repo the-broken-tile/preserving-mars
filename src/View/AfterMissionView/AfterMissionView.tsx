@@ -1,4 +1,4 @@
-import { JSX } from "react"
+import { FormEvent, JSX } from "react"
 import { Legacy, Player } from "@/Model"
 import { legacyRepository } from "@/Repository"
 import { useLegacyContext } from "@/Context/LegacyContext"
@@ -8,19 +8,22 @@ import { t } from "@/i18n"
 export default function AfterMissionView(): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
 
-  const handleNexMissionClick: VoidFunction = (): void => {
+  const handleNexMission = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault()
     const l: Legacy = legacy.advance()
     setLegacy(l)
     legacyRepository.save(l)
   }
 
   return (
-    <>
+    <form onSubmit={handleNexMission}>
       {legacy.players.map(
         (player: Player): JSX.Element => (
-          <div key={player.id} className="player-panel">
-            <PlayerNameView player={player} />
-            <TitleView player={player} />
+          <div key={player.id}>
+            <hgroup>
+              <PlayerNameView player={player} />
+              <TitleView player={player} />
+            </hgroup>
             <div>
               {t("Title Points: %points%", {
                 points: legacy.getTitlePoints(player),
@@ -30,13 +33,13 @@ export default function AfterMissionView(): JSX.Element {
           </div>
         ),
       )}
-      <button type="button" className="button" onClick={handleNexMissionClick}>
+      <button type="submit">
         {legacy.currentMission + 1 < legacy.totalMissions ?
           t("Start mission %mission%", {
             mission: t(String(legacy.currentMission + 1), {}, "missionNames"),
           })
         : t("Finish")}
       </button>
-    </>
+    </form>
   )
 }

@@ -1,9 +1,0 @@
-.new-player-form {
-  padding: var(--default-padding);
-}
-
-.players-count {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
