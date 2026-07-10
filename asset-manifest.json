@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/preserving-mars/static/css/main.bc351f75.css",
-    "main.js": "/preserving-mars/static/js/main.8eb42576.js",
+    "main.css": "/preserving-mars/static/css/main.88d9d9dd.css",
+    "main.js": "/preserving-mars/static/js/main.f21c02f5.js",
+    "static/media/background.jpg": "/preserving-mars/static/media/background.4a43e43282ccbcd5dd99.jpg",
     "index.html": "/preserving-mars/index.html",
-    "main.bc351f75.css.map": "/preserving-mars/static/css/main.bc351f75.css.map",
-    "main.8eb42576.js.map": "/preserving-mars/static/js/main.8eb42576.js.map"
+    "main.88d9d9dd.css.map": "/preserving-mars/static/css/main.88d9d9dd.css.map",
+    "main.f21c02f5.js.map": "/preserving-mars/static/js/main.f21c02f5.js.map"
   },
   "entrypoints": [
-    "static/css/main.bc351f75.css",
-    "static/js/main.8eb42576.js"
+    "static/css/main.88d9d9dd.css",
+    "static/js/main.f21c02f5.js"
   ]
 }
