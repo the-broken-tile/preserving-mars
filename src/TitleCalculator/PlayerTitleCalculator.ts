@@ -17,13 +17,13 @@ export default class PlayerTitleCalculator implements TitleCalculatorInterface {
 
     players.forEach((player: Player, index: number): void => {
       const place: number = index + 1
-      let result: MissionResult = player.currentMissionResult
+      let result: MissionResult = player.missionResults[l.currentMission]
       const titleName: TitleName = this.titleForPlace[place]
 
       result = result.setTitle(
         new Title(
           titleName,
-          legacy.currentMission,
+          l.currentMission,
           this.pointsPerTitle[titleName],
           this.megaCreditsForPlace[place]!,
         ),

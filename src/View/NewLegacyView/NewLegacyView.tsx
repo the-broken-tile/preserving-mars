@@ -1,18 +1,29 @@
 import { FormEvent, FormEventHandler, JSX, useState } from "react"
 import { Link, NavigateFunction, useNavigate } from "react-router"
 import { t } from "@/i18n"
-import { MAX_PLAYERS, MIN_PLAYERS, MISSION_LENGTHS } from "@/constants"
+import { DEBUG, MAX_PLAYERS, MIN_PLAYERS, MISSION_LENGTHS } from "@/constants"
 import { BottomMenu } from "@/Component"
 import { CreatePlayerView } from "@/View"
 import { ValidationError, validator } from "@/container/Validator"
-import { Color, Legacy, Player } from "@/Model"
+import { Color, Corporation, Legacy, Player } from "@/Model"
 import { chooseNext } from "@/Model/Color"
 import { legacyRepository } from "@/Repository"
 import { home } from "@/icons"
 
 import "./new-legacy-view.css"
+import { legacyFactory } from "@/container"
 
-const initialValues: Player[] = [Player.create("b"), Player.create("r")]
+const initialValues: Player[] =
+  DEBUG ?
+    [
+      Player.create("b")
+        .setName("Player 1")
+        .setCorporation(Corporation.create("Corporation 1")),
+      Player.create("r")
+        .setName("Player 2")
+        .setCorporation(Corporation.create("Corporation 2")),
+    ]
+  : [Player.create("b"), Player.create("r")]
 
 export default function NewLegacyView(): JSX.Element {
   const [missions, setMissions] = useState<number>(MISSION_LENGTHS[0])
@@ -63,7 +74,7 @@ export default function NewLegacyView(): JSX.Element {
       return
     }
 
-    const legacy: Legacy = Legacy.create(players, missions).advance()
+    const legacy: Legacy = legacyFactory.build(players, missions)
     legacyRepository.save(legacy)
 
     navigate(`/legacy/${legacy.id}`)

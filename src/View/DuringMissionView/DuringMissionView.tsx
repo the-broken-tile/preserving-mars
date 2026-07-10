@@ -18,7 +18,7 @@ export default function DuringMissionView(): JSX.Element {
   const handlePointsChange =
     (player: Player) =>
     (points: number): void => {
-      const result: MissionResult = player.currentMissionResult
+      const result: MissionResult = player.missionResults[legacy.currentMission]
       const l: Legacy = legacy.setMissionResult(
         player,
         result.setPoints(points),
@@ -48,7 +48,7 @@ export default function DuringMissionView(): JSX.Element {
             <Fragment key={player.id}>
               <PlayerNameView player={player} />
               <TerraformingRatingView
-                points={player.currentMissionResult.points}
+                points={player.missionResults[legacy.currentMission].points}
                 onChange={handlePointsChange(player)}
                 id={player.id}
               />

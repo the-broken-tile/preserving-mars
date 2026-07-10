@@ -1,5 +1,7 @@
 import config from "@/config.json"
 
+export const DEBUG: boolean = config.debug
+
 export const MIN_PLAYERS: number = config.minPlayers
 export const MAX_PLAYERS: number = config.maxPlayers
 

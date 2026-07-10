@@ -1,4 +1,5 @@
 {
+  "debug": false,
   "cachePrefix": "preserving_mars:v1.3:",
   "minPlayers": 2,
   "maxPlayers": 5,

@@ -4,7 +4,7 @@ import { ADVANCEMENT_MAP, AFTER, BEFORE, FINISHED, PREPARING } from "./Phase"
 import { MissionResult, Phase, Player, SavedCard, Title } from "."
 import IdentityInterface from "@/Model/IdentityInterface"
 
-export type MissionResults = Map<Player, MissionResult>[]
+type MissionResults = Map<Player, MissionResult>[]
 type PlayerPointTuple = [Player, number]
 
 export default class Legacy implements IdentityInterface<Legacy> {
@@ -60,21 +60,16 @@ export default class Legacy implements IdentityInterface<Legacy> {
 
     return this.clone({
       phase: newPhase,
-      mission: Math.min(mission, this.totalMissions),
+      currentMission: Math.min(mission, this.totalMissions - 1),
     })
   }
 
   public getCurrentPlayerMissions(): Map<Player, MissionResult> {
     const result: Map<Player, MissionResult> = new Map<Player, MissionResult>()
     for (const player of this.players) {
-      result.set(player, player.getMissionResult(this.currentMission))
+      result.set(player, player.missionResults[this.currentMission])
     }
-
     return result
-  }
-
-  public getCurrentMission(player: Player): MissionResult {
-    return this.getCurrentPlayerMissions().get(player)!
   }
 
   public getSavedCards(player: Player): SavedCard[] {
@@ -139,10 +134,10 @@ export default class Legacy implements IdentityInterface<Legacy> {
 
   public getSortedPlayers(): Player[] {
     return this.players.sort((a: Player, b: Player): number => {
-      const missionA: MissionResult = a.currentMissionResult
+      const missionA: MissionResult = a.missionResults[this.currentMission]
       const pointsA: number = missionA.points
 
-      const missionB: MissionResult = b.currentMissionResult
+      const missionB: MissionResult = b.missionResults[this.currentMission]
       const pointsB: number = missionB.points
 
       if (pointsA === pointsB) {
@@ -208,7 +203,8 @@ export default class Legacy implements IdentityInterface<Legacy> {
 
     const tuples: PlayerPointTuple[] = this.players.map(
       (player: Player): [Player, number] => {
-        const mission: MissionResult = player.currentMissionResult
+        const mission: MissionResult =
+          player.missionResults[this.currentMission]
 
         return [player, mission.points + this.getTitlePoints(player)]
       },

@@ -20,48 +20,34 @@ export default class Player implements IdentityInterface<Player> {
     return new Player("", color, Corporation.create(), missionResults)
   }
 
+  public initMissionResults(missions: number): Player {
+    const missionResults: MissionResult[] = []
+    for (let mission: number = 0; mission < missions; mission++) {
+      missionResults[mission] = MissionResult.create(mission)
+    }
+
+    return this.clone({
+      missionResults,
+    })
+  }
+
   public is(other: Player): boolean {
     return this.id === other.id
   }
 
   public setMissionResult(missionResult: MissionResult): Player {
-    // assert there's at least 1
-    this.getMissionResult(0)
-
     return this.clone({
-      missionResults:
-        this.missionResults.length === 1 ?
-          [missionResult]
-        : [
-            this.missionResults.slice(0, this.missionResults.length - 1),
-            missionResult,
-          ],
+      missionResults: this.missionResults.map(
+        (m: MissionResult): MissionResult =>
+          m.mission === missionResult.mission ? missionResult : m,
+      ),
     })
   }
 
-  public getMissionResult(mission: number): MissionResult {
-    if (this.missionResults[mission] === undefined) {
-      this.missionResults[mission] = MissionResult.create(mission)
-    }
-
-    return this.missionResults[mission]
-  }
-
-  public get currentMissionResult(): MissionResult {
-    if (this.missionResults.length === 0) {
-      // Create the first and return it.
-      return this.getMissionResult(0)
-    }
-
-    return this.missionResults[this.missionResults.length - 1]
-  }
-
-  public getPreviousMissionResult(): MissionResult | undefined {
-    if (this.missionResults.length <= 1) {
-      return undefined
-    }
-
-    return this.missionResults[this.missionResults.length - 2]
+  public getPreviousMissionResult(
+    currentMission: number,
+  ): MissionResult | undefined {
+    return this.missionResults[currentMission - 1]
   }
 
   public setName(name: string): Player {
@@ -84,7 +70,7 @@ export default class Player implements IdentityInterface<Player> {
     }
   }
 
-  private clone(props: Record<string, any>): Player {
+  private clone(props: Record<string, any> = {}): Player {
     const p: Player = new Player(
       this.name,
       this.color,

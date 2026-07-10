@@ -18,7 +18,6 @@ export default class LegacyRepository {
     return (this.store.get<SerializedLegacy[]>(KEY) ?? []).map(
       (legacy: SerializedLegacy): Legacy =>
         this.deserializer.deserialize(legacy)!,
-      this,
     )
   }
 
