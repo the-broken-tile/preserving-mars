@@ -17,7 +17,7 @@ export default function BeforeMissionView(): JSX.Element {
   }
 
   return (
-    <form onSubmit={handleStartMission}>
+    <Fragment>
       <h3>
         {t("Preparation for mission %mission%", {
           mission: t(legacy.currentMission, {}, "missionNames"),
@@ -35,9 +35,11 @@ export default function BeforeMissionView(): JSX.Element {
           </article>
         ),
       )}
-      <button type="submit" className="button">
-        {t("Start mission")}
-      </button>
-    </form>
+      <form onSubmit={handleStartMission}>
+        <button type="submit" className="button">
+          {t("Start mission")}
+        </button>
+      </form>
+    </Fragment>
   )
 }

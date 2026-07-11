@@ -3,6 +3,7 @@ import { Link } from "react-router"
 import { t } from "@/i18n"
 import { Legacy } from "@/Model"
 import { legacyRepository } from "@/Repository"
+import { Icon } from "@/Component"
 
 export default function ListLegacyView(): JSX.Element {
   const [legacies, setLegacies] = useState<Legacy[]>(legacyRepository.findAll())
@@ -21,7 +22,9 @@ export default function ListLegacyView(): JSX.Element {
             <Link to={`/legacy/${l.id}`} viewTransition>
               {l.name}
             </Link>
-            <button onClick={(): void => handleDeleteLegacy(l)}>❌</button>
+            <button onClick={(): void => handleDeleteLegacy(l)}>
+              <Icon type="cancel" />
+            </button>
           </article>
         ),
       )}

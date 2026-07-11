@@ -1,7 +1,7 @@
 import { Fragment, JSX, ReactNode } from "react"
 import icons from "./icons"
 type Props = {
-  type: "back" | "confirm" | "home" | "share"
+  type: "back" | "cancel" | "confirm" | "home" | "share"
   children?: ReactNode
 }
 
