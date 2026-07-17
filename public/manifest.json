@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Preserving Mars",
+  "name": "Preserving the Legacy of Mars game state",
   "icons": [
     {
       "src": "./img/preserving-mars-192x192.png",
