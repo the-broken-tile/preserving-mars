@@ -42,25 +42,21 @@ export default function DuringMissionView(): JSX.Element {
 
   return (
     <form onSubmit={handleSubmit}>
-      <ul>
-        {legacy.players.map(
-          (player: Player): JSX.Element => (
-            <Fragment key={player.id}>
-              <PlayerNameView player={player} />
-              <TerraformingRatingView
-                points={player.missionResults[legacy.currentMission].points}
-                onChange={handlePointsChange(player)}
-                id={player.id}
-              />
-              {finishing && <PassingOrderView player={player} />}
-              <SavedCardsView player={player} type="innovation" />
-            </Fragment>
-          ),
-        )}
-      </ul>
-      <button type="submit" className="button">
-        {t("Finish mission")}
-      </button>
+      {legacy.players.map(
+        (player: Player): JSX.Element => (
+          <article key={player.id}>
+            <PlayerNameView player={player} />
+            <TerraformingRatingView
+              points={player.missionResults[legacy.currentMission].points}
+              onChange={handlePointsChange(player)}
+              id={player.id}
+            />
+            {finishing && <PassingOrderView player={player} />}
+            <SavedCardsView player={player} type="innovation" />
+          </article>
+        ),
+      )}
+      <button type="submit">{t("Finish mission")}</button>
     </form>
   )
 }

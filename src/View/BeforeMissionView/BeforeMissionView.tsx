@@ -1,4 +1,4 @@
-import { Fragment, JSX } from "react"
+import { FormEvent, Fragment, JSX } from "react"
 import { Legacy, Player } from "@/Model"
 import { t } from "@/i18n"
 import { PlayerNameView, TitleView } from "@/View"
@@ -9,34 +9,37 @@ import StartingMegaCreditsView from "../StartingMegaCreditsView/StartingMegaCred
 
 export default function BeforeMissionView(): JSX.Element {
   const { legacy, setLegacy } = useLegacyContext()
-  const handleStartMission: VoidFunction = (): void => {
+  const handleStartMission = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault()
     const l: Legacy = legacy.advance()
     legacyRepository.save(l)
     setLegacy(l)
   }
 
   return (
-    <>
+    <Fragment>
       <h3>
         {t("Preparation for mission %mission%", {
           mission: t(legacy.currentMission, {}, "missionNames"),
         })}
       </h3>
-      <ul>
-        {legacy.players.map(
-          (player: Player): JSX.Element => (
-            <div key={player.id} className="player-panel">
+      {legacy.players.map(
+        (player: Player): JSX.Element => (
+          <article key={player.id}>
+            <hgroup>
               <PlayerNameView player={player} />
               <TitleView player={player} />
-              <StartingMegaCreditsView player={player} />
-              <SavedCardsView player={player} type="development" />
-            </div>
-          ),
-        )}
-      </ul>
-      <button type="button" onClick={handleStartMission} className="button">
-        {t("Start mission")}
-      </button>
-    </>
+            </hgroup>
+            <StartingMegaCreditsView player={player} />
+            <SavedCardsView player={player} type="development" />
+          </article>
+        ),
+      )}
+      <form onSubmit={handleStartMission}>
+        <button type="submit" className="button">
+          {t("Start mission")}
+        </button>
+      </form>
+    </Fragment>
   )
 }

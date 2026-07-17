@@ -1,16 +1,12 @@
-import { JSX, useState } from "react"
+import { Fragment, JSX, useState } from "react"
 import { Link } from "react-router"
-import { legacyRepository } from "@/Repository"
-import { Legacy } from "@/Model"
-
-import "./list-legacy.css"
 import { t } from "@/i18n"
-import { useBodyClassName } from "@/Context"
+import { Legacy } from "@/Model"
+import { legacyRepository } from "@/Repository"
+import { Icon } from "@/Component"
 
 export default function ListLegacyView(): JSX.Element {
   const [legacies, setLegacies] = useState<Legacy[]>(legacyRepository.findAll())
-
-  useBodyClassName("home")
 
   const handleDeleteLegacy = (legacy: Legacy): void => {
     legacyRepository.delete(legacy)
@@ -19,22 +15,22 @@ export default function ListLegacyView(): JSX.Element {
     )
   }
   return (
-    <ul className="legacy-list">
+    <Fragment>
       {legacies.map(
         (l: Legacy): JSX.Element => (
-          <li key={l.id}>
+          <article key={l.id} role="group">
             <Link to={`/legacy/${l.id}`} viewTransition>
               {l.name}
             </Link>
-            <button onClick={(): void => handleDeleteLegacy(l)}>❌</button>
-          </li>
+            <button onClick={(): void => handleDeleteLegacy(l)}>
+              <Icon type="cancel" />
+            </button>
+          </article>
         ),
       )}
-      <li>
-        <Link to="/new" className="button" viewTransition>
-          {t("Create a new legacy")}
-        </Link>
-      </li>
-    </ul>
+      <Link to="/new" className="button" viewTransition>
+        {t("Create a new legacy")}
+      </Link>
+    </Fragment>
   )
 }

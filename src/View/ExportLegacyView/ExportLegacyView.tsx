@@ -3,11 +3,10 @@ import { Link, useParams } from "react-router"
 
 import { Legacy } from "@/Model"
 import { exportLegacy } from "@/util"
-import { BottomMenu, Loading, QR } from "@/Component"
+import { Icon, Loading, QR } from "@/Component"
 import { legacyRepository } from "@/Repository"
 import { LegacyNotFoundView } from ".."
 import { t } from "@/i18n"
-import { back } from "@/icons"
 
 export default function ExportLegacyView(): JSX.Element {
   const { id } = useParams()
@@ -29,11 +28,11 @@ export default function ExportLegacyView(): JSX.Element {
         text={`${window.location.origin}/#/import/${encodeURIComponent(exportLegacy(legacy))}`}
         alt={`Export of ${legacy.name}`}
       />
-      <BottomMenu>
-        <Link to={`/legacy/${legacy.id}`}>
-          <img src={back} alt="back" />
+      <footer role="group">
+        <Link to={`/legacy/${legacy.id}`} role="button">
+          <Icon type="back">{t("Back")}</Icon>
         </Link>
-      </BottomMenu>
+      </footer>
     </div>
   )
 }

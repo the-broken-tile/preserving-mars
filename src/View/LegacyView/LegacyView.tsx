@@ -1,7 +1,7 @@
 import { JSX, useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
 import { legacyRepository } from "@/Repository"
-import { BottomMenu, Loading } from "@/Component"
+import { Icon, Loading } from "@/Component"
 import { Legacy, Phase } from "@/Model"
 import { AFTER, BEFORE, DURING, FINISHED, PREPARING } from "@/Model/Phase"
 import {
@@ -13,7 +13,7 @@ import {
   LegacyNotFoundView,
 } from "@/View"
 import LegacyContext from "@/Context/LegacyContext"
-import { home, share } from "@/icons"
+import { t } from "@/i18n"
 
 const PHASE_MAP: Record<
   Exclude<Phase, "p">,
@@ -52,15 +52,15 @@ export default function LegacyView(): JSX.Element {
   return (
     <LegacyContext value={{ legacy, setLegacy }}>
       <LegacyNameView />
-      {PHASE_MAP[legacy.phase](legacy)}
-      <BottomMenu>
-        <Link to="/">
-          <img src={home} alt="home" />
+      <main>{PHASE_MAP[legacy.phase](legacy)}</main>
+      <footer role="group">
+        <Link to="/" role="button">
+          <Icon type="home">{t("Home")}</Icon>
         </Link>
-        <Link to={`/legacy/${legacy.id}/export`}>
-          <img src={share} alt="share" />
+        <Link to={`/legacy/${legacy.id}/export`} role="button">
+          <Icon type="share">{t("Share")}</Icon>
         </Link>
-      </BottomMenu>
+      </footer>
     </LegacyContext>
   )
 }

@@ -10,11 +10,11 @@ export default function FinishedLegacyView(): JSX.Element {
     <div>
       {legacy.getFinalStanding().map(([player, points]): JSX.Element => {
         return (
-          <div className="player-panel" key={player.id}>
+          <hgroup key={player.id}>
             <PlayerNameView player={player} />
             <TitleView player={player} />
-            <h3>{t("Final score: %points%", { points })}</h3>
-          </div>
+            <h5>{t("Final score: %points%", { points })}</h5>
+          </hgroup>
         )
       })}
     </div>

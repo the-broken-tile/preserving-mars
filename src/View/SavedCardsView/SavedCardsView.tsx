@@ -11,7 +11,7 @@ import { useLegacyContext } from "@/Context"
 import { legacyRepository } from "@/Repository"
 import { SavedCardView } from "@/View"
 import { MAX_SAVED_PROJECT_CARDS } from "@/constants"
-import { Collapsible } from "@/Component"
+import { Collapsible, Icon } from "@/Component"
 
 type Props = {
   player: Player
@@ -93,13 +93,17 @@ export default function SavedCardsView({ player, type }: Props): JSX.Element {
       </ul>
       {currentCardName !== null && (
         <form onSubmit={handleSaveCurrentCard}>
-          <input
-            autoFocus={true}
-            value={currentCardName}
-            onInput={handleCurrentCardNameChange}
-          />{" "}
-          <button type="submit">✅</button>
-          <button onClick={handleCancelAddingCard}>❌</button>
+          <fieldset role="group">
+            <input
+              autoFocus={true}
+              value={currentCardName}
+              onInput={handleCurrentCardNameChange}
+            />{" "}
+            <button type="submit">✅</button>
+            <button type="reset" onClick={handleCancelAddingCard}>
+              <Icon type="cancel" />
+            </button>
+          </fieldset>
         </form>
       )}
       {canAdd() && currentCardName === null && (

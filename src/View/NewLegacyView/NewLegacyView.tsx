@@ -1,16 +1,13 @@
-import { FormEvent, FormEventHandler, JSX, useState } from "react"
+import { FormEvent, FormEventHandler, Fragment, JSX, useState } from "react"
 import { Link, NavigateFunction, useNavigate } from "react-router"
 import { t } from "@/i18n"
 import { DEBUG, MAX_PLAYERS, MIN_PLAYERS, MISSION_LENGTHS } from "@/constants"
-import { BottomMenu } from "@/Component"
 import { CreatePlayerView } from "@/View"
 import { ValidationError, validator } from "@/container/Validator"
 import { Color, Corporation, Legacy, Player } from "@/Model"
 import { chooseNext } from "@/Model/Color"
 import { legacyRepository } from "@/Repository"
-import { home } from "@/icons"
-
-import "./new-legacy-view.css"
+import { Icon } from "@/Component"
 import { legacyFactory } from "@/container"
 
 const initialValues: Player[] =
@@ -86,8 +83,8 @@ export default function NewLegacyView(): JSX.Element {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="new-player-form">
-        <div className="players-count">
+      <form onSubmit={handleSubmit}>
+        <fieldset role="group">
           <button
             type="button"
             className="button"
@@ -96,11 +93,9 @@ export default function NewLegacyView(): JSX.Element {
           >
             -
           </button>
-          <span>
-            {t("Players: %players%", {
-              players: players.length,
-            })}
-          </span>
+          {t("Players: %players%", {
+            players: players.length,
+          })}
           <button
             type="button"
             className="button"
@@ -109,11 +104,11 @@ export default function NewLegacyView(): JSX.Element {
           >
             +
           </button>
-        </div>
-        <ul>
+        </fieldset>
+        <main>
           {players.map(
             (player: Player): JSX.Element => (
-              <li key={player.id}>
+              <Fragment key={player.id}>
                 <CreatePlayerView
                   errors={errors.filter(e => e.entityId === player.id)}
                   player={player}
@@ -122,25 +117,12 @@ export default function NewLegacyView(): JSX.Element {
                     (p: Player): Color => p.color,
                   )}
                 />
-              </li>
+              </Fragment>
             ),
           )}
-        </ul>
-        {errors.length > 0 && (
-          <ul>
-            {errors
-              .filter((e: ValidationError): boolean => e.entityId === undefined)
-              .map(
-                (error: ValidationError, i: number): JSX.Element => (
-                  <li className="error" key={i}>
-                    {error.message}
-                  </li>
-                ),
-              )}
-          </ul>
-        )}
-        <div>
-          <div>{t("Missions")}:</div>
+        </main>
+        <fieldset role="group">
+          <legend>{t("Missions")}</legend>
           {MISSION_LENGTHS.map(
             (m: number): JSX.Element => (
               <label key={m}>
@@ -154,14 +136,16 @@ export default function NewLegacyView(): JSX.Element {
               </label>
             ),
           )}
-        </div>
-        <input type="submit" className="button" value={`${t("Save")}`} />
+        </fieldset>
+        <fieldset role="group">
+          <button type="submit">
+            <Icon type="confirm">{t("Save")}</Icon>
+          </button>
+          <Link to="/" role="button">
+            <Icon type="home">{t("Back")}</Icon>
+          </Link>
+        </fieldset>
       </form>
-      <BottomMenu>
-        <Link to="/">
-          <img src={home} alt="home" />
-        </Link>
-      </BottomMenu>
     </>
   )
 }

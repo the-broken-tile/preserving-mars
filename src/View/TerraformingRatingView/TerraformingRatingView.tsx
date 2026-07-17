@@ -25,10 +25,8 @@ export default function TerraformingRatingView({
   }
 
   return (
-    <div>
-      <label htmlFor={`points-player-${id}`}>
-        {t("Terraforming rating")}:{" "}
-      </label>
+    <fieldset role="group">
+      <legend>{t("Terraforming rating")}: </legend>
       <button type="button" onClick={handleDecreasePoints}>
         -
       </button>
@@ -41,6 +39,6 @@ export default function TerraformingRatingView({
       <button type="button" onClick={handleIncreasePoints}>
         +
       </button>
-    </div>
+    </fieldset>
   )
 }

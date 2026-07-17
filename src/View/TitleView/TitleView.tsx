@@ -14,7 +14,7 @@ export default function TitleView({ player }: Props): JSX.Element {
   const { legacy } = useLegacyContext()
 
   return (
-    <h4 className="title-row">
+    <h4 role="group">
       {legacy.getTitles(player).map(
         (title: Title, i: number): JSX.Element => (
           <Fragment key={i}>

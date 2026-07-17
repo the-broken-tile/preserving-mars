@@ -8,9 +8,9 @@ type Props = {
 
 export default function PlayerNameView({ player }: Props): JSX.Element {
   return (
-    <h2 className="player-row">
+    <h3>
       <Cube color={player.color} />
       {player.name}, CEO of {player.corporation.name}
-    </h2>
+    </h3>
   )
 }
