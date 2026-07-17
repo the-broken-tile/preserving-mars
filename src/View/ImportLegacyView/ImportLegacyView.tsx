@@ -35,7 +35,7 @@ export default function ImportLegacyView(): JSX.Element {
       })}
       <br />
       <button className="button" onClick={handleImport}>
-        ${t("Import")}
+        {t("Import")}
       </button>
     </div>
   )

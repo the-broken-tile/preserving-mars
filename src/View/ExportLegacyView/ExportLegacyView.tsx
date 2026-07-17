@@ -25,7 +25,7 @@ export default function ExportLegacyView(): JSX.Element {
     <div>
       <h2>{t("Scan to import on another device.")}</h2>
       <QR
-        text={`${window.location.origin}/#/import/${encodeURIComponent(exportLegacy(legacy))}`}
+        text={`${window.location.origin}${window.location.pathname}/#/import/${encodeURIComponent(exportLegacy(legacy))}`}
         alt={`Export of ${legacy.name}`}
       />
       <footer role="group">
